@@ -7,15 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B6412CDD238EE49300BED236 /* DocumentsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CDC238EE49300BED236 /* DocumentsDatabase.swift */; };
+		B6412CE1238EE6A900BED236 /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CE0238EE6A900BED236 /* CreateViewController.swift */; };
+		B6412CE3238EEB0900BED236 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CE2238EEB0900BED236 /* SceneDelegate.swift */; };
+		B6412CE5238EF8D400BED236 /* SnapshotAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CE4238EF8D400BED236 /* SnapshotAnchor.swift */; };
+		B6412CE7238EF9A500BED236 /* ARUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CE6238EF9A500BED236 /* ARUtilities.swift */; };
 		B6C1ED9623809E8200AAE1B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C1ED9523809E8200AAE1B1 /* AppDelegate.swift */; };
-		B6C1ED9823809E8200AAE1B1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C1ED9723809E8200AAE1B1 /* SceneDelegate.swift */; };
 		B6C1ED9F23809E8300AAE1B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6C1ED9E23809E8300AAE1B1 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B6412CDC238EE49300BED236 /* DocumentsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsDatabase.swift; sourceTree = "<group>"; };
+		B6412CE0238EE6A900BED236 /* CreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateViewController.swift; sourceTree = "<group>"; };
+		B6412CE2238EEB0900BED236 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		B6412CE4238EF8D400BED236 /* SnapshotAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotAnchor.swift; sourceTree = "<group>"; };
+		B6412CE6238EF9A500BED236 /* ARUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARUtilities.swift; sourceTree = "<group>"; };
 		B6C1ED9223809E8200AAE1B1 /* Memorabilia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorabilia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6C1ED9523809E8200AAE1B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B6C1ED9723809E8200AAE1B1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B6C1ED9E23809E8300AAE1B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B6C1EDA323809E8300AAE1B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -31,6 +39,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B6412CDA238EE3FD00BED236 /* Memories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Memories;
+			sourceTree = "<group>";
+		};
+		B6412CDB238EE43400BED236 /* DocumentsDirectory */ = {
+			isa = PBXGroup;
+			children = (
+				B6412CDC238EE49300BED236 /* DocumentsDatabase.swift */,
+			);
+			path = DocumentsDirectory;
+			sourceTree = "<group>";
+		};
+		B6412CDE238EE66300BED236 /* Create */ = {
+			isa = PBXGroup;
+			children = (
+				B6412CE0238EE6A900BED236 /* CreateViewController.swift */,
+			);
+			path = Create;
+			sourceTree = "<group>";
+		};
+		B6412CDF238EE68D00BED236 /* Experience */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Experience;
+			sourceTree = "<group>";
+		};
 		B6C1ED8923809E8200AAE1B1 = {
 			isa = PBXGroup;
 			children = (
@@ -50,12 +88,12 @@
 		B6C1ED9423809E8200AAE1B1 /* Memorabilia */ = {
 			isa = PBXGroup;
 			children = (
-				B6C1EDAB23809FF100AAE1B1 /* Service */,
 				B6C1ED9523809E8200AAE1B1 /* AppDelegate.swift */,
+				B6412CE2238EEB0900BED236 /* SceneDelegate.swift */,
 				B6C1ED9E23809E8300AAE1B1 /* Assets.xcassets */,
 				B6C1EDA323809E8300AAE1B1 /* Info.plist */,
-				B6C1ED9723809E8200AAE1B1 /* SceneDelegate.swift */,
 				B6C1EDA923809FCB00AAE1B1 /* Clean */,
+				B6C1EDAB23809FF100AAE1B1 /* Service */,
 				B6C1EDAA23809FE100AAE1B1 /* View */,
 				B6C1EDAD2380A00100AAE1B1 /* Extension */,
 				B6C1EDAC23809FF600AAE1B1 /* Enumeration */,
@@ -67,6 +105,9 @@
 		B6C1EDA923809FCB00AAE1B1 /* Clean */ = {
 			isa = PBXGroup;
 			children = (
+				B6412CDA238EE3FD00BED236 /* Memories */,
+				B6412CDE238EE66300BED236 /* Create */,
+				B6412CDF238EE68D00BED236 /* Experience */,
 			);
 			path = Clean;
 			sourceTree = "<group>";
@@ -81,6 +122,7 @@
 		B6C1EDAB23809FF100AAE1B1 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				B6412CDB238EE43400BED236 /* DocumentsDirectory */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -95,6 +137,7 @@
 		B6C1EDAD2380A00100AAE1B1 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				B6412CE6238EF9A500BED236 /* ARUtilities.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -102,6 +145,7 @@
 		B6C1EDAE2380A00E00AAE1B1 /* Extra */ = {
 			isa = PBXGroup;
 			children = (
+				B6412CE4238EF8D400BED236 /* SnapshotAnchor.swift */,
 			);
 			path = Extra;
 			sourceTree = "<group>";
@@ -176,7 +220,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6C1ED9623809E8200AAE1B1 /* AppDelegate.swift in Sources */,
-				B6C1ED9823809E8200AAE1B1 /* SceneDelegate.swift in Sources */,
+				B6412CE5238EF8D400BED236 /* SnapshotAnchor.swift in Sources */,
+				B6412CDD238EE49300BED236 /* DocumentsDatabase.swift in Sources */,
+				B6412CE7238EF9A500BED236 /* ARUtilities.swift in Sources */,
+				B6412CE1238EE6A900BED236 /* CreateViewController.swift in Sources */,
+				B6412CE3238EEB0900BED236 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
