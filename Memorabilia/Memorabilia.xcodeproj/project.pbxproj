@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B63663ED239444420008F5BD /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63663EC239444420008F5BD /* NavigationController.swift */; };
+		B63663EF239448420008F5BD /* MemoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63663EE239448420008F5BD /* MemoriesViewController.swift */; };
+		B63663F2239448990008F5BD /* MemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63663F1239448990008F5BD /* MemoryCollectionViewCell.swift */; };
 		B6412CDD238EE49300BED236 /* DocumentsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CDC238EE49300BED236 /* DocumentsDatabase.swift */; };
 		B6412CE1238EE6A900BED236 /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CE0238EE6A900BED236 /* CreateViewController.swift */; };
 		B6412CE3238EEB0900BED236 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CE2238EEB0900BED236 /* SceneDelegate.swift */; };
@@ -21,6 +23,8 @@
 
 /* Begin PBXFileReference section */
 		B63663EC239444420008F5BD /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		B63663EE239448420008F5BD /* MemoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesViewController.swift; sourceTree = "<group>"; };
+		B63663F1239448990008F5BD /* MemoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		B6412CDC238EE49300BED236 /* DocumentsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsDatabase.swift; sourceTree = "<group>"; };
 		B6412CE0238EE6A900BED236 /* CreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateViewController.swift; sourceTree = "<group>"; };
 		B6412CE2238EEB0900BED236 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,9 +49,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B63663F0239448760008F5BD /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B63663F1239448990008F5BD /* MemoryCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		B6412CDA238EE3FD00BED236 /* Memories */ = {
 			isa = PBXGroup;
 			children = (
+				B63663EE239448420008F5BD /* MemoriesViewController.swift */,
 			);
 			path = Memories;
 			sourceTree = "<group>";
@@ -140,6 +153,7 @@
 			children = (
 				B6996AB0239439F100F4133D /* View */,
 				B6996AAB2394371900F4133D /* Button */,
+				B63663F0239448760008F5BD /* Cell */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -245,8 +259,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6996AAF239439EB00F4133D /* InfoView.swift in Sources */,
+				B63663EF239448420008F5BD /* MemoriesViewController.swift in Sources */,
 				B6996AAD2394372D00F4133D /* CircleButton.swift in Sources */,
 				B6C1ED9623809E8200AAE1B1 /* AppDelegate.swift in Sources */,
+				B63663F2239448990008F5BD /* MemoryCollectionViewCell.swift in Sources */,
 				B6412CE5238EF8D400BED236 /* SnapshotAnchor.swift in Sources */,
 				B63663ED239444420008F5BD /* NavigationController.swift in Sources */,
 				B6412CDD238EE49300BED236 /* DocumentsDatabase.swift in Sources */,

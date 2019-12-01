@@ -41,6 +41,10 @@ class CreateViewController: UIViewController {
     
     lazy var arView: ARView = {
         let view = ARView(frame: self.view.frame)
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(tap))
+        view.addGestureRecognizer(gesture)
+        view.session.delegate = self
+        view.debugOptions = [.showFeaturePoints]
         return view
     }()
     
@@ -136,9 +140,7 @@ class CreateViewController: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = true
 
         // Start AR Session
-        arView.session.delegate = self
         arView.session.run(worldTrackingConfiguration)
-        arView.debugOptions = [.showFeaturePoints]
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -158,6 +160,20 @@ class CreateViewController: UIViewController {
         infoView.message = "Oh happy day!"
     }
     
+    @objc func tap(_ sender: UITapGestureRecognizer) {
+        if isRelocalizingMap {
+            return
+        }
+        
+        guard let hitTestResult = arView
+            .hitTest(sender.location(in: arView), types: [.existingPlaneUsingGeometry, .estimatedHorizontalPlane])
+            .first
+            else { return }
+        
+        infoView.message = String(Float(hitTestResult.distance))
+//        arView.session.add(anchor: )
+    }
+    
 }
 
 extension CreateViewController {
@@ -170,8 +186,52 @@ extension CreateViewController {
 
 extension CreateViewController: ARSessionDelegate {
     
+    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+        infoView.message = camera.trackingState.description
+    }
+    
+    func sessionWasInterrupted(_ session: ARSession) {
+        infoView.message = "Session interrupted"
+    }
+    
+    func sessionInterruptionEnded(_ session: ARSession) {
+        infoView.message = "Session continued"
+    }
+    
+    func session(_ session: ARSession, didFailWithError error: Error) {
+        infoView.message = error.localizedDescription
+        
+        guard error is ARError else { return }
+        
+        let errorWithInfo = error as NSError
+        let messages = [
+            errorWithInfo.localizedDescription,
+            errorWithInfo.localizedFailureReason,
+            errorWithInfo.localizedRecoverySuggestion
+        ]
+        
+        // Remove optional error messages.
+        let errorMessage = messages.compactMap({ $0 }).joined(separator: "\n")
+        
+        DispatchQueue.main.async {
+            // Present an alert informing about the error that has occurred.
+            let alertController = UIAlertController(title: "The AR session failed.", message: errorMessage, preferredStyle: .alert)
+            let restartAction = UIAlertAction(title: "Restart Session", style: .default) { _ in
+                alertController.dismiss(animated: true, completion: nil)
+                self.resetTracking()
+            }
+            alertController.addAction(restartAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
     func sessionShouldAttemptRelocalization(_ session: ARSession) -> Bool {
         true
+    }
+    
+    private func resetTracking() {
+        isRelocalizingMap = false
+        arView.session.run(worldTrackingConfiguration, options: [.resetTracking, .removeExistingAnchors])
     }
     
     private func saveARWorld() {
