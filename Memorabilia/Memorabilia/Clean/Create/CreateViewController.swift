@@ -14,9 +14,35 @@ class CreateViewController: UIViewController {
     
     // MARK: View properties
     
+    let backButton: CircleButton = {
+        let button = CircleButton()
+        button.icon.tintColor = .systemBackground
+        button.icon.image = UIImage(systemName: "chevron.left.circle.fill")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    let infoView: InfoView = {
+        let view = InfoView()
+        view.label.text = "Aqui aparecem mensagens de status do AR para auxiliar o usuário no momento de mapeamento."
+        return view
+    }()
+    
+    let infoButton: CircleButton = {
+        let button = CircleButton()
+        button.addTarget(self, action: #selector(action), for: .primaryActionTriggered)
+        button.icon.tintColor = .systemBackground
+        button.icon.image = UIImage(systemName: "info.circle.fill")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     // MARK: AR properties
     
-    var isRelocalizingMap: Bool = false
+    lazy var arView: ARView = {
+        let view = ARView(frame: self.view.frame)
+        return view
+    }()
     
     lazy var worldTrackingConfiguration: ARWorldTrackingConfiguration = {
         let configuration = ARWorldTrackingConfiguration()
@@ -34,31 +60,70 @@ class CreateViewController: UIViewController {
         return configuration
     }()
     
-    // MARK: Scene properties
-    
-    lazy var arView: ARView = {
-        let view = ARView(frame: self.view.frame)
-        return view
-    }()
+    var isRelocalizingMap: Bool = false
     
     // MARK: Initializers
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         cleanSetup()
+        setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         cleanSetup()
+        setup()
+    }
+    
+    // MARK: Setup
+    
+    func setup() {
+        // Self
+        view.backgroundColor = .systemBackground
+        
+        // AR view
+        view.addSubview(arView)
+        
+        // Back button
+        view.addSubview(backButton)
+        
+        // Info view
+        view.addSubview(infoView)
+        
+        // Info button
+        view.addSubview(infoButton)
+        
+        setupConstraints()
+    }
+    
+    func setupConstraints() {
+        NSLayoutConstraint.activate([
+            // AR view
+            arView.topAnchor.constraint(equalTo: view.topAnchor),
+            arView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            arView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            arView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            // Back button
+            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            backButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
+            
+            // Info view
+            infoView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            infoView.leftAnchor.constraint(equalTo: backButton.rightAnchor, constant: 16),
+            infoView.rightAnchor.constraint(equalTo: infoButton.leftAnchor, constant: -16),
+            
+            // Info button
+            infoButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            infoButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16)
+        ])
     }
     
     // MARK: View life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .systemBackground
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -73,7 +138,7 @@ class CreateViewController: UIViewController {
         // Start AR Session
         arView.session.delegate = self
         arView.session.run(worldTrackingConfiguration)
-        arView.debugOptions = [.showWorldOrigin, .showFeaturePoints]
+        arView.debugOptions = [.showFeaturePoints]
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -85,6 +150,12 @@ class CreateViewController: UIViewController {
     
     override var shouldAutorotate: Bool {
         false
+    }
+    
+    // MARK: Action
+    
+    @objc func action() {
+        infoView.message = "Oh happy day!"
     }
     
 }

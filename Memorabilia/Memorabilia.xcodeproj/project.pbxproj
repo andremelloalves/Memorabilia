@@ -7,21 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B63663ED239444420008F5BD /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63663EC239444420008F5BD /* NavigationController.swift */; };
 		B6412CDD238EE49300BED236 /* DocumentsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CDC238EE49300BED236 /* DocumentsDatabase.swift */; };
 		B6412CE1238EE6A900BED236 /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CE0238EE6A900BED236 /* CreateViewController.swift */; };
 		B6412CE3238EEB0900BED236 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CE2238EEB0900BED236 /* SceneDelegate.swift */; };
 		B6412CE5238EF8D400BED236 /* SnapshotAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CE4238EF8D400BED236 /* SnapshotAnchor.swift */; };
 		B6412CE7238EF9A500BED236 /* ARUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CE6238EF9A500BED236 /* ARUtilities.swift */; };
+		B6996AAD2394372D00F4133D /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6996AAC2394372D00F4133D /* CircleButton.swift */; };
+		B6996AAF239439EB00F4133D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6996AAE239439EB00F4133D /* InfoView.swift */; };
 		B6C1ED9623809E8200AAE1B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C1ED9523809E8200AAE1B1 /* AppDelegate.swift */; };
 		B6C1ED9F23809E8300AAE1B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6C1ED9E23809E8300AAE1B1 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B63663EC239444420008F5BD /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		B6412CDC238EE49300BED236 /* DocumentsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsDatabase.swift; sourceTree = "<group>"; };
 		B6412CE0238EE6A900BED236 /* CreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateViewController.swift; sourceTree = "<group>"; };
 		B6412CE2238EEB0900BED236 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B6412CE4238EF8D400BED236 /* SnapshotAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotAnchor.swift; sourceTree = "<group>"; };
 		B6412CE6238EF9A500BED236 /* ARUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARUtilities.swift; sourceTree = "<group>"; };
+		B6996AAC2394372D00F4133D /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
+		B6996AAE239439EB00F4133D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		B6C1ED9223809E8200AAE1B1 /* Memorabilia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorabilia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6C1ED9523809E8200AAE1B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6C1ED9E23809E8300AAE1B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -67,6 +73,23 @@
 			children = (
 			);
 			path = Experience;
+			sourceTree = "<group>";
+		};
+		B6996AAB2394371900F4133D /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				B6996AAC2394372D00F4133D /* CircleButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
+		B6996AB0239439F100F4133D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B63663EC239444420008F5BD /* NavigationController.swift */,
+				B6996AAE239439EB00F4133D /* InfoView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		B6C1ED8923809E8200AAE1B1 = {
@@ -115,6 +138,8 @@
 		B6C1EDAA23809FE100AAE1B1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B6996AB0239439F100F4133D /* View */,
+				B6996AAB2394371900F4133D /* Button */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -219,8 +244,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6996AAF239439EB00F4133D /* InfoView.swift in Sources */,
+				B6996AAD2394372D00F4133D /* CircleButton.swift in Sources */,
 				B6C1ED9623809E8200AAE1B1 /* AppDelegate.swift in Sources */,
 				B6412CE5238EF8D400BED236 /* SnapshotAnchor.swift in Sources */,
+				B63663ED239444420008F5BD /* NavigationController.swift in Sources */,
 				B6412CDD238EE49300BED236 /* DocumentsDatabase.swift in Sources */,
 				B6412CE7238EF9A500BED236 /* ARUtilities.swift in Sources */,
 				B6412CE1238EE6A900BED236 /* CreateViewController.swift in Sources */,
@@ -352,6 +380,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J9TFN4UF6A;
 				INFOPLIST_FILE = Memorabilia/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -359,7 +388,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = AGMA.Memorabilia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -370,6 +399,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J9TFN4UF6A;
 				INFOPLIST_FILE = Memorabilia/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -377,7 +407,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = AGMA.Memorabilia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
