@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,13 +15,22 @@
 		B6412CE3238EEB0900BED236 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CE2238EEB0900BED236 /* SceneDelegate.swift */; };
 		B6412CE5238EF8D400BED236 /* SnapshotAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CE4238EF8D400BED236 /* SnapshotAnchor.swift */; };
 		B6412CE7238EF9A500BED236 /* ARUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6412CE6238EF9A500BED236 /* ARUtilities.swift */; };
+		B6423FA8241D8DD6004A7B5E /* RealmDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6423FA7241D8DD6004A7B5E /* RealmDatabase.swift */; };
+		B6423FAA241D92BD004A7B5E /* RealmObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6423FA9241D92BD004A7B5E /* RealmObserver.swift */; };
+		B6423FAC241D9354004A7B5E /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6423FAB241D9354004A7B5E /* Database.swift */; };
+		B6423FAE241D93A8004A7B5E /* DatabaseObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6423FAD241D93A8004A7B5E /* DatabaseObserver.swift */; };
+		B6423FB1241D94B8004A7B5E /* UserDefaultsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6423FB0241D94B8004A7B5E /* UserDefaultsDatabase.swift */; };
+		B6423FB3241D99AD004A7B5E /* TableViewChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6423FB2241D99AD004A7B5E /* TableViewChanges.swift */; };
+		B6423FB5241D9A6C004A7B5E /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6423FB4241D9A6C004A7B5E /* App.swift */; };
 		B6996AAD2394372D00F4133D /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6996AAC2394372D00F4133D /* CircleButton.swift */; };
 		B6996AAF239439EB00F4133D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6996AAE239439EB00F4133D /* InfoView.swift */; };
 		B6C1ED9623809E8200AAE1B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C1ED9523809E8200AAE1B1 /* AppDelegate.swift */; };
 		B6C1ED9F23809E8300AAE1B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6C1ED9E23809E8300AAE1B1 /* Assets.xcassets */; };
+		C6BE42FFDC075E42C630E3CC /* Pods_Memorabilia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FF160F8A56DEDA37463E238 /* Pods_Memorabilia.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7FF160F8A56DEDA37463E238 /* Pods_Memorabilia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Memorabilia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B63663EC239444420008F5BD /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		B63663EE239448420008F5BD /* MemoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesViewController.swift; sourceTree = "<group>"; };
 		B63663F1239448990008F5BD /* MemoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -30,12 +39,21 @@
 		B6412CE2238EEB0900BED236 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B6412CE4238EF8D400BED236 /* SnapshotAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotAnchor.swift; sourceTree = "<group>"; };
 		B6412CE6238EF9A500BED236 /* ARUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARUtilities.swift; sourceTree = "<group>"; };
+		B6423FA7241D8DD6004A7B5E /* RealmDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDatabase.swift; sourceTree = "<group>"; };
+		B6423FA9241D92BD004A7B5E /* RealmObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmObserver.swift; sourceTree = "<group>"; };
+		B6423FAB241D9354004A7B5E /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		B6423FAD241D93A8004A7B5E /* DatabaseObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseObserver.swift; sourceTree = "<group>"; };
+		B6423FB0241D94B8004A7B5E /* UserDefaultsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsDatabase.swift; sourceTree = "<group>"; };
+		B6423FB2241D99AD004A7B5E /* TableViewChanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewChanges.swift; sourceTree = "<group>"; };
+		B6423FB4241D9A6C004A7B5E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		B6996AAC2394372D00F4133D /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		B6996AAE239439EB00F4133D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		B6C1ED9223809E8200AAE1B1 /* Memorabilia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorabilia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6C1ED9523809E8200AAE1B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6C1ED9E23809E8300AAE1B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B6C1EDA323809E8300AAE1B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C7F620167391D6FD12C1DD89 /* Pods-Memorabilia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memorabilia.debug.xcconfig"; path = "Target Support Files/Pods-Memorabilia/Pods-Memorabilia.debug.xcconfig"; sourceTree = "<group>"; };
+		F4EC53CCB888ED32ABB0F659 /* Pods-Memorabilia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memorabilia.release.xcconfig"; path = "Target Support Files/Pods-Memorabilia/Pods-Memorabilia.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,12 +61,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6BE42FFDC075E42C630E3CC /* Pods_Memorabilia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		49E15CB451B6EFD5A5BA6C52 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7FF160F8A56DEDA37463E238 /* Pods_Memorabilia.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B63663F0239448760008F5BD /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -65,12 +92,12 @@
 			path = Memories;
 			sourceTree = "<group>";
 		};
-		B6412CDB238EE43400BED236 /* DocumentsDirectory */ = {
+		B6412CDB238EE43400BED236 /* Document */ = {
 			isa = PBXGroup;
 			children = (
 				B6412CDC238EE49300BED236 /* DocumentsDatabase.swift */,
 			);
-			path = DocumentsDirectory;
+			path = Document;
 			sourceTree = "<group>";
 		};
 		B6412CDE238EE66300BED236 /* Create */ = {
@@ -86,6 +113,23 @@
 			children = (
 			);
 			path = Experience;
+			sourceTree = "<group>";
+		};
+		B6423FA6241D8DC5004A7B5E /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				B6423FA7241D8DD6004A7B5E /* RealmDatabase.swift */,
+				B6423FA9241D92BD004A7B5E /* RealmObserver.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		B6423FAF241D949E004A7B5E /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				B6423FB0241D94B8004A7B5E /* UserDefaultsDatabase.swift */,
+			);
+			path = UserDefaults;
 			sourceTree = "<group>";
 		};
 		B6996AAB2394371900F4133D /* Button */ = {
@@ -110,6 +154,8 @@
 			children = (
 				B6C1ED9423809E8200AAE1B1 /* Memorabilia */,
 				B6C1ED9323809E8200AAE1B1 /* Products */,
+				DFF667CFDBF5E5C345165B00 /* Pods */,
+				49E15CB451B6EFD5A5BA6C52 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,6 +174,7 @@
 				B6412CE2238EEB0900BED236 /* SceneDelegate.swift */,
 				B6C1ED9E23809E8300AAE1B1 /* Assets.xcassets */,
 				B6C1EDA323809E8300AAE1B1 /* Info.plist */,
+				B6423FB4241D9A6C004A7B5E /* App.swift */,
 				B6C1EDA923809FCB00AAE1B1 /* Clean */,
 				B6C1EDAB23809FF100AAE1B1 /* Service */,
 				B6C1EDAA23809FE100AAE1B1 /* View */,
@@ -161,7 +208,11 @@
 		B6C1EDAB23809FF100AAE1B1 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				B6412CDB238EE43400BED236 /* DocumentsDirectory */,
+				B6423FAB241D9354004A7B5E /* Database.swift */,
+				B6423FAD241D93A8004A7B5E /* DatabaseObserver.swift */,
+				B6423FA6241D8DC5004A7B5E /* Realm */,
+				B6412CDB238EE43400BED236 /* Document */,
+				B6423FAF241D949E004A7B5E /* UserDefaults */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -185,8 +236,18 @@
 			isa = PBXGroup;
 			children = (
 				B6412CE4238EF8D400BED236 /* SnapshotAnchor.swift */,
+				B6423FB2241D99AD004A7B5E /* TableViewChanges.swift */,
 			);
 			path = Extra;
+			sourceTree = "<group>";
+		};
+		DFF667CFDBF5E5C345165B00 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C7F620167391D6FD12C1DD89 /* Pods-Memorabilia.debug.xcconfig */,
+				F4EC53CCB888ED32ABB0F659 /* Pods-Memorabilia.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,9 +257,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B6C1EDA623809E8300AAE1B1 /* Build configuration list for PBXNativeTarget "Memorabilia" */;
 			buildPhases = (
+				36ABF156E1B73EA4B11D00B6 /* [CP] Check Pods Manifest.lock */,
 				B6C1ED8E23809E8200AAE1B1 /* Sources */,
 				B6C1ED8F23809E8200AAE1B1 /* Frameworks */,
 				B6C1ED9023809E8200AAE1B1 /* Resources */,
+				75CF4D60B2C4F79F84842BEE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -253,22 +316,71 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		36ABF156E1B73EA4B11D00B6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Memorabilia-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		75CF4D60B2C4F79F84842BEE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Memorabilia/Pods-Memorabilia-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Memorabilia/Pods-Memorabilia-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Memorabilia/Pods-Memorabilia-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B6C1ED8E23809E8200AAE1B1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6423FAE241D93A8004A7B5E /* DatabaseObserver.swift in Sources */,
+				B6423FB1241D94B8004A7B5E /* UserDefaultsDatabase.swift in Sources */,
 				B6996AAF239439EB00F4133D /* InfoView.swift in Sources */,
 				B63663EF239448420008F5BD /* MemoriesViewController.swift in Sources */,
 				B6996AAD2394372D00F4133D /* CircleButton.swift in Sources */,
 				B6C1ED9623809E8200AAE1B1 /* AppDelegate.swift in Sources */,
 				B63663F2239448990008F5BD /* MemoryCollectionViewCell.swift in Sources */,
+				B6423FAA241D92BD004A7B5E /* RealmObserver.swift in Sources */,
 				B6412CE5238EF8D400BED236 /* SnapshotAnchor.swift in Sources */,
+				B6423FB5241D9A6C004A7B5E /* App.swift in Sources */,
 				B63663ED239444420008F5BD /* NavigationController.swift in Sources */,
 				B6412CDD238EE49300BED236 /* DocumentsDatabase.swift in Sources */,
 				B6412CE7238EF9A500BED236 /* ARUtilities.swift in Sources */,
 				B6412CE1238EE6A900BED236 /* CreateViewController.swift in Sources */,
+				B6423FB3241D99AD004A7B5E /* TableViewChanges.swift in Sources */,
 				B6412CE3238EEB0900BED236 /* SceneDelegate.swift in Sources */,
+				B6423FAC241D9354004A7B5E /* Database.swift in Sources */,
+				B6423FA8241D8DD6004A7B5E /* RealmDatabase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,12 +503,13 @@
 		};
 		B6C1EDA723809E8300AAE1B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7F620167391D6FD12C1DD89 /* Pods-Memorabilia.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J9TFN4UF6A;
 				INFOPLIST_FILE = Memorabilia/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -410,12 +523,13 @@
 		};
 		B6C1EDA823809E8300AAE1B1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4EC53CCB888ED32ABB0F659 /* Pods-Memorabilia.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J9TFN4UF6A;
 				INFOPLIST_FILE = Memorabilia/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

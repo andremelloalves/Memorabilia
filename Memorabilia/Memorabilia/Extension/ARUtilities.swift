@@ -6,7 +6,6 @@
 //  Copyright © 2019 André Mello Alves. All rights reserved.
 //
 
-import simd
 import ARKit
 
 extension ARFrame.WorldMappingStatus: CustomStringConvertible {

@@ -157,7 +157,7 @@ class CreateViewController: UIViewController {
     // MARK: Action
     
     @objc func action() {
-        infoView.message = "Oh happy day!"
+        infoView.message = "Esse texto informativo pode ocupar mais de uma linha se preciso."
     }
     
     @objc func tap(_ sender: UITapGestureRecognizer) {
