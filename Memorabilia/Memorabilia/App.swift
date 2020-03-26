@@ -31,9 +31,11 @@ class App {
     // MARK: Session
     
     func start() {
+        
     }
     
     func finish() {
+        
     }
     
     // MARK: Functions

@@ -36,7 +36,7 @@ class MemoryCollectionViewCell: UICollectionViewCell {
     
     private func setup() {
         // Self
-        backgroundColor = .clear
+        backgroundColor = .cyan
         
         // Text field
 //        addSubview(moreField)
