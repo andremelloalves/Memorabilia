@@ -37,6 +37,7 @@
 		B6423FB5241D9A6C004A7B5E /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6423FB4241D9A6C004A7B5E /* App.swift */; };
 		B6996AAD2394372D00F4133D /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6996AAC2394372D00F4133D /* CircleButton.swift */; };
 		B6996AAF239439EB00F4133D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6996AAE239439EB00F4133D /* InfoView.swift */; };
+		B6A6CEAE242D84370065102E /* MemoryInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6CEAD242D84370065102E /* MemoryInfoView.swift */; };
 		B6C1ED9623809E8200AAE1B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C1ED9523809E8200AAE1B1 /* AppDelegate.swift */; };
 		B6C1ED9F23809E8300AAE1B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6C1ED9E23809E8300AAE1B1 /* Assets.xcassets */; };
 		C6BE42FFDC075E42C630E3CC /* Pods_Memorabilia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FF160F8A56DEDA37463E238 /* Pods_Memorabilia.framework */; };
@@ -74,6 +75,7 @@
 		B6423FB4241D9A6C004A7B5E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		B6996AAC2394372D00F4133D /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		B6996AAE239439EB00F4133D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		B6A6CEAD242D84370065102E /* MemoryInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryInfoView.swift; sourceTree = "<group>"; };
 		B6C1ED9223809E8200AAE1B1 /* Memorabilia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorabilia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6C1ED9523809E8200AAE1B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6C1ED9E23809E8300AAE1B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				B6996AAE239439EB00F4133D /* InfoView.swift */,
 				B6102A37241ED0250060E962 /* NavigationBarView.swift */,
 				B6102A3B241ED3CA0060E962 /* ActionBarView.swift */,
+				B6A6CEAD242D84370065102E /* MemoryInfoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -408,6 +411,7 @@
 				B6423FB1241D94B8004A7B5E /* UserDefaultsDatabase.swift in Sources */,
 				B6996AAF239439EB00F4133D /* InfoView.swift in Sources */,
 				B6102A3A241ED1DC0060E962 /* Memories+Collection.swift in Sources */,
+				B6A6CEAE242D84370065102E /* MemoryInfoView.swift in Sources */,
 				B63663EF239448420008F5BD /* MemoriesViewController.swift in Sources */,
 				B6102A36241ECA4B0060E962 /* ExperienceRouter.swift in Sources */,
 				B6996AAD2394372D00F4133D /* CircleButton.swift in Sources */,

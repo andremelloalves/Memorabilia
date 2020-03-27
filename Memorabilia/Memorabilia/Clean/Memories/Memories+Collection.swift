@@ -16,14 +16,6 @@ extension MemoriesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoryCollectionViewCell.identifier, for: indexPath)
-        switch indexPath.row {
-        case 0:
-            cell.backgroundColor = .systemRed
-        case 1:
-            cell.backgroundColor = .systemPink
-        default:
-            cell.backgroundColor = .systemOrange
-        }
         return cell
     }
 

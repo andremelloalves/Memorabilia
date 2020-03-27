@@ -14,11 +14,34 @@ class MemoryCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "Memory"
     
-//    let moreField: InputTextView = {
-//        let view = InputTextView()
-//        view.clearButtonMode = .whileEditing
+    let photo: UIImageView = {
+        let view = UIImageView()
+        view.backgroundColor = .systemTeal
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        view.contentMode = .scaleAspectFill
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+//    let shadow: UIView = {
+//        let view = UIView()
+//        view.backgroundColor = .systemBackground
+//        view.clipsToBounds = true
+//        view.layer.masksToBounds = false
+//        view.layer.cornerRadius = 20
+//        view.layer.shadowRadius = 8
+//        view.layer.shadowColor = UIColor.black.cgColor
+//        view.layer.shadowOpacity = 0.5
+//        view.layer.shadowOffset = .zero
+//        view.translatesAutoresizingMaskIntoConstraints = false
 //        return view
 //    }()
+    
+    let infoView: MemoryInfoView = {
+        let view = MemoryInfoView()
+        return view
+    }()
     
     // MARK: Initializers
     
@@ -36,11 +59,18 @@ class MemoryCollectionViewCell: UICollectionViewCell {
     
     private func setup() {
         // Self
-        backgroundColor = .cyan
+        backgroundColor = .clear
         
-        // Text field
-//        addSubview(moreField)
+        // Shadow
         
+        // Photo
+        
+        // Subviews
+//        addSubview(shadow)
+        addSubview(photo)
+        addSubview(infoView)
+        
+        // Constraints
         setupConstraints()
     }
     
@@ -55,14 +85,26 @@ class MemoryCollectionViewCell: UICollectionViewCell {
     // MARK: Constraints
     
     private func setupConstraints() {
-//        NSLayoutConstraint.activate([
-//            // Self
-//            moreField.topAnchor.constraint(equalTo: topAnchor),
-//            moreField.centerYAnchor.constraint(equalTo: centerYAnchor),
-//            moreField.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
-//            moreField.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
-//            moreField.bottomAnchor.constraint(equalTo: bottomAnchor)
-//        ])
+        NSLayoutConstraint.activate([
+            // Self
+            
+            // Photo
+            photo.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            photo.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
+            photo.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
+            photo.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            
+            // Shadow
+//            shadow.topAnchor.constraint(equalTo: photo.topAnchor),
+//            shadow.leftAnchor.constraint(equalTo: photo.leftAnchor),
+//            shadow.rightAnchor.constraint(equalTo: photo.rightAnchor),
+//            shadow.bottomAnchor.constraint(equalTo: photo.bottomAnchor),
+            
+            // Background
+            infoView.topAnchor.constraint(equalTo: photo.topAnchor, constant: 8),
+            infoView.leftAnchor.constraint(equalTo: photo.leftAnchor, constant: 8),
+            infoView.rightAnchor.constraint(equalTo: photo.rightAnchor, constant: -8)
+        ])
     }
 
 }
