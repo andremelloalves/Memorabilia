@@ -68,7 +68,7 @@ class MemoryCollectionViewCell: UICollectionViewCell {
         // Subviews
 //        addSubview(shadow)
         addSubview(photo)
-        addSubview(infoView)
+        photo.addSubview(infoView)
         
         // Constraints
         setupConstraints()
@@ -100,11 +100,39 @@ class MemoryCollectionViewCell: UICollectionViewCell {
 //            shadow.rightAnchor.constraint(equalTo: photo.rightAnchor),
 //            shadow.bottomAnchor.constraint(equalTo: photo.bottomAnchor),
             
-            // Background
+            // Info view
             infoView.topAnchor.constraint(equalTo: photo.topAnchor, constant: 8),
             infoView.leftAnchor.constraint(equalTo: photo.leftAnchor, constant: 8),
             infoView.rightAnchor.constraint(equalTo: photo.rightAnchor, constant: -8)
         ])
+    }
+    
+    // MARK: Animation
+    
+    private func startAnimation() {
+        UIView.animate(withDuration: 0.15) {
+            self.photo.transform = CGAffineTransform(scaleX: 0.975, y: 0.975)
+        }
+    }
+    
+    private func stopAnimation() {
+        UIView.animate(withDuration: 0.15) {
+            self.photo.transform = .identity
+        }
+    }
+    
+    // MARK: Touch
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        startAnimation()
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        stopAnimation()
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        stopAnimation()
     }
 
 }

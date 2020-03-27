@@ -52,7 +52,7 @@ class MemoryInfoView: UIView {
     
     lazy var background: UIVisualEffectView = {
         // Blur
-        let blur = UIBlurEffect(style: .systemThinMaterial)
+        let blur = UIBlurEffect(style: .prominent)
         let blurView = UIVisualEffectView(effect: blur)
         blurView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         

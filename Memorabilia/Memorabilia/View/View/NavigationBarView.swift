@@ -35,12 +35,12 @@ class NavigationBarView: UIView {
         return button
     }()
     
-    let background: UIVisualEffectView = {
-        let blur = UIBlurEffect(style: .systemChromeMaterial)
-        let view = UIVisualEffectView(effect: blur)
-        view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        return view
-    }()
+//    let background: UIVisualEffectView = {
+//        let blur = UIBlurEffect(style: .systemChromeMaterial)
+//        let view = UIVisualEffectView(effect: blur)
+//        view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+//        return view
+//    }()
     
     // MARK: Initializers
     
@@ -64,7 +64,7 @@ class NavigationBarView: UIView {
         }
         
         // Background
-        addSubview(background)
+//        addSubview(background)
         
         // Left button
         addSubview(leftButton)
