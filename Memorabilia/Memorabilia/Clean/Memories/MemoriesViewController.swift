@@ -50,6 +50,7 @@ class MemoriesViewController: UIViewController, MemoriesViewInput {
     let action: ActionBarView = {
         let view = ActionBarView()
         view.button.title.text = "Criar memória"
+        view.button.addTarget(self, action: #selector(actionBarButtonAction), for: .primaryActionTriggered)
         return view
     }()
     
@@ -130,6 +131,18 @@ class MemoriesViewController: UIViewController, MemoriesViewInput {
         super.viewDidLoad()
 
         view.backgroundColor = .systemBlue
+    }
+    
+    // MARK: Actions
+    
+    @objc func actionBarButtonAction() {
+        routeToCreate()
+    }
+    
+    // MARK: Navigation
+    
+    func routeToCreate() {
+        router?.routeToCreateViewController()
     }
 
 }

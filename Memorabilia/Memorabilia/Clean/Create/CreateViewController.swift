@@ -10,7 +10,17 @@ import UIKit
 import ARKit
 import RealityKit
 
-class CreateViewController: UIViewController {
+protocol CreateViewInput: class {
+    
+}
+
+class CreateViewController: UIViewController, CreateViewInput {
+    
+    // MARK: Clean Properties
+    
+    var interactor: CreateInteractorInput?
+    
+    var router: (CreateRouterInput & CreateRouterOutput)?
     
     // MARK: View properties
     
@@ -19,6 +29,7 @@ class CreateViewController: UIViewController {
         button.icon.tintColor = .systemBackground
         button.icon.image = UIImage(systemName: "chevron.left.circle.fill")
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(backButtonAction), for: .primaryActionTriggered)
         return button
     }()
     
@@ -174,82 +185,38 @@ class CreateViewController: UIViewController {
 //        arView.session.add(anchor: )
     }
     
+    @objc func backButtonAction() {
+        routeBack()
+    }
+    
+    // MARK: Navigation
+    
+    func routeBack() {
+        router?.routeBack()
+    }
+    
 }
 
 extension CreateViewController {
     
-    func cleanSetup() {
-        
+    // MARK: Clean setup
+    
+    private func cleanSetup() {
+        let viewController = self
+        let interactor = CreateInteractor()
+        let presenter = CreatePresenter()
+        let router = CreateRouter()
+        viewController.interactor = interactor
+        viewController.router = router
+        interactor.presenter = presenter
+        presenter.viewController = viewController
+        router.viewController = viewController
+        router.interactor = interactor
     }
     
 }
 
-extension CreateViewController: ARSessionDelegate {
+extension CreateViewController {
     
-    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        infoView.message = camera.trackingState.description
-    }
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        infoView.message = "Session interrupted"
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        infoView.message = "Session continued"
-    }
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        infoView.message = error.localizedDescription
-        
-        guard error is ARError else { return }
-        
-        let errorWithInfo = error as NSError
-        let messages = [
-            errorWithInfo.localizedDescription,
-            errorWithInfo.localizedFailureReason,
-            errorWithInfo.localizedRecoverySuggestion
-        ]
-        
-        // Remove optional error messages.
-        let errorMessage = messages.compactMap({ $0 }).joined(separator: "\n")
-        
-        DispatchQueue.main.async {
-            // Present an alert informing about the error that has occurred.
-            let alertController = UIAlertController(title: "The AR session failed.", message: errorMessage, preferredStyle: .alert)
-            let restartAction = UIAlertAction(title: "Restart Session", style: .default) { _ in
-                alertController.dismiss(animated: true, completion: nil)
-                self.resetTracking()
-            }
-            alertController.addAction(restartAction)
-            self.present(alertController, animated: true, completion: nil)
-        }
-    }
-    
-    func sessionShouldAttemptRelocalization(_ session: ARSession) -> Bool {
-        true
-    }
-    
-    private func resetTracking() {
-        isRelocalizingMap = false
-        arView.session.run(worldTrackingConfiguration, options: [.resetTracking, .removeExistingAnchors])
-    }
-    
-    private func saveARWorld() {
-        arView.session.getCurrentWorldMap { worldMap, error in
-            guard let map = worldMap else { return }
-
-            guard let snapshotAnchor = SnapshotAnchor(from: self.arView) else { return }
-
-            map.anchors.append(snapshotAnchor)
-
-//            do {
-//                let data = try NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
-//                try data.write(to: url, options: .atomic)
-//                interactor?.saveExperience(data)
-//            } catch {
-//                fatalError("Can't save map: \(error.localizedDescription)")
-//            }
-        }
-    }
-    
+    // Update
 }

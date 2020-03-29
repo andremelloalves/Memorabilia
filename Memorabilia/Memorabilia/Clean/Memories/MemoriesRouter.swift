@@ -14,6 +14,8 @@ protocol MemoriesRouterInput {
     
     func routeToExperienceViewController(memoryID: String)
     
+    func routeToCreateViewController()
+    
 }
 
 protocol MemoriesRouterOutput {
@@ -44,9 +46,26 @@ class MemoriesRouter: MemoriesRouterInput, MemoriesRouterOutput {
         viewController?.present(experienceViewController, animated: true, completion: nil)
     }
     
+    func routeToCreateViewController() {
+        // Perform segue
+        let createExperienceViewController = CreateViewController()
+        createExperienceViewController.modalTransitionStyle = .coverVertical
+        createExperienceViewController.modalPresentationStyle = .fullScreen
+        
+        var dInteractor = createExperienceViewController.router!.interactor!
+        
+        passDataCreateViewController(source: interactor!, destination: &dInteractor)
+        viewController?.present(createExperienceViewController, animated: true, completion: nil)
+    }
+    
     // MARK: Data passing
     
     private func passDataExperienceViewController(source: MemoriesInteractorData, destination: inout ExperienceInteractorData, memoryID: String) {
+        // Pass data
+        destination.db = source.db
+    }
+    
+    private func passDataCreateViewController(source: MemoriesInteractorData, destination: inout CreateInteractorData) {
         // Pass data
         destination.db = source.db
     }
