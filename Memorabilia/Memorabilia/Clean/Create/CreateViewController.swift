@@ -70,6 +70,7 @@ class CreateViewController: UIViewController, CreateViewInput {
 //        configuration.isCollaborationEnabled = false
 //        configuration.maximumNumberOfTrackedImages = 0
         configuration.planeDetection = .vertical
+//        configuration.sceneReconstruction = .mesh
 //        configuration.userFaceTrackingEnabled = false
 //        configuration.wantsHDREnvironmentTextures = false
         return configuration
@@ -111,6 +112,8 @@ class CreateViewController: UIViewController, CreateViewInput {
         
         setupConstraints()
     }
+    
+    // MARK: Constraints
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
@@ -182,7 +185,7 @@ class CreateViewController: UIViewController, CreateViewInput {
             else { return }
         
         infoView.message = String(Float(hitTestResult.distance))
-//        arView.session.add(anchor: )
+        addSphere(anchor: hitTestResult.anchor)
     }
     
     @objc func backButtonAction() {
@@ -193,6 +196,24 @@ class CreateViewController: UIViewController, CreateViewInput {
     
     func routeBack() {
         router?.routeBack()
+    }
+    
+    // MARK: AR
+    
+    func addSphere(anchor: ARAnchor?) {
+//        guard let anchor = anchor else { return }
+        
+//        let anchorEntity = AnchorEntity(anchor: anchor)
+        let anchorEntity = AnchorEntity(plane: .horizontal)
+        arView.scene.addAnchor(anchorEntity)
+//        arView.scene.anchors.append(anchorEntity)
+        
+        let sphere = MeshResource.generateSphere(radius: 1)
+        let material = SimpleMaterial(color: .blue, isMetallic: false)
+        let entity = ModelEntity(mesh: sphere, materials: [material])
+        
+        anchorEntity.addChild(entity)
+        print(arView.scene.anchors.count)
     }
     
 }
