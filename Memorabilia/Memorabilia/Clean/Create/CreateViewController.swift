@@ -14,7 +14,7 @@ protocol CreateViewInput: class {
     
 }
 
-class CreateViewController: UIViewController, CreateViewInput {
+class CreateViewController: UIViewController {
     
     // MARK: Clean Properties
     
@@ -185,7 +185,8 @@ class CreateViewController: UIViewController, CreateViewInput {
             else { return }
         
         infoView.message = String(Float(hitTestResult.distance))
-        addSphere(anchor: hitTestResult.anchor)
+        //addSphere(anchor: hitTestResult.anchor)
+        add(hit: hitTestResult)
     }
     
     @objc func backButtonAction() {
@@ -216,6 +217,24 @@ class CreateViewController: UIViewController, CreateViewInput {
         print(arView.scene.anchors.count)
     }
     
+    func add(hit: ARHitTestResult) {
+        let x = hit.worldTransform.columns.3.x
+        let y = hit.worldTransform.columns.3.y
+        let z = hit.worldTransform.columns.3.z
+        
+        let anchorEntity = AnchorEntity()
+        anchorEntity.position = [x,y,z]
+        
+        let sphere = MeshResource.generateSphere(radius: 0.1)
+        let material = SimpleMaterial(color: .white, isMetallic: false)
+        let entity = ModelEntity(mesh: sphere, materials: [material])
+        entity.position = [0,0,0]
+        
+        anchorEntity.addChild(entity)
+        arView.scene.addAnchor(anchorEntity)
+        print(arView.scene.anchors.count)
+    }
+    
 }
 
 extension CreateViewController {
@@ -237,7 +256,7 @@ extension CreateViewController {
     
 }
 
-extension CreateViewController {
+extension CreateViewController: CreateViewInput {
     
     // Update
 }
