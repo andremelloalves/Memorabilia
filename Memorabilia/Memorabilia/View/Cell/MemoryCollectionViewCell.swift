@@ -38,8 +38,8 @@ class MemoryCollectionViewCell: UICollectionViewCell {
 //        return view
 //    }()
     
-    let infoView: MemoryInfoView = {
-        let view = MemoryInfoView()
+    let infoView: InfoView = {
+        let view = InfoView()
         return view
     }()
     

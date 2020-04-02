@@ -12,19 +12,19 @@ import ARKit
 extension CreateViewController: ARSessionDelegate {
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        infoView.message = camera.trackingState.description
+        infoView.info = camera.trackingState.description
     }
     
     func sessionWasInterrupted(_ session: ARSession) {
-        infoView.message = "Session interrupted"
+        infoView.info = "Session interrupted"
     }
     
     func sessionInterruptionEnded(_ session: ARSession) {
-        infoView.message = "Session continued"
+        infoView.info = "Session continued"
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
-        infoView.message = error.localizedDescription
+        infoView.info = error.localizedDescription
         
         guard error is ARError else { return }
         

@@ -26,25 +26,21 @@ class CreateViewController: UIViewController {
     
     let backButton: CircleButton = {
         let button = CircleButton()
-        button.icon.tintColor = .systemBackground
-        button.icon.image = UIImage(systemName: "chevron.left.circle.fill")
-        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.addTarget(self, action: #selector(backButtonAction), for: .primaryActionTriggered)
         return button
     }()
     
     let infoView: InfoView = {
         let view = InfoView()
-        view.label.text = "Aqui aparecem mensagens de status do AR para auxiliar o usuário no momento de mapeamento."
+        view.infoLabel.text = "Aqui aparecem mensagens de status do AR para auxiliar o usuário no momento de mapeamento."
         return view
     }()
     
     let infoButton: CircleButton = {
         let button = CircleButton()
+        button.setImage(UIImage(systemName: "info"), for: .normal)
         button.addTarget(self, action: #selector(action), for: .primaryActionTriggered)
-        button.icon.tintColor = .systemBackground
-        button.icon.image = UIImage(systemName: "info.circle.fill")
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -171,7 +167,7 @@ class CreateViewController: UIViewController {
     // MARK: Action
     
     @objc func action() {
-        infoView.message = "Esse texto informativo pode ocupar mais de uma linha se preciso."
+        infoView.info = "Esse texto informativo pode ocupar mais de uma linha se preciso."
     }
     
     @objc func tap(_ sender: UITapGestureRecognizer) {
@@ -179,14 +175,15 @@ class CreateViewController: UIViewController {
             return
         }
         
+        guard let raycast = arView.raycast(from: sender.location(in: arView), allowing: .estimatedPlane, alignment: .any).first else { return }
         guard let hitTestResult = arView
             .hitTest(sender.location(in: arView), types: [.existingPlaneUsingGeometry, .estimatedHorizontalPlane])
             .first
             else { return }
         
-        infoView.message = String(Float(hitTestResult.distance))
+        infoView.info = String(Float(hitTestResult.distance))
         //addSphere(anchor: hitTestResult.anchor)
-        add(hit: hitTestResult)
+        add(raycast: raycast)
     }
     
     @objc func backButtonAction() {
@@ -217,10 +214,10 @@ class CreateViewController: UIViewController {
         print(arView.scene.anchors.count)
     }
     
-    func add(hit: ARHitTestResult) {
-        let x = hit.worldTransform.columns.3.x
-        let y = hit.worldTransform.columns.3.y
-        let z = hit.worldTransform.columns.3.z
+    func add(raycast: ARRaycastResult) {
+        let x = raycast.worldTransform.columns.3.x
+        let y = raycast.worldTransform.columns.3.y
+        let z = raycast.worldTransform.columns.3.z
         
         let anchorEntity = AnchorEntity()
         anchorEntity.position = [x,y,z]
@@ -229,6 +226,7 @@ class CreateViewController: UIViewController {
         let material = SimpleMaterial(color: .white, isMetallic: false)
         let entity = ModelEntity(mesh: sphere, materials: [material])
         entity.position = [0,0,0]
+        arView.installGestures(.all, for: entity)
         
         anchorEntity.addChild(entity)
         arView.scene.addAnchor(anchorEntity)

@@ -15,7 +15,10 @@ extension MemoriesViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoryCollectionViewCell.identifier, for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoryCollectionViewCell.identifier, for: indexPath) as? MemoryCollectionViewCell else { return UICollectionViewCell() }
+        cell.infoView.layer.cornerRadius = 12
+        cell.infoView.title = "Sala de estar"
+        cell.infoView.info = "14 de setembro de 2019"
         return cell
     }
 

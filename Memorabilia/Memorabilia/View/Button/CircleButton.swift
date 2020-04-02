@@ -12,14 +12,13 @@ class CircleButton: UIButton {
     
     // MARK: Properties
     
-    let icon: UIImageView = {
-        let view = UIImageView()
-        view.tintColor = .tertiaryLabel
-        view.layer.cornerRadius = 20
-        view.clipsToBounds = true
-        view.contentMode = .scaleAspectFit
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    let background: UIVisualEffectView = {
+        // Blur
+        let blur = UIBlurEffect(style: .regular)
+        let blurView = UIVisualEffectView(effect: blur)
+        blurView.isUserInteractionEnabled = false
+        blurView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        return blurView
     }()
     
     // MARK: Initializers
@@ -39,12 +38,18 @@ class CircleButton: UIButton {
     private func setup() {
         // Self
         backgroundColor = .clear
+        tintColor = .systemPurple
         layer.cornerRadius = 20
         clipsToBounds = true
         
-        // Image
-        addSubview(icon)
+        let configuration = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular, scale: .medium)
+        setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         
+        // Background
+        addSubview(background)
+        bringSubviewToFront(imageView!)
+        
+        // Constraints
         setupConstraints()
     }
     
@@ -55,13 +60,7 @@ class CircleButton: UIButton {
         NSLayoutConstraint.activate([
             // Self
             heightAnchor.constraint(equalToConstant: 40),
-            widthAnchor.constraint(equalToConstant: 40),
-            
-            // Image
-            icon.topAnchor.constraint(equalTo: topAnchor),
-            icon.leftAnchor.constraint(equalTo: leftAnchor),
-            icon.rightAnchor.constraint(equalTo: rightAnchor),
-            icon.bottomAnchor.constraint(equalTo: bottomAnchor)
+            widthAnchor.constraint(equalToConstant: 40)
         ])
     }
     

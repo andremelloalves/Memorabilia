@@ -12,14 +12,33 @@ class InfoView: UIView {
     
     // MARK: Properties
     
-    var message: String = "" {
+    var title: String = "" {
         didSet {
-            label.text = message
+            titleLabel.text = title
         }
     }
     
-    let label: UILabel = {
+    var info: String = ""{
+        didSet {
+            infoLabel.text = info
+        }
+    }
+    
+    let titleLabel: UILabel = {
         let label = UILabel()
+        label.backgroundColor = .clear
+        label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
+        label.adjustsFontForContentSizeCategory = true
+        label.adjustsFontSizeToFitWidth = false
+        label.baselineAdjustment = .alignCenters
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let infoLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .clear
         label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         label.adjustsFontForContentSizeCategory = true
         label.adjustsFontSizeToFitWidth = false
@@ -32,7 +51,7 @@ class InfoView: UIView {
     
     lazy var background: UIVisualEffectView = {
         // Blur
-        let blur = UIBlurEffect(style: .prominent)
+        let blur = UIBlurEffect(style: .regular)
         let blurView = UIVisualEffectView(effect: blur)
         blurView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
@@ -41,7 +60,8 @@ class InfoView: UIView {
         let vibrancyView = UIVisualEffectView(effect: vibrancy)
         vibrancyView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
-        vibrancyView.contentView.addSubview(label)
+        vibrancyView.contentView.addSubview(titleLabel)
+        vibrancyView.contentView.addSubview(infoLabel)
         blurView.contentView.addSubview(vibrancyView)
         return blurView
     }()
@@ -80,11 +100,16 @@ class InfoView: UIView {
             // Self
             heightAnchor.constraint(greaterThanOrEqualToConstant: 40),
             
-            // Label
-            label.topAnchor.constraint(equalTo: topAnchor, constant: 9),
-            label.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
-            label.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
-            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9)
+            // Title
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 9),
+            titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
+            titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
+            
+            // Info
+            infoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            infoLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
+            infoLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
+            infoLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9)
         ])
     }
     

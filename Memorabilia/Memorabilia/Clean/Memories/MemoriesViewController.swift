@@ -41,15 +41,15 @@ class MemoriesViewController: UIViewController, MemoriesViewInput {
     
     let navigation: NavigationBarView = {
         let view = NavigationBarView()
-        view.leftButton.icon.image = UIImage(systemName: "ellipsis.circle")
+        view.leftButton.setImage(UIImage(systemName: "cloud.moon.fill"), for: .normal)
         view.titleButton.setTitle("Memórias", for: .normal)
-        view.rightButton.icon.image = UIImage(systemName: "ellipsis.circle")
+        view.rightButton.setImage(UIImage(systemName: "ellipsis"), for: .normal)
         return view
     }()
     
     let action: ActionBarView = {
         let view = ActionBarView()
-        view.button.title.text = "Criar memória"
+        view.button.setTitle("Criar memória", for: .normal)
         view.button.addTarget(self, action: #selector(actionBarButtonAction), for: .primaryActionTriggered)
         return view
     }()
