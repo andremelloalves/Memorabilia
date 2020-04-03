@@ -14,27 +14,6 @@ class OptionsBarView: UIView {
     
     private var buttons: [UIButton] = []
     
-    let background: UIVisualEffectView = {
-        // Blur
-        let blur = UIBlurEffect(style: .regular)
-        let blurView = UIVisualEffectView(effect: blur)
-        blurView.isUserInteractionEnabled = false
-        blurView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        return blurView
-    }()
-    
-    let highlight: UIVisualEffectView = {
-        let blur = UIBlurEffect(style: .regular)
-        let blurView = UIVisualEffectView(effect: blur)
-        blurView.isUserInteractionEnabled = false
-        blurView.backgroundColor = .systemPurple
-//        blurView.alpha = 0.75
-        blurView.layer.cornerRadius = 16
-        blurView.clipsToBounds = true
-        blurView.frame = CGRect(x: 4, y: 4, width: 78, height: 42)
-        return blurView
-    }()
-    
     let stack: UIStackView = {
         let view = UIStackView()
         view.alignment = .fill
@@ -43,6 +22,31 @@ class OptionsBarView: UIView {
         view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    let highlight: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 16
+        view.clipsToBounds = true
+        view.frame = CGRect(x: 4, y: 4, width: 78, height: 42)
+        return view
+    }()
+    
+    lazy var background: UIVisualEffectView = {
+        // Blur
+        let blur = UIBlurEffect(style: .regular)
+        let blurView = UIVisualEffectView(effect: blur)
+        blurView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        // Vibrancy
+        let vibrancy = UIVibrancyEffect(blurEffect: blur, style: .label)
+        let vibrancyView = UIVisualEffectView(effect: vibrancy)
+        vibrancyView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        vibrancyView.contentView.addSubview(highlight)
+        blurView.contentView.addSubview(vibrancyView)
+        return blurView
     }()
     
     // MARK: Initializers
@@ -69,7 +73,6 @@ class OptionsBarView: UIView {
         addSubview(background)
         
         // Highlight
-        addSubview(highlight)
         
         // Stack
         addSubview(stack)
@@ -82,7 +85,7 @@ class OptionsBarView: UIView {
     func addButton(iconName: String) {
         let button = UIButton()
         button.backgroundColor = .clear
-        button.tintColor = .systemPurple
+        button.tintColor = .systemBackground
         button.layer.cornerRadius = 20
         button.clipsToBounds = true
         let configuration = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular, scale: .medium)
@@ -106,9 +109,6 @@ class OptionsBarView: UIView {
         NSLayoutConstraint.activate([
             // Self
             heightAnchor.constraint(equalToConstant: 50),
-            
-            // Highlight
-//            highlight.heightAnchor.constraint(equalTo: heightAnchor),
             
             // Stack
             stack.topAnchor.constraint(equalTo: topAnchor),

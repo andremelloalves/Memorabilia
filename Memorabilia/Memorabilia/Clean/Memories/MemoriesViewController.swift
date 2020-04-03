@@ -76,7 +76,7 @@ class MemoriesViewController: UIViewController, MemoriesViewInput {
     
     private func setup() {
         // Background
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemGray
         
         // CollectionView
         collection.delegate = self

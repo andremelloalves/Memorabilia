@@ -16,7 +16,7 @@ class MemoryCollectionViewCell: UICollectionViewCell {
     
     let photo: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = .systemTeal
+        view.backgroundColor = .systemPurple
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
         view.contentMode = .scaleAspectFill
