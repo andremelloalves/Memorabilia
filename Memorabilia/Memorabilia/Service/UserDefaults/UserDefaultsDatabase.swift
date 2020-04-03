@@ -1,6 +1,6 @@
 //
 //  UserDefaultsDatabase.swift
-//  Relista
+//  Memorabilia
 //
 //  Created by André Mello Alves on 10/10/19.
 //  Copyright © 2019 André Mello Alves. All rights reserved.
@@ -50,9 +50,9 @@ class UserDefaultsDatabase {
         var code: String {
             switch self {
             case .id:
-                return "relista-user-id"
+                return "memorabilia-user-id"
             case .preferences:
-                return "relista-user-preferences"
+                return "memorabilia-user-preferences"
             }
         }
         

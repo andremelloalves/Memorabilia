@@ -1,6 +1,6 @@
 //
 //  App.swift
-//  Relista
+//  Memorabilia
 //
 //  Created by André Mello Alves on 08/10/19.
 //  Copyright © 2019 André Mello Alves. All rights reserved.

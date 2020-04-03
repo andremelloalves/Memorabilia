@@ -1,14 +1,14 @@
 //
-//  ActionBarButton.swift
+//  PillButton.swift
 //  Memorabilia
 //
-//  Created by André Mello Alves on 11/10/19.
-//  Copyright © 2019 André Mello Alves. All rights reserved.
+//  Created by André Mello Alves on 03/04/20.
+//  Copyright © 2020 André Mello Alves. All rights reserved.
 //
 
 import UIKit
 
-class ActionBarButton: UIButton {
+class PillButton: UIButton {
 
     // MARK: Properties
     
@@ -56,7 +56,7 @@ class ActionBarButton: UIButton {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             // Self
-            heightAnchor.constraint(equalToConstant: 50)
+            heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     

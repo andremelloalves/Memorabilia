@@ -44,12 +44,26 @@ class CreateViewController: UIViewController {
         return button
     }()
     
+    let finishButton: PillButton = {
+        let button = PillButton()
+        button.setTitle("Finalizar", for: .normal)
+        button.addTarget(self, action: #selector(backButtonAction), for: .primaryActionTriggered)
+        return button
+    }()
+    
     let optionsBar: OptionsBarView = {
         let view = OptionsBarView()
         view.addButton(iconName: "textformat")
         view.addButton(iconName: "photo")
         view.addButton(iconName: "film")
         view.addButton(iconName: "mic")
+        return view
+    }()
+    
+    let actionView: ActionView = {
+        let view = ActionView()
+        view.symbol = "paperplane.fill"
+        view.text = "Paperplane"
         return view
     }()
     
@@ -115,9 +129,16 @@ class CreateViewController: UIViewController {
         // Info button
         view.addSubview(infoButton)
         
+        // Finish button
+        view.addSubview(finishButton)
+        
         // Options bar
         view.addSubview(optionsBar)
         
+        // Action view
+        view.addSubview(actionView)
+        
+        // Constraints
         setupConstraints()
     }
     
@@ -144,10 +165,21 @@ class CreateViewController: UIViewController {
             infoButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             infoButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
             
+            // Finish button
+            finishButton.bottomAnchor.constraint(equalTo: optionsBar.topAnchor, constant: -16),
+            finishButton.widthAnchor.constraint(equalToConstant: 120),
+            finishButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            
             // Options bar
             optionsBar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
             optionsBar.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
-            optionsBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
+            optionsBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            
+            // Action view
+            actionView.widthAnchor.constraint(equalTo: infoView.widthAnchor),
+            actionView.heightAnchor.constraint(equalTo: actionView.widthAnchor),
+            actionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            actionView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
     }
     

@@ -1,6 +1,6 @@
 //
 //  TableViewChanges.swift
-//  Relista
+//  Memorabilia
 //
 //  Created by André Mello Alves on 11/11/19.
 //  Copyright © 2019 André Mello Alves. All rights reserved.

@@ -45,6 +45,8 @@
 		B6A09EE02436B11A00EB700A /* OptionsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A09EDF2436B11A00EB700A /* OptionsBarView.swift */; };
 		B6C1ED9623809E8200AAE1B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C1ED9523809E8200AAE1B1 /* AppDelegate.swift */; };
 		B6C1ED9F23809E8300AAE1B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6C1ED9E23809E8300AAE1B1 /* Assets.xcassets */; };
+		B6E7F67324379EC3001A5149 /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7F67224379EC3001A5149 /* ActionView.swift */; };
+		B6F236B724379069002457DF /* PillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F236B624379069002457DF /* PillButton.swift */; };
 		C6BE42FFDC075E42C630E3CC /* Pods_Memorabilia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FF160F8A56DEDA37463E238 /* Pods_Memorabilia.framework */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +92,8 @@
 		B6C1ED9523809E8200AAE1B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6C1ED9E23809E8300AAE1B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B6C1EDA323809E8300AAE1B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6E7F67224379EC3001A5149 /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
+		B6F236B624379069002457DF /* PillButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillButton.swift; sourceTree = "<group>"; };
 		C7F620167391D6FD12C1DD89 /* Pods-Memorabilia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memorabilia.debug.xcconfig"; path = "Target Support Files/Pods-Memorabilia/Pods-Memorabilia.debug.xcconfig"; sourceTree = "<group>"; };
 		F4EC53CCB888ED32ABB0F659 /* Pods-Memorabilia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memorabilia.release.xcconfig"; path = "Target Support Files/Pods-Memorabilia/Pods-Memorabilia.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -189,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				B6996AAC2394372D00F4133D /* CircleButton.swift */,
+				B6F236B624379069002457DF /* PillButton.swift */,
 				B6102A3D241ED4320060E962 /* ActionBarButton.swift */,
 			);
 			path = Button;
@@ -202,6 +207,7 @@
 				B6102A37241ED0250060E962 /* NavigationBarView.swift */,
 				B6102A3B241ED3CA0060E962 /* ActionBarView.swift */,
 				B6A09EDF2436B11A00EB700A /* OptionsBarView.swift */,
+				B6E7F67224379EC3001A5149 /* ActionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -428,6 +434,8 @@
 				B6423FB1241D94B8004A7B5E /* UserDefaultsDatabase.swift in Sources */,
 				B6996AAF239439EB00F4133D /* InfoView.swift in Sources */,
 				B6102A3A241ED1DC0060E962 /* Memories+Collection.swift in Sources */,
+				B6E7F67324379EC3001A5149 /* ActionView.swift in Sources */,
+				B6F236B724379069002457DF /* PillButton.swift in Sources */,
 				B63663EF239448420008F5BD /* MemoriesViewController.swift in Sources */,
 				B6102A36241ECA4B0060E962 /* ExperienceRouter.swift in Sources */,
 				B6996AAD2394372D00F4133D /* CircleButton.swift in Sources */,
