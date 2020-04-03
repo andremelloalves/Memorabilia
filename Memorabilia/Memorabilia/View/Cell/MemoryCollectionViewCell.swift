@@ -101,9 +101,9 @@ class MemoryCollectionViewCell: UICollectionViewCell {
 //            shadow.bottomAnchor.constraint(equalTo: photo.bottomAnchor),
             
             // Info view
-            infoView.topAnchor.constraint(equalTo: photo.topAnchor, constant: 8),
             infoView.leftAnchor.constraint(equalTo: photo.leftAnchor, constant: 8),
-            infoView.rightAnchor.constraint(equalTo: photo.rightAnchor, constant: -8)
+            infoView.rightAnchor.constraint(equalTo: photo.rightAnchor, constant: -8),
+            infoView.bottomAnchor.constraint(equalTo: photo.bottomAnchor, constant: -8),
         ])
     }
     

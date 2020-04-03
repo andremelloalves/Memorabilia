@@ -44,6 +44,15 @@ class CreateViewController: UIViewController {
         return button
     }()
     
+    let optionsBar: OptionsBarView = {
+        let view = OptionsBarView()
+        view.addButton(iconName: "textformat")
+        view.addButton(iconName: "photo")
+        view.addButton(iconName: "film")
+        view.addButton(iconName: "mic")
+        return view
+    }()
+    
     // MARK: AR properties
     
     lazy var arView: ARView = {
@@ -106,6 +115,9 @@ class CreateViewController: UIViewController {
         // Info button
         view.addSubview(infoButton)
         
+        // Options bar
+        view.addSubview(optionsBar)
+        
         setupConstraints()
     }
     
@@ -130,7 +142,12 @@ class CreateViewController: UIViewController {
             
             // Info button
             infoButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            infoButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16)
+            infoButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
+            
+            // Options bar
+            optionsBar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
+            optionsBar.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
+            optionsBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
     
