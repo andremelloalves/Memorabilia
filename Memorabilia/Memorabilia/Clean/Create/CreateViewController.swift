@@ -47,7 +47,7 @@ class CreateViewController: UIViewController {
     let finishButton: PillButton = {
         let button = PillButton()
         button.setTitle("Finalizar", for: .normal)
-        button.addTarget(self, action: #selector(backButtonAction), for: .primaryActionTriggered)
+        button.addTarget(self, action: #selector(finishButtonAction), for: .primaryActionTriggered)
         return button
     }()
     
@@ -62,8 +62,9 @@ class CreateViewController: UIViewController {
     
     let actionView: ActionView = {
         let view = ActionView()
-        view.symbol = "paperplane.fill"
-        view.text = "Paperplane"
+        view.symbol = "rectangle.3.offgrid.fill"
+        view.text = "Retorno visual"
+        view.alpha = 0
         return view
     }()
     
@@ -176,8 +177,6 @@ class CreateViewController: UIViewController {
             optionsBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             
             // Action view
-            actionView.widthAnchor.constraint(equalTo: infoView.widthAnchor),
-            actionView.heightAnchor.constraint(equalTo: actionView.widthAnchor),
             actionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             actionView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
@@ -237,6 +236,21 @@ class CreateViewController: UIViewController {
     
     @objc func backButtonAction() {
         routeBack()
+    }
+    
+    @objc func finishButtonAction() {
+        showActionView()
+    }
+    
+    // MARK: Animation
+    
+    func showActionView() {
+        let fadeIn = { self.actionView.alpha = 1 }
+        let fadeOut = { self.actionView.alpha = 0 }
+
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.beginFromCurrentState], animations: fadeIn) { _ in
+            UIView.animate(withDuration: 0.25, delay: 0.5, options: [.beginFromCurrentState], animations: fadeOut, completion: nil)
+        }
     }
     
     // MARK: Navigation

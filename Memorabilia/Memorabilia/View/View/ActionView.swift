@@ -28,6 +28,7 @@ class ActionView: UIView {
         let view = UIImageView()
         view.backgroundColor = .clear
         view.tintColor = .white
+        view.contentMode = .scaleAspectFit
         let configuration = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular, scale: .small)
         view.preferredSymbolConfiguration = configuration
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -95,7 +96,8 @@ class ActionView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             // Self
-//            heightAnchor.constraint(greaterThanOrEqualToConstant: 40),
+            heightAnchor.constraint(equalToConstant: 200),
+            widthAnchor.constraint(equalToConstant: 200),
             
             // Title
             imageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
