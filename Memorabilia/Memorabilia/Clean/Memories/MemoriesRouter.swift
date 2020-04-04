@@ -68,6 +68,7 @@ class MemoriesRouter: MemoriesRouterInput, MemoriesRouterOutput {
     private func passDataCreateViewController(source: MemoriesInteractorData, destination: inout CreateInteractorData) {
         // Pass data
         destination.db = source.db
+        destination.memories = source.memories
     }
     
 }

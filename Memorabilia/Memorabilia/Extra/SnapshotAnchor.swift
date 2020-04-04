@@ -54,4 +54,8 @@ class SnapshotAnchor: ARAnchor {
         aCoder.encode(image, forKey: "snapshot")
     }
     
+    override class var supportsSecureCoding: Bool {
+        true
+    }
+    
 }

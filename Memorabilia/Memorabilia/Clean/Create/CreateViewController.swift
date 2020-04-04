@@ -235,7 +235,8 @@ class CreateViewController: UIViewController {
     }
     
     @objc func finishButtonAction() {
-        showActionView()
+        print("Finish!")
+        saveARWorld()
     }
     
     // MARK: Animation

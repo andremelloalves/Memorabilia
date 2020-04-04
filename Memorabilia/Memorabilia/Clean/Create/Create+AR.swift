@@ -59,21 +59,20 @@ extension CreateViewController: ARSessionDelegate {
         arView.session.run(worldTrackingConfiguration, options: [.resetTracking, .removeExistingAnchors])
     }
     
-    private func saveARWorld() {
-        arView.session.getCurrentWorldMap { worldMap, error in
-            guard let map = worldMap else { return }
-
+    public func saveARWorld() {
+        arView.session.getCurrentWorldMap { arWorld, error in
+            guard let worldMap = arWorld else { return }
+            
             guard let snapshotAnchor = SnapshotAnchor(from: self.arView) else { return }
-
-            map.anchors.append(snapshotAnchor)
-
-//            do {
-//                let data = try NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
-//                try data.write(to: url, options: .atomic)
-//                interactor?.saveExperience(data)
-//            } catch {
-//                fatalError("Can't save map: \(error.localizedDescription)")
-//            }
+            worldMap.anchors.append(snapshotAnchor)
+            let photo = snapshotAnchor.image
+            
+            do {
+                let worldData = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
+                self.interactor?.createMemory(with: worldData, photo: photo)
+            } catch let error {
+                print(error)
+            }
         }
     }
     

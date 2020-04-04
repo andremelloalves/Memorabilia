@@ -7,28 +7,19 @@
 //
 
 import Foundation
+import PromiseKit
 
 protocol CreateInteractorInput {
     
-//    // Create
-//
-//    func finishCreate()
-//
-//    // Read
-//
-//    func readGroupName()
-//
-//    func readListItems(by sorting: ListSorting, changes: Bool)
-//
-//    // Update
-//
-//    func updateItemIsBought(by id: String)
-//
-//    // Delete
-//
-//    func deleteItem(by id: String)
-//
-//    func deleteItems()
+    // Create
+
+    func createMemory(with worldData: Data, photo: Data)
+
+    // Read
+
+    // Update
+
+    // Delete
     
 }
 
@@ -38,11 +29,7 @@ protocol CreateInteractorData {
     
     var db: Database? { get set }
     
-//    var group: GroupRealm? { get set }
-//
-//    var list: RelistRealm? { get }
-//
-//    var items: [ItemRealm]? { get }
+    var memories: [Memory]? { get set }
     
 }
 
@@ -65,13 +52,7 @@ class CreateInteractor: CreateInteractorInput, CreateInteractorData {
         }
     }
     
-//    var group: GroupRealm?
-//
-//    var list: RelistRealm?
-//
-//    var items: [ItemRealm]?
-//
-//    private var sorting: ListSorting?
+    var memories: [Memory]?
     
     // MARK: Initializers
     
@@ -84,6 +65,18 @@ class CreateInteractor: CreateInteractorInput, CreateInteractorData {
     // MARK: Functions
     
     // Create
+    
+    func createMemory(with worldData: Data, photo: Data) {
+        guard let db = db else { return }
+        
+        firstly {
+            db.createMemory(with: worldData, photo: photo)
+        }.done { _ in
+            print("World created successfully!")
+        }.catch { error in
+            print(error.localizedDescription)
+        }
+    }
     
     // Read
     

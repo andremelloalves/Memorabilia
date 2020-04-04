@@ -19,13 +19,17 @@ extension MemoriesViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoryCollectionViewCell.identifier, for: indexPath) as? MemoryCollectionViewCell, let memory = memoriesSections[indexPath.section].items[indexPath.row].item as? MemoriesEntity.Display.MemoryItem else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoryCollectionViewCell.identifier,for: indexPath) as? MemoryCollectionViewCell else { return UICollectionViewCell() }
+        guard let memory = memoriesSections[indexPath.section].items[indexPath.row].item as? MemoriesEntity.Display.MemoryItem else { return UICollectionViewCell() }
+        
+        cell.infoView.layer.cornerRadius = 12
         cell.update(memory: memory)
         if let data = photoDataCache.object(forKey: NSString(string: memory.photoID)) {
             cell.updatePhoto(data as Data)
         } else {
             interactor?.readMemoryPhoto(id: memory.photoID, index: indexPath)
         }
+        
         return cell
     }
 

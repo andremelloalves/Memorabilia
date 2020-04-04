@@ -55,6 +55,20 @@ class Database {
     
     // MARK: Create
     
+    func createMemory(with worldMap: Data, photo: Data) -> Promise<Void> {
+        let memory = Memory(name: "Memória")
+        return Promise { seal in
+            realm.createUpdate(object: memory)
+            do {
+                try documents.create(file: memory.uid, folder: .experiences, data: worldMap)
+                try documents.create(file: memory.uid, folder: .photos, data: photo)
+                seal.fulfill(())
+            } catch let error {
+                seal.reject(error)
+            }
+        }
+    }
+    
     // MARK: Read
     
     func readMemories() -> Promise<[Memory]> {
