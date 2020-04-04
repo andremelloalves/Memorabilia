@@ -30,6 +30,7 @@ class OptionsBarButton: UIButton {
         tintColor = .systemBackground
         layer.cornerRadius = 20
         clipsToBounds = true
+        adjustsImageWhenHighlighted = false
         let configuration = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular, scale: .medium)
         setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
     }
