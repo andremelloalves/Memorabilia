@@ -66,6 +66,17 @@ class Database {
         }
     }
     
+    func readMemoryPhoto(id: String) -> Promise<Data> {
+        return Promise { seal in
+            do {
+                let photo = try documents.read(file: id, folder: .photos)
+                seal.fulfill(photo)
+            } catch let error {
+                seal.reject(error)
+            }
+        }
+    }
+    
     // MARK: Update
     
     func update(changes: () -> ()?) {

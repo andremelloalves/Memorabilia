@@ -16,6 +16,8 @@ protocol MemoriesInteractorInput {
 //    func finishMemories()
 
     // Read
+    
+    func readMemoryPhoto(id: String, index: IndexPath)
 
     func readMemories()
 
@@ -86,12 +88,27 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
     
     func readMemories() {
         guard let db = db else { return }
+        
         firstly {
             db.readMemories()
         }.done { memories in
             self.memories = memories
+            let entity = MemoriesEntity.Present(memories: memories)
+            self.presenter?.presentMemories(entity: entity)
         }.catch { error in
             print(error.localizedDescription)
+        }
+    }
+    
+    func readMemoryPhoto(id: String, index: IndexPath) {
+        guard let db = db else { return }
+        
+        firstly {
+            db.readMemoryPhoto(id: id)
+        }.done { photo in
+            self.presenter?.presentMemoryPhoto(photo, with: id, for: index)
+        }.catch { error in
+            print(error)
         }
     }
     

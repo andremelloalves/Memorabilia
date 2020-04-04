@@ -74,12 +74,15 @@ class MemoryCollectionViewCell: UICollectionViewCell {
         setupConstraints()
     }
     
-    private func update() {
-//        guard let more = more else { return }
-//
-//        // More
-//        moreField.placeholder = more.placeholder
-//        moreField.text = more.more
+    // MARK: Update
+    
+    public func update(memory: MemoriesEntity.Display.MemoryItem) {
+        infoView.titleLabel.text = memory.name
+        infoView.infoLabel.text = memory.date
+    }
+    
+    public func updatePhoto(_ data: Data) {
+        photo.image = UIImage(data: data)
     }
     
     // MARK: Constraints

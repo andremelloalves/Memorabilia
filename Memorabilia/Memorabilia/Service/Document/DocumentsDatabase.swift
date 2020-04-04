@@ -47,11 +47,15 @@ class DocumentsDatabase {
     
     // MARK: Read
     
-    public func read(file: String, folder: Folder) -> Data? {
+    public func read(file: String, folder: Folder) throws -> Data {
         let filePath = folder.name + "/" + file + folder.fileExtension
         let path = documentsPath.appendingPathComponent(filePath)
         
-        return fileManager.contents(atPath: path)
+        if let content = fileManager.contents(atPath: path) {
+            return content
+        } else {
+            throw DocumentError.notFound
+        }
     }
     
     // MARK: Update
@@ -70,11 +74,14 @@ class DocumentsDatabase {
     enum Folder {
         
         case experiences
+        case photos
         
         var name: String {
             switch self {
             case .experiences:
                 return "Experiences"
+            case .photos:
+                return "Photos"
             }
         }
         
@@ -82,6 +89,20 @@ class DocumentsDatabase {
             switch self {
             case .experiences:
                 return ""
+            case .photos:
+                return ""
+            }
+        }
+    }
+    
+    enum DocumentError: Error {
+        
+        case notFound
+        
+        var localizedDescription: String {
+            switch self {
+            case .notFound:
+                return "File not found."
             }
         }
     }

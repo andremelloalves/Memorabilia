@@ -1,5 +1,5 @@
 //
-//  TableViewChanges.swift
+//  SeriesChanges.swift
 //  Memorabilia
 //
 //  Created by André Mello Alves on 11/11/19.
@@ -14,7 +14,7 @@ class SectionChanges {
     
     var deletesInts = [Int]()
     
-    var updates = RowChanges()
+    var updates = ItemChanges()
     
     var inserts: IndexSet {
         return IndexSet(insertsInts)
@@ -24,7 +24,7 @@ class SectionChanges {
         return IndexSet(deletesInts)
     }
     
-    init(inserts: [Int] = [], deletes: [Int] = [], updates: RowChanges = RowChanges()) {
+    init(inserts: [Int] = [], deletes: [Int] = [], updates: ItemChanges = ItemChanges()) {
         self.insertsInts = inserts
         self.deletesInts = deletes
         self.updates = updates
@@ -32,7 +32,7 @@ class SectionChanges {
     
 }
 
-class RowChanges {
+class ItemChanges {
     
     var inserts = [IndexPath]()
     
@@ -53,26 +53,26 @@ struct ReloadableSection<N: Equatable>: Equatable {
     
     var uid: String
     
-    var rows: [ReloadableRow<N>]
+    var items: [ReloadableItem<N>]
     
     var index: Int
     
     static func ==(lhs: ReloadableSection, rhs: ReloadableSection) -> Bool {
-        return lhs.uid == rhs.uid && lhs.rows == rhs.rows
+        return lhs.uid == rhs.uid && lhs.items == rhs.items
     }
     
 }
 
-struct ReloadableRow<N: Equatable>: Equatable {
+struct ReloadableItem<N: Equatable>: Equatable {
     
     var uid: String
     
-    var row: N
+    var item: N
     
     var index: Int
     
-    static func ==(lhs: ReloadableRow, rhs: ReloadableRow) -> Bool {
-        return lhs.uid == rhs.uid && lhs.row == rhs.row
+    static func ==(lhs: ReloadableItem, rhs: ReloadableItem) -> Bool {
+        return lhs.uid == rhs.uid && lhs.item == rhs.item
     }
     
 }
@@ -95,25 +95,25 @@ struct ReloadableSectionData<N: Equatable> {
     
 }
 
-struct ReloadableRowData<N: Equatable> {
+struct ReloadableItemData<N: Equatable> {
     
-    var rows = [ReloadableRow<N>]()
+    var items = [ReloadableItem<N>]()
     
-    subscript(uid: String) -> ReloadableRow<N>? {
+    subscript(uid: String) -> ReloadableItem<N>? {
         get {
-            return rows.filter { $0.uid == uid }.first
+            return items.filter { $0.uid == uid }.first
         }
     }
     
-    subscript(index: Int) -> ReloadableRow<N>? {
+    subscript(index: Int) -> ReloadableItem<N>? {
         get {
-            return rows.filter { $0.index == index }.first
+            return items.filter { $0.index == index }.first
         }
     }
     
 }
 
-class TableViewChange {
+class SeriesChanges {
     
     static func calculate<N>(old: [ReloadableSection<N>], new: [ReloadableSection<N>]) -> SectionChanges {
         let sectionChanges = SectionChanges()
@@ -121,7 +121,7 @@ class TableViewChange {
             .map { $0.uid }
             .filterDuplicates()
         
-        let rowChanges = RowChanges()
+        let itemChanges = ItemChanges()
         
         for sectionUid in uniqueSectionUids {
             
@@ -130,24 +130,24 @@ class TableViewChange {
             
             if let oldSection = oldSection, let newSection = newSection {
                 if oldSection != newSection {
-                    let oldRowData = ReloadableRowData(rows: oldSection.rows)
-                    let newRowData = ReloadableRowData(rows: newSection.rows)
+                    let oldItemData = ReloadableItemData(items: oldSection.items)
+                    let newItemData = ReloadableItemData(items: newSection.items)
                     
-                    let uniqueRowUids = (oldRowData.rows + newRowData.rows)
+                    let uniqueItemUids = (oldItemData.items + newItemData.items)
                         .map { $0.uid }
                         .filterDuplicates()
                     
-                    for rowUid in uniqueRowUids {
-                        let oldRow = oldRowData[rowUid]
-                        let newRow = newRowData[rowUid]
-                        if let oldRow = oldRow, let newRow = newRow {
-                            if oldRow != newRow {
-                                rowChanges.reloads.append(IndexPath(row: oldRow.index, section: oldSection.index))
+                    for itemUid in uniqueItemUids {
+                        let oldItem = oldItemData[itemUid]
+                        let newItem = newItemData[itemUid]
+                        if let oldItem = oldItem, let newItem = newItem {
+                            if oldItem != newItem {
+                                itemChanges.reloads.append(IndexPath(item: oldItem.index, section: oldSection.index))
                             }
-                        } else if let oldRow = oldRow {
-                            rowChanges.deletes.append(IndexPath(row: oldRow.index, section: oldSection.index))
-                        } else if let newRow = newRow {
-                            rowChanges.inserts.append(IndexPath(row: newRow.index, section: newSection.index))
+                        } else if let oldItem = oldItem {
+                            itemChanges.deletes.append(IndexPath(item: oldItem.index, section: oldSection.index))
+                        } else if let newItem = newItem {
+                            itemChanges.inserts.append(IndexPath(item: newItem.index, section: newSection.index))
                         }
                     }
                 }
@@ -158,7 +158,7 @@ class TableViewChange {
             }
         }
         
-        sectionChanges.updates = rowChanges
+        sectionChanges.updates = itemChanges
         
         return sectionChanges
     }
@@ -167,7 +167,6 @@ class TableViewChange {
 
 extension Array where Element: Hashable {
    
-    /// Remove duplicates from the array, preserving the items order
     func filterDuplicates() -> Array<Element> {
         var set = Set<Element>()
         var filteredArray = Array<Element>()

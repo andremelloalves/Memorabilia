@@ -9,6 +9,12 @@
 import UIKit
 
 protocol MemoriesViewInput: class {
+
+    // Update
+    
+    func apply(changes: SectionChanges, sections: [MemoriesSection])
+    
+    func loadPhoto(_ photo: Data, with id: String, for index: IndexPath)
     
 }
 
@@ -56,7 +62,9 @@ class MemoriesViewController: UIViewController, MemoriesViewInput {
     
     // MARK: View model
     
-//    var memoriesSections: [ListSection] = []
+    var memoriesSections: [MemoriesSection] = [MemoriesEntity.Display.MemorySection(memories: [])]
+    
+    let photoDataCache = NSCache<NSString, NSData>()
     
     // MARK: Initializers
     
@@ -173,4 +181,22 @@ extension MemoriesViewController {
 extension MemoriesViewController {
     
     // Update
+    
+    func apply(changes: SectionChanges, sections: [MemoriesSection]) {
+        memoriesSections = sections
+        
+        collection.deleteSections(changes.deletes)
+        collection.insertSections(changes.inserts)
+        
+        collection.reloadItems(at: changes.updates.reloads)
+        collection.insertItems(at: changes.updates.inserts)
+        collection.deleteItems(at: changes.updates.deletes)
+    }
+    
+    func loadPhoto(_ photo: Data, with id: String, for index: IndexPath) {
+        photoDataCache.setObject(photo as NSData, forKey: NSString(string: id))
+        
+        collection.reloadItems(at: [index])
+    }
+    
 }

@@ -10,15 +10,22 @@ import UIKit
 
 extension MemoriesViewController: UICollectionViewDataSource {
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        memoriesSections.count
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        3
+        memoriesSections[section].items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoryCollectionViewCell.identifier, for: indexPath) as? MemoryCollectionViewCell else { return UICollectionViewCell() }
-        cell.infoView.layer.cornerRadius = 12
-        cell.infoView.title = "Sala de estar"
-        cell.infoView.info = "14 de setembro de 2019"
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoryCollectionViewCell.identifier, for: indexPath) as? MemoryCollectionViewCell, let memory = memoriesSections[indexPath.section].items[indexPath.row].item as? MemoriesEntity.Display.MemoryItem else { return UICollectionViewCell() }
+        cell.update(memory: memory)
+        if let data = photoDataCache.object(forKey: NSString(string: memory.photoID)) {
+            cell.updatePhoto(data as Data)
+        } else {
+            interactor?.readMemoryPhoto(id: memory.photoID, index: indexPath)
+        }
         return cell
     }
 
