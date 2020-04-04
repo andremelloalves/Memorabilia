@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import PromiseKit
 
 class Database {
     
@@ -55,6 +56,15 @@ class Database {
     // MARK: Create
     
     // MARK: Read
+    
+    func readMemories() -> Promise<[Memory]> {
+        return Promise { seal in
+            let sort = NSSortDescriptor(key: "creationDate", ascending: false)
+            let results: Results<Memory> = realm.query(with: nil, sortDescriptors: [sort])
+            let memories: [Memory] = Array(results)
+            seal.fulfill(memories)
+        }
+    }
     
     // MARK: Update
     

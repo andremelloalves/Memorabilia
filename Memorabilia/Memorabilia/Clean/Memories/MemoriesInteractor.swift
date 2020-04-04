@@ -7,19 +7,18 @@
 //
 
 import Foundation
+import PromiseKit
 
 protocol MemoriesInteractorInput {
     
 //    // Create
 //
 //    func finishMemories()
-//
-//    // Read
-//
-//    func readGroupName()
-//
-//    func readListItems(by sorting: ListSorting, changes: Bool)
-//
+
+    // Read
+
+    func readMemories()
+
 //    // Update
 //
 //    func updateItemIsBought(by id: String)
@@ -39,10 +38,8 @@ protocol MemoriesInteractorData {
     var db: Database? { get set }
     
 //    var group: GroupRealm? { get set }
-//
-//    var list: RelistRealm? { get }
-//
-//    var items: [ItemRealm]? { get }
+
+    var memories: [Memory]? { get }
     
 }
 
@@ -68,9 +65,9 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
 //    var group: GroupRealm?
 //
 //    var list: RelistRealm?
-//
-//    var items: [ItemRealm]?
-//
+
+    var memories: [Memory]?
+
 //    private var sorting: ListSorting?
     
     // MARK: Initializers
@@ -86,6 +83,17 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
     // Create
     
     // Read
+    
+    func readMemories() {
+        guard let db = db else { return }
+        firstly {
+            db.readMemories()
+        }.done { memories in
+            self.memories = memories
+        }.catch { error in
+            print(error.localizedDescription)
+        }
+    }
     
     // Update
     

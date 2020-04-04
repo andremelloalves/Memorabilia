@@ -49,6 +49,7 @@
 		B6E7F6772438C8C1001A5149 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7F6762438C8C1001A5149 /* CGRect.swift */; };
 		B6E7F6792438C8E0001A5149 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7F6782438C8E0001A5149 /* CGPoint.swift */; };
 		B6E7F67B2438CE4A001A5149 /* OptionsBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7F67A2438CE4A001A5149 /* OptionsBarButton.swift */; };
+		B6E7F67E2438DB74001A5149 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7F67D2438DB74001A5149 /* Memory.swift */; };
 		B6F236B724379069002457DF /* PillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F236B624379069002457DF /* PillButton.swift */; };
 		C6BE42FFDC075E42C630E3CC /* Pods_Memorabilia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FF160F8A56DEDA37463E238 /* Pods_Memorabilia.framework */; };
 /* End PBXBuildFile section */
@@ -99,6 +100,7 @@
 		B6E7F6762438C8C1001A5149 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		B6E7F6782438C8E0001A5149 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
 		B6E7F67A2438CE4A001A5149 /* OptionsBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsBarButton.swift; sourceTree = "<group>"; };
+		B6E7F67D2438DB74001A5149 /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 		B6F236B624379069002457DF /* PillButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillButton.swift; sourceTree = "<group>"; };
 		C7F620167391D6FD12C1DD89 /* Pods-Memorabilia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memorabilia.debug.xcconfig"; path = "Target Support Files/Pods-Memorabilia/Pods-Memorabilia.debug.xcconfig"; sourceTree = "<group>"; };
 		F4EC53CCB888ED32ABB0F659 /* Pods-Memorabilia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memorabilia.release.xcconfig"; path = "Target Support Files/Pods-Memorabilia/Pods-Memorabilia.release.xcconfig"; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 		B6423FA6241D8DC5004A7B5E /* Realm */ = {
 			isa = PBXGroup;
 			children = (
+				B6E7F67C2438DB5C001A5149 /* Model */,
 				B6423FA7241D8DD6004A7B5E /* RealmDatabase.swift */,
 				B6423FA9241D92BD004A7B5E /* RealmObserver.swift */,
 			);
@@ -311,6 +314,14 @@
 				B6423FB2241D99AD004A7B5E /* TableViewChanges.swift */,
 			);
 			path = Extra;
+			sourceTree = "<group>";
+		};
+		B6E7F67C2438DB5C001A5149 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B6E7F67D2438DB74001A5149 /* Memory.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		DFF667CFDBF5E5C345165B00 /* Pods */ = {
@@ -473,6 +484,7 @@
 				B6A09EE02436B11A00EB700A /* OptionsBarView.swift in Sources */,
 				B6412CE3238EEB0900BED236 /* SceneDelegate.swift in Sources */,
 				B6423FAC241D9354004A7B5E /* Database.swift in Sources */,
+				B6E7F67E2438DB74001A5149 /* Memory.swift in Sources */,
 				B60409672431415C00C3D627 /* Create+AR.swift in Sources */,
 				B6102A3E241ED4320060E962 /* ActionBarButton.swift in Sources */,
 				B6102A38241ED0250060E962 /* NavigationBarView.swift in Sources */,

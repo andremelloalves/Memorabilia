@@ -1,4 +1,13 @@
 PODS:
+  - PromiseKit (6.13.1):
+    - PromiseKit/CorePromise (= 6.13.1)
+    - PromiseKit/Foundation (= 6.13.1)
+    - PromiseKit/UIKit (= 6.13.1)
+  - PromiseKit/CorePromise (6.13.1)
+  - PromiseKit/Foundation (6.13.1):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (6.13.1):
+    - PromiseKit/CorePromise
   - Realm (4.3.2):
     - Realm/Headers (= 4.3.2)
   - Realm/Headers (4.3.2)
@@ -6,17 +15,20 @@ PODS:
     - Realm (= 4.3.2)
 
 DEPENDENCIES:
+  - PromiseKit (~> 6.8)
   - RealmSwift
 
 SPEC REPOS:
   trunk:
+    - PromiseKit
     - Realm
     - RealmSwift
 
 SPEC CHECKSUMS:
+  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   Realm: 5e92902e2875dff4bb0fd02f67bb737c3d5db2bc
   RealmSwift: 9a360fc7bae04fc2e308a34fbd899d5faa2d6b22
 
-PODFILE CHECKSUM: b9433eb0656060c6cf080c311b8e7d1cea4f8321
+PODFILE CHECKSUM: ad898156c2da1f60ea1adb662d1094dca098fa0b
 
 COCOAPODS: 1.9.1

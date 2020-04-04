@@ -133,6 +133,10 @@ class MemoriesViewController: UIViewController, MemoriesViewInput {
         view.backgroundColor = .systemBlue
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        interactor?.readMemories()
+    }
+    
     // MARK: Actions
     
     @objc func actionBarButtonAction() {
