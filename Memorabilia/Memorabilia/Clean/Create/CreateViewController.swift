@@ -208,10 +208,6 @@ class CreateViewController: UIViewController {
         arView.session.pause()
     }
     
-    override var shouldAutorotate: Bool {
-        false
-    }
-    
     // MARK: Action
     
     @objc func action() {
