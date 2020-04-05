@@ -93,6 +93,8 @@ struct MemoriesEntity {
                 .memory
             }
             
+            var memoryID: String
+            
             var name: String
             
             var date: String

@@ -11,9 +11,7 @@ import PromiseKit
 
 protocol MemoriesInteractorInput {
     
-//    // Create
-//
-//    func finishMemories()
+    // Create
 
     // Read
     
@@ -21,15 +19,9 @@ protocol MemoriesInteractorInput {
 
     func readMemories()
 
-//    // Update
-//
-//    func updateItemIsBought(by id: String)
-//
-//    // Delete
-//
-//    func deleteItem(by id: String)
-//
-//    func deleteItems()
+    // Update
+
+    // Delete
     
 }
 
@@ -38,8 +30,6 @@ protocol MemoriesInteractorData {
     // Data
     
     var db: Database? { get set }
-    
-//    var group: GroupRealm? { get set }
 
     var memories: [Memory]? { get }
     
@@ -63,14 +53,8 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
             db?.startNotifications(observer: self)
         }
     }
-    
-//    var group: GroupRealm?
-//
-//    var list: RelistRealm?
 
     var memories: [Memory]?
-
-//    private var sorting: ListSorting?
     
     // MARK: Initializers
     
@@ -86,6 +70,18 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
     
     // Read
     
+    func readMemoryPhoto(id: String, index: IndexPath) {
+        guard let db = db else { return }
+        
+        firstly {
+            db.readMemoryPhoto(id: id)
+        }.done { photo in
+            self.presenter?.presentMemoryPhoto(photo, with: id, for: index)
+        }.catch { error in
+            print(error)
+        }
+    }
+    
     func readMemories() {
         guard let db = db else { return }
         
@@ -97,18 +93,6 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
             self.presenter?.presentMemories(entity: entity)
         }.catch { error in
             print(error.localizedDescription)
-        }
-    }
-    
-    func readMemoryPhoto(id: String, index: IndexPath) {
-        guard let db = db else { return }
-        
-        firstly {
-            db.readMemoryPhoto(id: id)
-        }.done { photo in
-            self.presenter?.presentMemoryPhoto(photo, with: id, for: index)
-        }.catch { error in
-            print(error)
         }
     }
     

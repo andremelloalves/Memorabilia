@@ -12,13 +12,13 @@ protocol MemoriesViewInput: class {
 
     // Update
     
-    func apply(changes: SectionChanges, sections: [MemoriesSection])
-    
     func loadPhoto(_ photo: Data, with id: String, for index: IndexPath)
+    
+    func apply(changes: SectionChanges, sections: [MemoriesSection])
     
 }
 
-class MemoriesViewController: UIViewController, MemoriesViewInput {
+class MemoriesViewController: UIViewController {
     
     // MARK: Clean Properties
     
@@ -178,9 +178,15 @@ extension MemoriesViewController {
     
 }
 
-extension MemoriesViewController {
+extension MemoriesViewController: MemoriesViewInput {
     
     // Update
+    
+    func loadPhoto(_ photo: Data, with id: String, for index: IndexPath) {
+        photoDataCache.setObject(photo as NSData, forKey: NSString(string: id))
+        
+        collection.reloadItems(at: [index])
+    }
     
     func apply(changes: SectionChanges, sections: [MemoriesSection]) {
         memoriesSections = sections
@@ -191,12 +197,6 @@ extension MemoriesViewController {
         collection.reloadItems(at: changes.updates.reloads)
         collection.insertItems(at: changes.updates.inserts)
         collection.deleteItems(at: changes.updates.deletes)
-    }
-    
-    func loadPhoto(_ photo: Data, with id: String, for index: IndexPath) {
-        photoDataCache.setObject(photo as NSData, forKey: NSString(string: id))
-        
-        collection.reloadItems(at: [index])
     }
     
 }

@@ -50,6 +50,7 @@
 		B6E7F6792438C8E0001A5149 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7F6782438C8E0001A5149 /* CGPoint.swift */; };
 		B6E7F67B2438CE4A001A5149 /* OptionsBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7F67A2438CE4A001A5149 /* OptionsBarButton.swift */; };
 		B6E7F67E2438DB74001A5149 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7F67D2438DB74001A5149 /* Memory.swift */; };
+		B6E7F68024394637001A5149 /* Experience+AR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7F67F24394637001A5149 /* Experience+AR.swift */; };
 		B6F236B724379069002457DF /* PillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F236B624379069002457DF /* PillButton.swift */; };
 		C6BE42FFDC075E42C630E3CC /* Pods_Memorabilia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FF160F8A56DEDA37463E238 /* Pods_Memorabilia.framework */; };
 /* End PBXBuildFile section */
@@ -101,6 +102,7 @@
 		B6E7F6782438C8E0001A5149 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
 		B6E7F67A2438CE4A001A5149 /* OptionsBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsBarButton.swift; sourceTree = "<group>"; };
 		B6E7F67D2438DB74001A5149 /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
+		B6E7F67F24394637001A5149 /* Experience+AR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Experience+AR.swift"; path = "Memorabilia/Service/Realm/Model/Experience+AR.swift"; sourceTree = SOURCE_ROOT; };
 		B6F236B624379069002457DF /* PillButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillButton.swift; sourceTree = "<group>"; };
 		C7F620167391D6FD12C1DD89 /* Pods-Memorabilia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memorabilia.debug.xcconfig"; path = "Target Support Files/Pods-Memorabilia/Pods-Memorabilia.debug.xcconfig"; sourceTree = "<group>"; };
 		F4EC53CCB888ED32ABB0F659 /* Pods-Memorabilia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memorabilia.release.xcconfig"; path = "Target Support Files/Pods-Memorabilia/Pods-Memorabilia.release.xcconfig"; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				B6102A31241ECA2E0060E962 /* ExperiencePresenter.swift */,
 				B6102A33241ECA3F0060E962 /* ExperienceEntity.swift */,
 				B6102A35241ECA4B0060E962 /* ExperienceRouter.swift */,
+				B6E7F67F24394637001A5149 /* Experience+AR.swift */,
 			);
 			path = Experience;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 				B6C1EDA923809FCB00AAE1B1 /* Clean */,
 				B6C1EDAB23809FF100AAE1B1 /* Service */,
 				B6C1EDAA23809FE100AAE1B1 /* View */,
+				B6E7F68124396D57001A5149 /* AR */,
 				B6C1EDAD2380A00100AAE1B1 /* Extension */,
 				B6C1EDAC23809FF600AAE1B1 /* Enumeration */,
 				B6C1EDAE2380A00E00AAE1B1 /* Extra */,
@@ -310,7 +314,6 @@
 		B6C1EDAE2380A00E00AAE1B1 /* Extra */ = {
 			isa = PBXGroup;
 			children = (
-				B6412CE4238EF8D400BED236 /* SnapshotAnchor.swift */,
 				B6423FB2241D99AD004A7B5E /* SeriesChanges.swift */,
 			);
 			path = Extra;
@@ -322,6 +325,30 @@
 				B6E7F67D2438DB74001A5149 /* Memory.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		B6E7F68124396D57001A5149 /* AR */ = {
+			isa = PBXGroup;
+			children = (
+				B6E7F68224396D84001A5149 /* Anchor */,
+				B6F95797243987000072EBD8 /* Entity */,
+			);
+			path = AR;
+			sourceTree = "<group>";
+		};
+		B6E7F68224396D84001A5149 /* Anchor */ = {
+			isa = PBXGroup;
+			children = (
+				B6412CE4238EF8D400BED236 /* SnapshotAnchor.swift */,
+			);
+			path = Anchor;
+			sourceTree = "<group>";
+		};
+		B6F95797243987000072EBD8 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		DFF667CFDBF5E5C345165B00 /* Pods */ = {
@@ -458,6 +485,7 @@
 				B6E7F67324379EC3001A5149 /* ActionView.swift in Sources */,
 				B6F236B724379069002457DF /* PillButton.swift in Sources */,
 				B63663EF239448420008F5BD /* MemoriesViewController.swift in Sources */,
+				B6E7F68024394637001A5149 /* Experience+AR.swift in Sources */,
 				B6102A36241ECA4B0060E962 /* ExperienceRouter.swift in Sources */,
 				B6996AAD2394372D00F4133D /* CircleButton.swift in Sources */,
 				B6C1ED9623809E8200AAE1B1 /* AppDelegate.swift in Sources */,

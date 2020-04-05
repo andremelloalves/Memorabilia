@@ -258,39 +258,19 @@ class CreateViewController: UIViewController {
     
     // MARK: AR
     
-    func addSphere(anchor: ARAnchor?) {
-//        guard let anchor = anchor else { return }
-        
-//        let anchorEntity = AnchorEntity(anchor: anchor)
-        let anchorEntity = AnchorEntity(plane: .horizontal)
-        arView.scene.addAnchor(anchorEntity)
-//        arView.scene.anchors.append(anchorEntity)
-        
-        let sphere = MeshResource.generateSphere(radius: 1)
-        let material = SimpleMaterial(color: .blue, isMetallic: false)
-        let entity = ModelEntity(mesh: sphere, materials: [material])
-        
-        anchorEntity.addChild(entity)
-        print(arView.scene.anchors.count)
-    }
-    
     func add(raycast: ARRaycastResult) {
-        let x = raycast.worldTransform.columns.3.x
-        let y = raycast.worldTransform.columns.3.y
-        let z = raycast.worldTransform.columns.3.z
+        let anchor = ARAnchor(name: "Sphere", transform: raycast.worldTransform)
+        arView.session.add(anchor: anchor)
         
-        let anchorEntity = AnchorEntity()
-        anchorEntity.position = [x,y,z]
+        let anchorEntity = AnchorEntity(anchor: anchor)
         
         let sphere = MeshResource.generateSphere(radius: 0.1)
         let material = SimpleMaterial(color: .white, isMetallic: false)
         let entity = ModelEntity(mesh: sphere, materials: [material])
-        entity.position = [0,0,0]
-        arView.installGestures(.all, for: entity)
         
         anchorEntity.addChild(entity)
+        
         arView.scene.addAnchor(anchorEntity)
-        print(arView.scene.anchors.count)
     }
     
 }

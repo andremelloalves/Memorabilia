@@ -37,4 +37,9 @@ extension MemoriesViewController: UICollectionViewDataSource {
 
 extension MemoriesViewController: UICollectionViewDelegate {
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let memory = memoriesSections[indexPath.section].items[indexPath.item].item as? MemoriesEntity.Display.MemoryItem else { return }
+        router?.routeToExperienceViewController(memoryID: memory.memoryID)
+    }
+    
 }

@@ -35,7 +35,8 @@ class ExperienceRouter: ExperienceRouterInput, ExperienceRouterOutput {
     // MARK: Navigation
     
     func routeBack() {
-        viewController?.navigationController?.popViewController(animated: true)
+        // Perform segue
+        viewController?.dismiss(animated: true, completion: nil)
     }
     
     // MARK: Data passing

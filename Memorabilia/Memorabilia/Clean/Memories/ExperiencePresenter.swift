@@ -12,6 +12,10 @@ protocol ExperiencePresenterInput {
     
     // Present
     
+    func presentMemoryPhoto(_ data: Data)
+    
+    func presentARWorld(_ world: Data)
+    
 }
 
 class ExperiencePresenter: ExperiencePresenterInput {
@@ -23,5 +27,13 @@ class ExperiencePresenter: ExperiencePresenterInput {
     // MARK: Properties
     
     // MARK: Functions
+    
+    func presentMemoryPhoto(_ data: Data) {
+        viewController?.loadPhoto(data)
+    }
+    
+    func presentARWorld(_ world: Data) {
+        viewController?.loadARWorld(world)
+    }
     
 }

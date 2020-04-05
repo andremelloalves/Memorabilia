@@ -40,13 +40,14 @@ class MemoriesPresenter: MemoriesPresenterInput {
         var memoryItems: [MemoriesEntity.Display.MemoryItem] = []
         
         for memory in entity.memories {
+            let memoryID = memory.uid
             let name = memory.name
             let format = DateFormatter()
             format.locale = .current
             format.dateFormat = "EEEE, d MMM yy"
             let date = format.string(from: memory.creationDate)
             let photoID = memory.uid
-            let memoryItem = MemoriesEntity.Display.MemoryItem(name: name, date: date, photoID: photoID)
+            let memoryItem = MemoriesEntity.Display.MemoryItem(memoryID: memoryID,name: name, date: date, photoID: photoID)
             memoryItems.append(memoryItem)
         }
         

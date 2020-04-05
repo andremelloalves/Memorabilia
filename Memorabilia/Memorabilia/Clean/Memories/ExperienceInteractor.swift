@@ -7,28 +7,21 @@
 //
 
 import Foundation
+import PromiseKit
 
 protocol ExperienceInteractorInput {
     
-//    // Create
-//
-//    func finishMemories()
-//
-//    // Read
-//
-//    func readGroupName()
-//
-//    func readListItems(by sorting: ListSorting, changes: Bool)
-//
-//    // Update
-//
-//    func updateItemIsBought(by id: String)
-//
-//    // Delete
-//
-//    func deleteItem(by id: String)
-//
-//    func deleteItems()
+    // Create
+
+    // Read
+    
+    func readMemoryPhoto()
+    
+    func readARWorld()
+
+    // Update
+
+    // Delete
     
 }
 
@@ -38,11 +31,9 @@ protocol ExperienceInteractorData {
     
     var db: Database? { get set }
     
-//    var group: GroupRealm? { get set }
-//
-//    var list: RelistRealm? { get }
-//
-//    var items: [ItemRealm]? { get }
+    var memory: Memory? { get set }
+    
+    var world: Data? { get }
     
 }
 
@@ -65,13 +56,9 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
         }
     }
     
-//    var group: GroupRealm?
-//
-//    var list: RelistRealm?
-//
-//    var items: [ItemRealm]?
-//
-//    private var sorting: ListSorting?
+    var memory: Memory?
+    
+    var world: Data?
     
     // MARK: Initializers
     
@@ -86,6 +73,33 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
     // Create
     
     // Read
+    
+    func readMemoryPhoto() {
+        guard let db = db else { return }
+        guard let memory = memory else { return }
+        
+        firstly {
+            db.readMemoryPhoto(id: memory.uid)
+        }.done { photo in
+            self.presenter?.presentMemoryPhoto(photo)
+        }.catch { error in
+            print(error)
+        }
+    }
+    
+    func readARWorld() {
+        guard let db = db else { return }
+        guard let memory = memory else { return }
+        
+        firstly {
+            db.readARWorld(id: memory.uid)
+        }.done { world in
+            self.world = world
+            self.presenter?.presentARWorld(world)
+        }.catch { error in
+            print(error.localizedDescription)
+        }
+    }
     
     // Update
     

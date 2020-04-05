@@ -91,6 +91,17 @@ class Database {
         }
     }
     
+    func readARWorld(id: String) -> Promise<Data> {
+        return Promise { seal in
+            do {
+                let world = try documents.read(file: id, folder: .experiences)
+                seal.fulfill(world)
+            } catch let error {
+                seal.reject(error)
+            }
+        }
+    }
+    
     // MARK: Update
     
     func update(changes: () -> ()?) {
