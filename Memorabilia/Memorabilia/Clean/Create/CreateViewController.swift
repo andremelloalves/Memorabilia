@@ -40,7 +40,7 @@ class CreateViewController: UIViewController {
     let infoButton: CircleButton = {
         let button = CircleButton()
         button.setImage(UIImage(systemName: "info"), for: .normal)
-        button.addTarget(self, action: #selector(action), for: .primaryActionTriggered)
+        button.addTarget(self, action: #selector(infoButtonAction), for: .primaryActionTriggered)
         return button
     }()
     
@@ -51,12 +51,40 @@ class CreateViewController: UIViewController {
         return button
     }()
     
-    let optionsBar: OptionsBarView = {
+    lazy var textButton: OptionsBarButton = {
+        let button = OptionsBarButton()
+        button.addAction(optionButtonAction(option: .text))
+        button.setImage(UIImage(systemName: ReminderType.text.symbol), for: .normal)
+        return button
+    }()
+    
+    lazy var photoButton: OptionsBarButton = {
+        let button = OptionsBarButton()
+        button.addAction(optionButtonAction(option: .photo))
+        button.setImage(UIImage(systemName: ReminderType.photo.symbol), for: .normal)
+        return button
+    }()
+    
+    lazy var videoButton: OptionsBarButton = {
+        let button = OptionsBarButton()
+        button.addAction(optionButtonAction(option: .video))
+        button.setImage(UIImage(systemName: ReminderType.video.symbol), for: .normal)
+        return button
+    }()
+    
+    lazy var audioButton: OptionsBarButton = {
+        let button = OptionsBarButton()
+        button.addAction(optionButtonAction(option: .audio))
+        button.setImage(UIImage(systemName: ReminderType.audio.symbol), for: .normal)
+        return button
+    }()
+    
+    lazy var optionsBar: OptionsBarView = {
         let view = OptionsBarView()
-        view.addButton(iconName: "textformat")
-        view.addButton(iconName: "photo")
-        view.addButton(iconName: "film")
-        view.addButton(iconName: "mic")
+        view.addButton(textButton)
+        view.addButton(photoButton)
+        view.addButton(videoButton)
+        view.addButton(audioButton)
         return view
     }()
     
@@ -68,11 +96,15 @@ class CreateViewController: UIViewController {
         return view
     }()
     
+    // MARK: Control properties
+    
+    var selectedOption: ReminderType = .text
+    
     // MARK: AR properties
     
     lazy var arView: ARView = {
         let view = ARView(frame: self.view.frame)
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(tap))
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(gesture)
         view.session.delegate = self
         view.debugOptions = [.showFeaturePoints]
@@ -96,7 +128,7 @@ class CreateViewController: UIViewController {
         return configuration
     }()
     
-    var isRelocalizingMap: Bool = false
+    var isRelocalizingMap: Bool = true
     
     // MARK: Initializers
     
@@ -210,24 +242,14 @@ class CreateViewController: UIViewController {
     
     // MARK: Action
     
-    @objc func action() {
-        infoView.info = "Esse texto informativo pode ocupar mais de uma linha se preciso."
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        guard !isRelocalizingMap else { return }
+        guard let raycast = arView.raycast(from: sender.location(in: arView), allowing: .estimatedPlane, alignment: .any).first else { return }
+        add(raycast: raycast)
     }
     
-    @objc func tap(_ sender: UITapGestureRecognizer) {
-        if isRelocalizingMap {
-            return
-        }
-        
-        guard let raycast = arView.raycast(from: sender.location(in: arView), allowing: .estimatedPlane, alignment: .any).first else { return }
-        guard let hitTestResult = arView
-            .hitTest(sender.location(in: arView), types: [.existingPlaneUsingGeometry, .estimatedHorizontalPlane])
-            .first
-            else { return }
-        
-        infoView.info = String(Float(hitTestResult.distance))
-        //addSphere(anchor: hitTestResult.anchor)
-        add(raycast: raycast)
+    @objc func infoButtonAction() {
+        infoView.info = "Esse texto informativo pode ocupar mais de uma linha se preciso."
     }
     
     @objc func backButtonAction() {
@@ -235,19 +257,30 @@ class CreateViewController: UIViewController {
     }
     
     @objc func finishButtonAction() {
-        print("Finish!")
         saveARWorld()
+    }
+    
+    func optionButtonAction(option: ReminderType) -> () -> () {
+        let action = { [weak self] in
+            self?.selectedOption = option
+            self?.actionView.text = option.name
+            self?.actionView.symbol = option.symbol
+            self?.showActionView()
+        }
+        return action
     }
     
     // MARK: Animation
     
     func showActionView() {
-        let fadeIn = { self.actionView.alpha = 1 }
-        let fadeOut = { self.actionView.alpha = 0 }
+        let fadeIn = { [unowned self] in self.actionView.alpha = 1 }
+        let fadeOut = { [unowned self] in self.actionView.alpha = 0 }
+        
+        let fadeInAnimator = UIViewPropertyAnimator(duration: 0.25, curve: .easeInOut, animations: fadeIn)
+        let fadeOutAnimator = UIViewPropertyAnimator(duration: 0.25, curve: .easeInOut, animations: fadeOut)
 
-        UIView.animate(withDuration: 0.25, delay: 0, options: [.beginFromCurrentState], animations: fadeIn) { _ in
-            UIView.animate(withDuration: 0.25, delay: 0.5, options: [.beginFromCurrentState], animations: fadeOut, completion: nil)
-        }
+        fadeInAnimator.startAnimation()
+        fadeInAnimator.addCompletion { _ in fadeOutAnimator.startAnimation(afterDelay: 0.5) }
     }
     
     // MARK: Navigation

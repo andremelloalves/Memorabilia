@@ -115,13 +115,15 @@ class OptionsBarView: UIView {
     @objc func handlePan(_ sender: UIPanGestureRecognizer) {
         let translation = sender.translation(in: focus)
         let animation = { self.focus.frame = self.focusSnap }
+        let action: (UIViewAnimatingPosition) -> () = { [weak self] _ in self?.focusedButton?.execute() }
         
         switch sender.state {
         case .changed:
             animator.pauseAnimation()
-            dragBy(translation)
+            dragFocusBy(translation)
         case .ended:
             animator.addAnimations(animation)
+            animator.addCompletion(action)
             animator.startAnimation()
         default:
             break
@@ -134,26 +136,27 @@ class OptionsBarView: UIView {
     
     private let animator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut, animations: nil)
     
-    private func validateDrag(_ translation: CGPoint) -> Bool {
+    private var focusSnap: CGRect {
+        let frames = buttons.map { $0.frame }
+        let closest = frames.reduce(.zero) { focus.frame.center <-> $0.center < focus.frame.center <-> $1.center ? $0 : $1 }
+        focusedButton = buttons.first(where: { $0.frame == closest })
+        return closest + CGPoint(x: 4, y: 4)
+    }
+    
+    private func validateFocusDrag(_ translation: CGPoint) -> Bool {
         let isUnder = focus.frame.minX + translation.x < stack.frame.minX
         let isOver = focus.frame.maxX + translation.x > stack.frame.maxX
         return !isUnder && !isOver
     }
     
-    private func dragBy(_ translation: CGPoint) {
-        let isValid = validateDrag(translation)
+    private func dragFocusBy(_ translation: CGPoint) {
+        let isValid = validateFocusDrag(translation)
         guard isValid else { return }
         focus.center = CGPoint(x: focus.center.x + translation.x, y: focus.center.y)
     }
     
-    private var focusSnap: CGRect {
-        let frames = buttons.map { $0.frame }
-        let closest = frames.reduce(.zero) { focus.frame.center <-> $0.center < focus.frame.center <-> $1.center ? $0 : $1 }
-        return closest + CGPoint(x: 4, y: 4)
-    }
-    
     public func updateFocus() {
-        let width = stack.frame.width / CGFloat(buttons.count)
+        let width = buttons.count != 0 ? stack.frame.width / CGFloat(buttons.count) : 10
         let height = stack.frame.height
         let animation = { self.focus.frame = CGRect(x: 4, y: 4, width: width, height: height) }
         animator.addAnimations(animation)
@@ -162,20 +165,20 @@ class OptionsBarView: UIView {
     
     // MARK: Delegate
     
-    private var buttons: [UIButton] = []
+    private var focusedButton: OptionsBarButton?
     
-    public func addButton(iconName: String) {
-        let button = OptionsBarButton()
-        button.setImage(UIImage(systemName: iconName), for: .normal)
+    private var buttons: [OptionsBarButton] = []
+    
+    public func addButton(_ button: OptionsBarButton) {
         button.addTarget(self, action: #selector(handleTap), for: .primaryActionTriggered)
         stack.addArrangedSubview(button)
         buttons.append(button)
+        updateFocus()
     }
     
-    public func removeButton() {
-        guard let button = buttons.popLast() else { return }
-        stack.removeArrangedSubview(button)
+    public func removeButton(_ button: OptionsBarButton) {
         button.removeFromSuperview()
+        buttons.removeAll(where: { $0 == button })
         updateFocus()
     }
     

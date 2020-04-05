@@ -25,6 +25,7 @@
 		B6102A3A241ED1DC0060E962 /* Memories+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6102A39241ED1DC0060E962 /* Memories+Collection.swift */; };
 		B6102A3C241ED3CA0060E962 /* ActionBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6102A3B241ED3CA0060E962 /* ActionBarView.swift */; };
 		B6102A3E241ED4320060E962 /* ActionBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6102A3D241ED4320060E962 /* ActionBarButton.swift */; };
+		B6304255243A3A890026FA1D /* ReminderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6304254243A3A890026FA1D /* ReminderType.swift */; };
 		B63663ED239444420008F5BD /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63663EC239444420008F5BD /* NavigationController.swift */; };
 		B63663EF239448420008F5BD /* MemoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63663EE239448420008F5BD /* MemoriesViewController.swift */; };
 		B63663F2239448990008F5BD /* MemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63663F1239448990008F5BD /* MemoryCollectionViewCell.swift */; };
@@ -77,6 +78,7 @@
 		B6102A39241ED1DC0060E962 /* Memories+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Memories+Collection.swift"; sourceTree = "<group>"; };
 		B6102A3B241ED3CA0060E962 /* ActionBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionBarView.swift; sourceTree = "<group>"; };
 		B6102A3D241ED4320060E962 /* ActionBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionBarButton.swift; sourceTree = "<group>"; };
+		B6304254243A3A890026FA1D /* ReminderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderType.swift; sourceTree = "<group>"; };
 		B63663EC239444420008F5BD /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		B63663EE239448420008F5BD /* MemoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesViewController.swift; sourceTree = "<group>"; };
 		B63663F1239448990008F5BD /* MemoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 			isa = PBXGroup;
 			children = (
 				B6F9579824398A250072EBD8 /* AnchorType.swift */,
+				B6304254243A3A890026FA1D /* ReminderType.swift */,
 			);
 			path = Enumeration;
 			sourceTree = "<group>";
@@ -502,6 +505,7 @@
 				B6102A32241ECA2E0060E962 /* ExperiencePresenter.swift in Sources */,
 				B6E7F6792438C8E0001A5149 /* CGPoint.swift in Sources */,
 				B6423FAA241D92BD004A7B5E /* RealmObserver.swift in Sources */,
+				B6304255243A3A890026FA1D /* ReminderType.swift in Sources */,
 				B6412CE5238EF8D400BED236 /* SnapshotAnchor.swift in Sources */,
 				B6423FB5241D9A6C004A7B5E /* App.swift in Sources */,
 				B6102A34241ECA3F0060E962 /* ExperienceEntity.swift in Sources */,

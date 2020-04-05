@@ -80,18 +80,9 @@ class ExperienceViewController: UIViewController {
     
     lazy var worldTrackingConfiguration: ARWorldTrackingConfiguration = {
         let configuration = ARWorldTrackingConfiguration()
-//        configuration.automaticImageScaleEstimationEnabled = false
-//        configuration.detectionImages
-//        configuration.detectionObjects
         configuration.environmentTexturing = .automatic
         configuration.initialWorldMap = world
-//        configuration.isAutoFocusEnabled = true
-//        configuration.isCollaborationEnabled = false
-//        configuration.maximumNumberOfTrackedImages = 0
         configuration.planeDetection = .vertical
-//        configuration.sceneReconstruction = .mesh
-//        configuration.userFaceTrackingEnabled = false
-//        configuration.wantsHDREnvironmentTextures = false
         return configuration
     }()
     

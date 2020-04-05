@@ -31,8 +31,27 @@ class OptionsBarButton: UIButton {
         layer.cornerRadius = 20
         clipsToBounds = true
         adjustsImageWhenHighlighted = false
+        addTarget(self, action: #selector(buttonAction), for: .primaryActionTriggered)
         let configuration = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular, scale: .medium)
         setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
+    }
+    
+    // MARK: Action
+    
+    @objc private func buttonAction() {
+        execute()
+    }
+    
+    // MARK: Delegate
+    
+    private var actions: [() -> ()] = []
+    
+    public func addAction(_ action: @escaping () -> ()) {
+        actions.append(action)
+    }
+    
+    public func execute() {
+        actions.forEach { $0() }
     }
     
 }
