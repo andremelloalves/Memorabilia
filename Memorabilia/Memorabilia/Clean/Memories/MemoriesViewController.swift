@@ -90,7 +90,13 @@ class MemoriesViewController: UIViewController {
     
     private func setup() {
         // Background
-        view.backgroundColor = .systemGray
+        let gradient = CAGradientLayer()
+        gradient.frame = view.bounds
+        gradient.colors = [UIColor(named: "Memo1")!.cgColor, UIColor(named: "Memo2")!.cgColor]
+        gradient.startPoint = .init(x: 0, y: 0.3)
+        gradient.endPoint = .init(x: 0, y: 1)
+        view.backgroundColor = .systemBackground
+        view.layer.insertSublayer(gradient, at: 0)
         
         // CollectionView
         view.addSubview(collection)

@@ -20,7 +20,7 @@ class NavigationBarView: UIView {
     let titleButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
-        button.setTitleColor(.label, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         button.titleLabel?.adjustsFontForContentSizeCategory = true
         button.titleLabel?.adjustsFontSizeToFitWidth = true

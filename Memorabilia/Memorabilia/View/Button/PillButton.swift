@@ -40,7 +40,7 @@ class PillButton: UIButton {
         backgroundColor = .clear
         layer.cornerRadius = 20
         clipsToBounds = true
-        setTitleColor(.systemBackground, for: .normal)
+        setTitleColor(.white, for: .normal)
         titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         
         // Background

@@ -156,10 +156,15 @@ class OptionsBarView: UIView {
     }
     
     public func updateFocus() {
+        focusedButton = buttons.first
+        let action: (UIViewAnimatingPosition) -> () = { [weak self] _ in self?.focusedButton?.execute() }
+        
         let width = buttons.count != 0 ? stack.frame.width / CGFloat(buttons.count) : 10
         let height = stack.frame.height
         let animation = { self.focus.frame = CGRect(x: 4, y: 4, width: width, height: height) }
+        
         animator.addAnimations(animation)
+        animator.addCompletion(action)
         animator.startAnimation()
     }
     

@@ -38,7 +38,7 @@ class CircleButton: UIButton {
     private func setup() {
         // Self
         backgroundColor = .clear
-        tintColor = .systemBackground
+        tintColor = .white
         layer.cornerRadius = 20
         clipsToBounds = true
         adjustsImageWhenHighlighted = false

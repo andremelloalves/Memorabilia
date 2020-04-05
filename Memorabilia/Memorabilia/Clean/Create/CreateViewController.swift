@@ -128,7 +128,7 @@ class CreateViewController: UIViewController {
         return configuration
     }()
     
-    var isRelocalizingMap: Bool = true
+    var isRelocalizingMap: Bool = false
     
     // MARK: Initializers
     
