@@ -96,6 +96,20 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
         }
     }
     
+    private func readMemoriesUpdate() {
+        guard let db = db else { return }
+        
+        firstly {
+            db.readMemories()
+        }.done { memories in
+            self.memories = memories
+            let entity = MemoriesEntity.Present(memories: memories)
+            self.presenter?.presentMemories(entity: entity)
+        }.catch { error in
+            print(error.localizedDescription)
+        }
+    }
+    
     // Update
     
     // Delete
@@ -106,7 +120,7 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
 extension MemoriesInteractor: DatabaseObserver {
     
     func notify() {
-        
+        readMemoriesUpdate()
     }
     
 }

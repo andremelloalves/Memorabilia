@@ -14,7 +14,9 @@ protocol MemoriesViewInput: class {
     
     func loadPhoto(_ photo: Data, with id: String, for index: IndexPath)
     
-    func apply(changes: SectionChanges, sections: [MemoriesSection])
+    func loadSections(sections: [MemoriesSection])
+    
+    func reloadSections(changes: SectionChanges, sections: [MemoriesSection])
     
 }
 
@@ -185,7 +187,13 @@ extension MemoriesViewController: MemoriesViewInput {
         collection.reloadItems(at: [index])
     }
     
-    func apply(changes: SectionChanges, sections: [MemoriesSection]) {
+    func loadSections(sections: [MemoriesSection]) {
+        memoriesSections = sections
+        
+        collection.reloadData()
+    }
+    
+    func reloadSections(changes: SectionChanges, sections: [MemoriesSection]) {
         memoriesSections = sections
         
         collection.deleteSections(changes.deletes)
