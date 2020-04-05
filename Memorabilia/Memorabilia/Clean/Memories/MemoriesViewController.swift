@@ -28,7 +28,7 @@ class MemoriesViewController: UIViewController {
     
     // MARK: Properties
     
-    let collection: UICollectionView = {
+    lazy var collection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
@@ -42,6 +42,10 @@ class MemoriesViewController: UIViewController {
         view.scrollIndicatorInsets = viewInsets
         view.backgroundColor = .clear
         view.isPagingEnabled = false
+        view.delegate = self
+        view.dataSource = self
+        view.register(MemoryCollectionViewCell.self,forCellWithReuseIdentifier: MemoryCollectionViewCell.identifier)
+        view.register(EmptyMemoryCollectionViewCell.self, forCellWithReuseIdentifier: EmptyMemoryCollectionViewCell.identifier)
         return view
     }()
     
@@ -87,21 +91,16 @@ class MemoriesViewController: UIViewController {
         view.backgroundColor = .systemGray
         
         // CollectionView
-        collection.delegate = self
-        collection.dataSource = self
-        collection.register(MemoryCollectionViewCell.self,forCellWithReuseIdentifier: MemoryCollectionViewCell.identifier)
+        view.addSubview(collection)
         
         // Navigation bar
+        view.addSubview(navigation)
 //        navigation.leftButton.addTarget(self, action: #selector(backButtonAction), for: .primaryActionTriggered)
 //        navigation.rightButton.addTarget(self, action: #selector(optionsButtonAction), for: .primaryActionTriggered)
         
         // Action bar
-//        action.button.addTarget(self, action: #selector(addItemButtonAction), for: .primaryActionTriggered)
-        
-        // Subviews
-        view.addSubview(collection)
-        view.addSubview(navigation)
         view.addSubview(action)
+//        action.button.addTarget(self, action: #selector(addItemButtonAction), for: .primaryActionTriggered)
         
         // Constraints
         setupConstraints()
@@ -137,8 +136,6 @@ class MemoriesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemBlue
     }
     
     override func viewWillAppear(_ animated: Bool) {

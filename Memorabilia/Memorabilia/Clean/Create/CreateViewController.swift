@@ -259,7 +259,7 @@ class CreateViewController: UIViewController {
     // MARK: AR
     
     func add(raycast: ARRaycastResult) {
-        let anchor = ARAnchor(name: "Sphere", transform: raycast.worldTransform)
+        let anchor = ARAnchor(name: AnchorType.text.rawValue, transform: raycast.worldTransform)
         arView.session.add(anchor: anchor)
         
         let anchorEntity = AnchorEntity(anchor: anchor)

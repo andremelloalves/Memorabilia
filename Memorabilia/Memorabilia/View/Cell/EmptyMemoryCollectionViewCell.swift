@@ -1,18 +1,18 @@
 //
-//  MemoryCollectionViewCell.swift
+//  EmptyMemoryCollectionViewCell.swift
 //  Memorabilia
 //
-//  Created by André Mello Alves on 01/12/19.
-//  Copyright © 2019 André Mello Alves. All rights reserved.
+//  Created by André Mello Alves on 05/04/20.
+//  Copyright © 2020 André Mello Alves. All rights reserved.
 //
 
 import UIKit
 
-class MemoryCollectionViewCell: UICollectionViewCell {
+class EmptyMemoryCollectionViewCell: UICollectionViewCell {
     
     // MARK: Properties
     
-    static let identifier = "Memory"
+    static let identifier = "EmptyMemory"
     
     let photo: UIImageView = {
         let view = UIImageView()
@@ -23,20 +23,6 @@ class MemoryCollectionViewCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-//    let shadow: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = .systemBackground
-//        view.clipsToBounds = true
-//        view.layer.masksToBounds = false
-//        view.layer.cornerRadius = 20
-//        view.layer.shadowRadius = 8
-//        view.layer.shadowColor = UIColor.black.cgColor
-//        view.layer.shadowOpacity = 0.5
-//        view.layer.shadowOffset = .zero
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
     
     let infoView: InfoView = {
         let view = InfoView()
@@ -95,12 +81,6 @@ class MemoryCollectionViewCell: UICollectionViewCell {
             photo.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             photo.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
             photo.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
-            
-            // Shadow
-//            shadow.topAnchor.constraint(equalTo: photo.topAnchor),
-//            shadow.leftAnchor.constraint(equalTo: photo.leftAnchor),
-//            shadow.rightAnchor.constraint(equalTo: photo.rightAnchor),
-//            shadow.bottomAnchor.constraint(equalTo: photo.bottomAnchor),
             
             // Info view
             infoView.leftAnchor.constraint(equalTo: photo.leftAnchor, constant: 8),

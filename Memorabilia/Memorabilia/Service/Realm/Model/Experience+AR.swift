@@ -93,7 +93,7 @@ extension ExperienceViewController: ARSessionDelegate {
     
     func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
         for anchor in anchors {
-            if anchor.name == "Sphere" {
+            if anchor.name == AnchorType.text.rawValue {
                 add(anchor: anchor)
             }
         }

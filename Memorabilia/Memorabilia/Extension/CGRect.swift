@@ -18,4 +18,8 @@ extension CGRect {
         return CGRect(x: rect.origin.x + point.x, y: rect.origin.y + point.y, width: rect.width, height: rect.height)
     }
     
+    static func -(rect: CGRect, point: CGPoint) -> CGRect {
+        return CGRect(x: rect.origin.x - point.x, y: rect.origin.y - point.y, width: rect.width, height: rect.height)
+    }
+    
 }
