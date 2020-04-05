@@ -58,8 +58,8 @@ class Database {
     func createMemory(with worldMap: Data, photo: Data) -> Promise<Void> {
         let memory = Memory(name: "Memória")
         return Promise { seal in
-            realm.createUpdate(object: memory)
             do {
+                try realm.createUpdate(object: memory)
                 try documents.create(file: memory.uid, folder: .experiences, data: worldMap)
                 try documents.create(file: memory.uid, folder: .photos, data: photo)
                 seal.fulfill(())
@@ -104,8 +104,15 @@ class Database {
     
     // MARK: Update
     
-    func update(changes: () -> ()?) {
-        realm.update(changes: changes)
+    func update(changes: () -> ()?) -> Promise<Void> {
+        return Promise { seal in
+            do {
+                try realm.update(changes: changes)
+                seal.fulfill(())
+            } catch let error {
+                seal.reject(error)
+            }
+        }
     }
     
     // MARK: Delete

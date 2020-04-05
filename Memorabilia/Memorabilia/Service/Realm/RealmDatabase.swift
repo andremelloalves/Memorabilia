@@ -42,17 +42,20 @@ class RealmDatabase {
     
     // MARK: Create
     
-    func createUpdate<RealmObject: Object>(object: RealmObject) {
-        try! realm.write {
+    func createUpdate<RealmObject: Object>(object: RealmObject) throws {
+        try realm.write {
             realm.create(RealmObject.self, value: object, update: .modified)
         }
     }
     
     // MARK: Read
     
-    func get<RealmObject: Object>(type: RealmObject.Type, with primaryKey: String) -> RealmObject? {
-        let object = realm.object(ofType: type, forPrimaryKey: primaryKey)
-        return object
+    func get<RealmObject: Object>(type: RealmObject.Type, with primaryKey: String) throws -> RealmObject {
+        if let object = realm.object(ofType: type, forPrimaryKey: primaryKey) {
+            return object
+        } else {
+            throw RealmError.notFound
+        }
     }
     
     func query<RealmObject: Object>(with predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor]) -> Results<RealmObject> {
@@ -68,20 +71,22 @@ class RealmDatabase {
     
     // MARK: Update
     
-    func update(changes: () -> ()?) {
-        try! realm.write {
+    func update(changes: () -> ()?) throws {
+        try realm.write {
             changes()
         }
     }
     
     // MARK: Delete
     
-    func delete<RealmObject: Object>(type: RealmObject.Type, with primaryKey: String) {
+    func delete<RealmObject: Object>(type: RealmObject.Type, with primaryKey: String) throws {
         let object = realm.object(ofType: type, forPrimaryKey: primaryKey)
         if let object = object {
-            try! realm.write {
+            try realm.write {
                 realm.delete(object)
             }
+        } else {
+            throw RealmError.notFound
         }
     }
     
@@ -93,6 +98,18 @@ class RealmDatabase {
     
     func stopNotifications(observer: RealmObserver) {
         self.observers.removeAll(where: { $0.uid == observer.uid })
+    }
+    
+    enum RealmError: Error {
+        
+        case notFound
+        
+        var localizedDescription: String {
+            switch self {
+            case .notFound:
+                return "File not found."
+            }
+        }
     }
     
 }
