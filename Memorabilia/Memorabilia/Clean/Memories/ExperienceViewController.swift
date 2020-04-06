@@ -50,6 +50,32 @@ class ExperienceViewController: UIViewController {
         return button
     }()
     
+    let restartButton: CircleButton = {
+        let button = CircleButton()
+        button.setImage(UIImage(systemName: "arrow.counterclockwise"), for: .normal)
+        button.addTarget(self, action: #selector(restartButtonAction), for: .primaryActionTriggered)
+        return button
+    }()
+    
+    lazy var snapshotView: UIImageView = {
+        let view = UIImageView()
+        view.backgroundColor = .systemBackground
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        view.frame = self.view.frame
+        view.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(snapshotAction))
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+    
+    let snapshotButton: CircleButton = {
+        let button = CircleButton()
+        button.background.isHidden = true
+        button.setImage(UIImage(systemName: "arrow.up.left.and.arrow.down.right"), for: .normal)
+        return button
+    }()
+    
     let actionView: ActionView = {
         let view = ActionView()
         view.symbol = "rectangle.3.offgrid.fill"
@@ -58,14 +84,9 @@ class ExperienceViewController: UIViewController {
         return view
     }()
     
-    let hintView: UIImageView = {
-        let view = UIImageView()
-        view.backgroundColor = .systemBackground
-        view.layer.cornerRadius = 20
-        view.clipsToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    // MARK: Control properties
+    
+    var snapshotIsExpanded: Bool = false
     
     // MARK: AR properties
     
@@ -120,11 +141,17 @@ class ExperienceViewController: UIViewController {
         // Info button
         view.addSubview(infoButton)
         
+        // Restart button
+        view.addSubview(restartButton)
+        
+        // Snapshot view
+        view.addSubview(snapshotView)
+        
+        // Snapshot button
+        view.addSubview(snapshotButton)
+        
         // Action view
         view.addSubview(actionView)
-        
-        // Hint view
-        view.addSubview(hintView)
         
         // Constraints
         setupConstraints()
@@ -153,15 +180,17 @@ class ExperienceViewController: UIViewController {
             infoButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             infoButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
             
+            // Restart button
+            restartButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
+            restartButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            
+            // Snapshot button
+            snapshotButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
+            snapshotButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            
             // Action view
             actionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             actionView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-            
-            // Hint view
-            hintView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
-            hintView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
-            hintView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
-            hintView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
     
@@ -174,6 +203,8 @@ class ExperienceViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         interactor?.readMemoryPhoto()
         interactor?.readARWorld()
+        
+        contractSnapshot()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -204,6 +235,46 @@ class ExperienceViewController: UIViewController {
     
     @objc func backButtonAction() {
         routeBack()
+    }
+    
+    @objc func restartButtonAction() {
+        
+    }
+    
+    @objc func snapshotAction() {
+        if snapshotIsExpanded {
+            contractSnapshot()
+        } else {
+            expandSnapshot()
+        }
+    }
+    
+    // MARK: Animations
+    
+    private let animator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut, animations: nil)
+    
+    private func expandSnapshot() {
+        let animation = { [unowned self] in self.snapshotView.frame = self.snapshotFrame(multiplier: 0.7) }
+        animator.addAnimations(animation)
+        animator.startAnimation()
+        snapshotIsExpanded = true
+        snapshotButton.setImage(UIImage(systemName: "arrow.down.right.and.arrow.up.left"), for: .normal)
+    }
+    
+    private func contractSnapshot() {
+        let animation = { [unowned self] in self.snapshotView.frame = self.snapshotFrame(multiplier: 0.3) }
+        animator.addAnimations(animation)
+        animator.startAnimation()
+        snapshotIsExpanded = false
+        snapshotButton.setImage(UIImage(systemName: "arrow.up.left.and.arrow.down.right"), for: .normal)
+    }
+    
+    private func snapshotFrame(multiplier: CGFloat) -> CGRect {
+        let width = view.frame.width * multiplier
+        let height = view.frame.height * multiplier
+        let x = view.frame.width - width - 16
+        let y = view.frame.height - height - 16
+        return CGRect(x: x, y: y, width: width, height: height)
     }
     
     // MARK: Navigation
@@ -244,7 +315,7 @@ extension ExperienceViewController: ExperienceViewInput {
     // Update
     
     func loadPhoto(_ photo: Data) {
-        hintView.image = UIImage(data: photo)
+        snapshotView.image = UIImage(data: photo)
     }
     
     func loadARWorld(_ world: Data) {

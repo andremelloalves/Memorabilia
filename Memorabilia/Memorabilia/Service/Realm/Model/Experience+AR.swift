@@ -68,7 +68,7 @@ extension ExperienceViewController: ARSessionDelegate {
         // Update the UI to provide feedback on the state of the AR experience.
         let message: String
         
-        hintView.isHidden = true
+        snapshotView.isHidden = true
         switch (trackingState, frame.worldMappingStatus) {
         case (.normal, .mapped),
              (.normal, .extending):
@@ -82,7 +82,7 @@ extension ExperienceViewController: ARSessionDelegate {
             
         case (.limited(.relocalizing), _):
             message = "Move your device to the location shown in the image."
-            hintView.isHidden = false
+            snapshotView.isHidden = false
             
         default:
             message = trackingState.localizedFeedback
