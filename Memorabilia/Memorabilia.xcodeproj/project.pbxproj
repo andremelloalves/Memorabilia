@@ -53,6 +53,7 @@
 		B6E7F67E2438DB74001A5149 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7F67D2438DB74001A5149 /* Memory.swift */; };
 		B6E7F68024394637001A5149 /* Experience+AR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7F67F24394637001A5149 /* Experience+AR.swift */; };
 		B6F236B724379069002457DF /* PillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F236B624379069002457DF /* PillButton.swift */; };
+		B6F2AD33243AB174009273CC /* SnapshotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F2AD32243AB174009273CC /* SnapshotView.swift */; };
 		B6F9579924398A250072EBD8 /* AnchorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F9579824398A250072EBD8 /* AnchorType.swift */; };
 		B6F9579B24398BB40072EBD8 /* EmptyMemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F9579A24398BB40072EBD8 /* EmptyMemoryCollectionViewCell.swift */; };
 		C6BE42FFDC075E42C630E3CC /* Pods_Memorabilia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FF160F8A56DEDA37463E238 /* Pods_Memorabilia.framework */; };
@@ -108,6 +109,7 @@
 		B6E7F67D2438DB74001A5149 /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 		B6E7F67F24394637001A5149 /* Experience+AR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Experience+AR.swift"; path = "Memorabilia/Service/Realm/Model/Experience+AR.swift"; sourceTree = SOURCE_ROOT; };
 		B6F236B624379069002457DF /* PillButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillButton.swift; sourceTree = "<group>"; };
+		B6F2AD32243AB174009273CC /* SnapshotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotView.swift; sourceTree = "<group>"; };
 		B6F9579824398A250072EBD8 /* AnchorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchorType.swift; sourceTree = "<group>"; };
 		B6F9579A24398BB40072EBD8 /* EmptyMemoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMemoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		C7F620167391D6FD12C1DD89 /* Pods-Memorabilia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memorabilia.debug.xcconfig"; path = "Target Support Files/Pods-Memorabilia/Pods-Memorabilia.debug.xcconfig"; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				B6102A3B241ED3CA0060E962 /* ActionBarView.swift */,
 				B6A09EDF2436B11A00EB700A /* OptionsBarView.swift */,
 				B6E7F67224379EC3001A5149 /* ActionView.swift */,
+				B6F2AD32243AB174009273CC /* SnapshotView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				B6E7F6792438C8E0001A5149 /* CGPoint.swift in Sources */,
 				B6423FAA241D92BD004A7B5E /* RealmObserver.swift in Sources */,
 				B6304255243A3A890026FA1D /* ReminderType.swift in Sources */,
+				B6F2AD33243AB174009273CC /* SnapshotView.swift in Sources */,
 				B6412CE5238EF8D400BED236 /* SnapshotAnchor.swift in Sources */,
 				B6423FB5241D9A6C004A7B5E /* App.swift in Sources */,
 				B6102A34241ECA3F0060E962 /* ExperienceEntity.swift in Sources */,

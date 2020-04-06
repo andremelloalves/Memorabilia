@@ -107,7 +107,7 @@ class OptionsBarView: UIView {
     // MARK: Action
     
     @objc func handleTap(sender: UIButton) {
-        let animation = { self.focus.frame = sender.frame + CGPoint(x: 4, y: 4) }
+        let animation = { [unowned self] in self.focus.frame = sender.frame + CGPoint(x: 4, y: 4) }
         animator.addAnimations(animation)
         animator.startAnimation()
     }

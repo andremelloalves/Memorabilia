@@ -75,6 +75,7 @@ class NavigationBarView: UIView {
         // Right button
         addSubview(rightButton)
         
+        // Constraints
         setupConstraints()
     }
     

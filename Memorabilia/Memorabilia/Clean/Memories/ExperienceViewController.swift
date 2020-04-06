@@ -57,23 +57,9 @@ class ExperienceViewController: UIViewController {
         return button
     }()
     
-    lazy var snapshotView: UIImageView = {
-        let view = UIImageView()
-        view.backgroundColor = .systemBackground
-        view.layer.cornerRadius = 20
-        view.clipsToBounds = true
-        view.frame = self.view.frame
-        view.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(snapshotAction))
-        view.addGestureRecognizer(tap)
+    lazy var snapshotView: SnapshotView = {
+        let view = SnapshotView(frame: self.view.frame)
         return view
-    }()
-    
-    let snapshotButton: CircleButton = {
-        let button = CircleButton()
-        button.background.isHidden = true
-        button.setImage(UIImage(systemName: "arrow.up.left.and.arrow.down.right"), for: .normal)
-        return button
     }()
     
     let actionView: ActionView = {
@@ -83,10 +69,6 @@ class ExperienceViewController: UIViewController {
         view.alpha = 0
         return view
     }()
-    
-    // MARK: Control properties
-    
-    var snapshotIsExpanded: Bool = false
     
     // MARK: AR properties
     
@@ -147,9 +129,6 @@ class ExperienceViewController: UIViewController {
         // Snapshot view
         view.addSubview(snapshotView)
         
-        // Snapshot button
-        view.addSubview(snapshotButton)
-        
         // Action view
         view.addSubview(actionView)
         
@@ -184,9 +163,9 @@ class ExperienceViewController: UIViewController {
             restartButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
             restartButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             
-            // Snapshot button
-            snapshotButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
-            snapshotButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            // Snapshot view
+            snapshotView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
+            snapshotView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             
             // Action view
             actionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -203,8 +182,6 @@ class ExperienceViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         interactor?.readMemoryPhoto()
         interactor?.readARWorld()
-        
-        contractSnapshot()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -239,42 +216,6 @@ class ExperienceViewController: UIViewController {
     
     @objc func restartButtonAction() {
         
-    }
-    
-    @objc func snapshotAction() {
-        if snapshotIsExpanded {
-            contractSnapshot()
-        } else {
-            expandSnapshot()
-        }
-    }
-    
-    // MARK: Animations
-    
-    private let animator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut, animations: nil)
-    
-    private func expandSnapshot() {
-        let animation = { [unowned self] in self.snapshotView.frame = self.snapshotFrame(multiplier: 0.7) }
-        animator.addAnimations(animation)
-        animator.startAnimation()
-        snapshotIsExpanded = true
-        snapshotButton.setImage(UIImage(systemName: "arrow.down.right.and.arrow.up.left"), for: .normal)
-    }
-    
-    private func contractSnapshot() {
-        let animation = { [unowned self] in self.snapshotView.frame = self.snapshotFrame(multiplier: 0.3) }
-        animator.addAnimations(animation)
-        animator.startAnimation()
-        snapshotIsExpanded = false
-        snapshotButton.setImage(UIImage(systemName: "arrow.up.left.and.arrow.down.right"), for: .normal)
-    }
-    
-    private func snapshotFrame(multiplier: CGFloat) -> CGRect {
-        let width = view.frame.width * multiplier
-        let height = view.frame.height * multiplier
-        let x = view.frame.width - width - 16
-        let y = view.frame.height - height - 16
-        return CGRect(x: x, y: y, width: width, height: height)
     }
     
     // MARK: Navigation

@@ -89,6 +89,7 @@ class InfoView: UIView {
         // Background
         addSubview(background)
         
+        // Constraints
         setupConstraints()
     }
     

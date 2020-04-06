@@ -51,6 +51,7 @@ class ActionBarView: UIView {
         // Button
         addSubview(button)
         
+        // Constraints
         setupConstraints()
     }
     

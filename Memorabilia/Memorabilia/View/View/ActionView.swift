@@ -87,6 +87,7 @@ class ActionView: UIView {
         // Background
         addSubview(background)
         
+        // Constraints
         setupConstraints()
     }
     
