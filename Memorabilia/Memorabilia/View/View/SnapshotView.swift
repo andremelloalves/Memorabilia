@@ -39,7 +39,7 @@ class SnapshotView: UIImageView {
     }
     
     required init?(coder: NSCoder) {
-        parentFrame = .zero
+        self.parentFrame = .zero
         super.init(coder: coder)
         setup()
     }
@@ -48,6 +48,7 @@ class SnapshotView: UIImageView {
     
     private func setup() {
         // Self
+        frame = snapshotFrame(multiplier: 0.3)
         layer.cornerRadius = 20
         clipsToBounds = true
         backgroundColor = .systemBackground
@@ -64,19 +65,9 @@ class SnapshotView: UIImageView {
     
     // MARK: Constraints
     
-    private var widthConstraint = NSLayoutConstraint()
-    
-    private var heigthConstraint = NSLayoutConstraint()
-    
     private func setupConstraints() {
-        widthConstraint = NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: snapshotSize(multiplier: 0.3).width)
-        heigthConstraint = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: snapshotSize(multiplier: 0.3).height)
-        
-        translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             // Self
-            widthConstraint,
-            heigthConstraint,
             
             // SizeIcon
             sizeIcon.widthAnchor.constraint(equalToConstant: 40),
@@ -104,9 +95,7 @@ class SnapshotView: UIImageView {
     
     private func expandSnapshot() {
         let animation = { [unowned self] in
-            self.widthConstraint.constant = self.snapshotSize(multiplier: 0.7).width
-            self.heigthConstraint.constant = self.snapshotSize(multiplier: 0.7).height
-//            self.layoutIfNeeded()
+            self.frame = self.snapshotFrame(multiplier: 0.7)
         }
         let completion: (UIViewAnimatingPosition) -> () = { [weak self] _ in
             self?.isExpanded = true
@@ -119,9 +108,7 @@ class SnapshotView: UIImageView {
     
     private func contractSnapshot() {
         let animation = { [unowned self] in
-            self.widthConstraint.constant = self.snapshotSize(multiplier: 0.3).width
-            self.heigthConstraint.constant = self.snapshotSize(multiplier: 0.3).height
-//            self.layoutIfNeeded()
+            self.frame = self.snapshotFrame(multiplier: 0.3)
         }
         let completion: (UIViewAnimatingPosition) -> () = { [weak self] _ in
             self?.isExpanded = false
@@ -132,39 +119,12 @@ class SnapshotView: UIImageView {
         animator.startAnimation()
     }
     
-    private func snapshotSize(multiplier: CGFloat) -> CGSize {
+    private func snapshotFrame(multiplier: CGFloat) -> CGRect {
         let width = parentFrame.width * multiplier
         let height = parentFrame.height * multiplier
-        return CGSize(width: width, height: height)
-    }
-    
-    private func startAnimation() {
-        UIView.animate(withDuration: 0.15) {
-            self.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-        }
-    }
-    
-    private func stopAnimation() {
-        UIView.animate(withDuration: 0.15) {
-            self.transform = .identity
-        }
-    }
-    
-    // MARK: Touch
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        startAnimation()
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesCancelled(touches, with: event)
-        stopAnimation()
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
-        stopAnimation()
+        let x = parentFrame.width - width - 16
+        let y = parentFrame.height - height - 16
+        return CGRect(x: x, y: y, width: width, height: height)
     }
     
 }
