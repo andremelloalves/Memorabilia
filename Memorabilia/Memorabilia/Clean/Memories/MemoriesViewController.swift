@@ -116,8 +116,6 @@ class MemoriesViewController: UIViewController {
     
     // MARK: Constraints
     
-    internal var navigationHeightAnchor: NSLayoutConstraint = NSLayoutConstraint()
-    
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             // Collection
