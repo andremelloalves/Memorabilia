@@ -54,6 +54,7 @@ class SettingsViewController: UIViewController, MenuPage {
     
     private func setup() {
         // Self
+        view.backgroundColor = .clear
         
         // ... views
         

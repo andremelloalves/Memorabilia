@@ -27,6 +27,13 @@ class CreateViewController: UIViewController, MenuPage {
     var router: (CreateRouterInput & CreateRouterOutput)?
     
     // MARK: View properties
+    
+    let createButton: PillButton = {
+        let button = PillButton()
+        button.setTitle("Criar em AR", for: .normal)
+        button.addTarget(self, action: #selector(createButtonAction), for: .primaryActionTriggered)
+        return button
+    }()
 
     // MARK: Control properties
 
@@ -52,8 +59,10 @@ class CreateViewController: UIViewController, MenuPage {
     
     private func setup() {
         // Self
+        view.backgroundColor = .clear
         
-        // ... views
+        // Create button
+        view.addSubview(createButton)
         
         // Constraints
         setupConstraints()
@@ -63,17 +72,30 @@ class CreateViewController: UIViewController, MenuPage {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            // ... views
+            // Self
+            
+            // Create button
+            createButton.widthAnchor.constraint(equalToConstant: 120),
+            createButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            createButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
     // MARK: View life cycle
     
     // MARK: Action
+    
+    @objc func createButtonAction() {
+        routeToStudio()
+    }
 
     // MARK: Animation
     
     // MARK: Navigation
+    
+    private func routeToStudio() {
+        router?.routeToStudioViewController()
+    }
     
 }
 

@@ -39,23 +39,4 @@ class StudioRouter: StudioRouterInput, StudioRouterOutput {
         viewController?.dismiss(animated: true, completion: nil)
     }
     
-//    func routeToCreateViewController() {
-//        // Perform segue
-//        let createExperienceViewController = CreateViewController()
-//        createExperienceViewController.modalTransitionStyle = .coverVertical
-//        createExperienceViewController.modalPresentationStyle = .fullScreen
-//        
-////        var dInteractor = viewController.router!.interactor!
-//        
-////        passDataCreateViewController(source: interactor!, destination: &dInteractor)
-//        viewController?.present(createExperienceViewController, animated: true, completion: nil)
-//    }
-    
-    // MARK: Data passing
-    
-//    private func passDataCreateViewController(source: MemoriesInteractorData, destination: inout CreateInteractorData) {
-//        // Pass data
-//        destination.db = source.db
-//    }
-    
 }
