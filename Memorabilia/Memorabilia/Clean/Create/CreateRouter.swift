@@ -7,3 +7,31 @@
 //
 
 import Foundation
+
+protocol CreateRouterInput {
+    
+    // Navigation
+    
+}
+
+protocol CreateRouterOutput {
+    
+    // Data passing
+    
+    var interactor: CreateInteractorData? { get }
+    
+}
+
+class CreateRouter: CreateRouterInput, CreateRouterOutput {
+    
+    // MARK: Clean Properties
+    
+    weak var viewController: CreateViewController?
+    
+    var interactor: CreateInteractorData?
+    
+    // MARK: Navigation
+    
+    // MARK: Data passing
+    
+}

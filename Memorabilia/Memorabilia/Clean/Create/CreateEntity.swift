@@ -7,3 +7,19 @@
 //
 
 import Foundation
+
+struct CreateEntity {
+    
+    struct Fetch {
+        
+    }
+    
+    struct Present {
+        
+    }
+    
+    struct Display {
+        
+    }
+    
+}

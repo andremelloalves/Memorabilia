@@ -7,3 +7,22 @@
 //
 
 import Foundation
+
+protocol CreatePresenterInput {
+    
+    // Present
+    
+}
+
+class CreatePresenter: CreatePresenterInput {
+    
+    // MARK: Clean Properties
+    
+    weak var viewController: CreateViewInput?
+    
+    // MARK: Properties
+    
+    // MARK: Functions
+    
+}
+

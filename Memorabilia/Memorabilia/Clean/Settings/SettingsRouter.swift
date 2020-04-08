@@ -7,3 +7,31 @@
 //
 
 import Foundation
+
+protocol SettingsRouterInput {
+    
+    // Navigation
+    
+}
+
+protocol SettingsRouterOutput {
+    
+    // Data passing
+    
+    var interactor: SettingsInteractorData? { get }
+    
+}
+
+class SettingsRouter: SettingsRouterInput, SettingsRouterOutput {
+    
+    // MARK: Clean Properties
+    
+    weak var viewController: SettingsViewController?
+    
+    var interactor: SettingsInteractorData?
+    
+    // MARK: Navigation
+    
+    // MARK: Data passing
+    
+}

@@ -22,6 +22,10 @@ protocol MemoriesViewInput: class {
 
 class MemoriesViewController: UIViewController, MenuPage {
     
+    // MARK: Menu page
+    
+    var menu: MenuController?
+    
     // MARK: Clean Properties
     
     var interactor: MemoriesInteractorInput?
@@ -56,10 +60,6 @@ class MemoriesViewController: UIViewController, MenuPage {
     var memoriesSections: [MemoriesSection] = [MemoriesEntity.Display.MemorySection(memories: [])]
     
     let photoDataCache = NSCache<NSString, NSData>()
-    
-    // MARK: Menu page
-    
-    var menu: MenuController?
     
     // MARK: Initializers
     

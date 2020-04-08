@@ -7,3 +7,71 @@
 //
 
 import Foundation
+
+protocol SettingsInteractorInput {
+    
+    // Create
+
+    // Read
+
+    // Update
+
+    // Delete
+    
+}
+
+protocol SettingsInteractorData {
+    
+    // Data
+    
+    var db: Database? { get set }
+    
+}
+
+class SettingsInteractor: SettingsInteractorInput, SettingsInteractorData {
+    
+    // MARK: Clean Properties
+    
+    var presenter: SettingsPresenterInput?
+    
+    // MARK: Properties
+    
+    var uid: String = UUID().uuidString
+    
+    var db: Database? {
+        willSet {
+            db?.stopNotifications(observer: self)
+        }
+        didSet {
+            db?.startNotifications(observer: self)
+        }
+    }
+    
+    // MARK: Initializers
+    
+    init() {}
+    
+    deinit {
+        db?.stopNotifications(observer: self)
+    }
+    
+    // MARK: Functions
+    
+    // Create
+    
+    // Read
+    
+    // Update
+    
+    // Delete
+    
+}
+
+
+extension SettingsInteractor: DatabaseObserver {
+    
+    func notify() {
+
+    }
+    
+}
