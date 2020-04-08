@@ -22,12 +22,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         App.configure()
         
-        let viewController = MemoriesViewController()
-        var dInteractor = viewController.router!.interactor!
-        dInteractor.db = App.session.db
-        let navigationController = NavigationController(rootViewController: viewController)
+//        let viewController = MemoriesViewController()
+//        var dInteractor = viewController.router!.interactor!
+//        dInteractor.db = App.session.db
+//        let navigationController = NavigationController(rootViewController: viewController)
+        let menu = MenuController()
+        menu.addPage(a1())
+        menu.addPage(a2())
+        menu.addPage(a3())
+        menu.page.setViewControllers([menu.pages[0]], direction: .forward, animated: true, completion: nil)
         
-        window!.rootViewController = navigationController
+        window!.rootViewController = menu//navigationController
         window!.makeKeyAndVisible()
         
         App.session.start()

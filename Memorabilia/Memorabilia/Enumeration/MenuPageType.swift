@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MenuPageType: String {
+enum MenuPageType: Int {
     
     case create
     case memories

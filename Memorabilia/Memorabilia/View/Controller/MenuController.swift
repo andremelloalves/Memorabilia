@@ -20,8 +20,10 @@ class MenuController: UIViewController {
         return view
     }()
     
-    let page: UIPageViewController = {
-        let controller = UIPageViewController()
+    lazy var page: UIPageViewController = {
+        let controller = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+//        controller.delegate = self
+//        controller.dataSource = self
         controller.view.backgroundColor = .systemBackground
         controller.view.layer.cornerRadius = 20
         controller.view.clipsToBounds = true
@@ -60,7 +62,7 @@ class MenuController: UIViewController {
     
     // MARK: Control properties
     
-    var selectedOption: MenuPageType = .create
+    var selectedPage: MenuPageType = .create
     
     // MARK: View model
     
@@ -132,20 +134,100 @@ class MenuController: UIViewController {
     
     func optionButtonAction(option: MenuPageType) -> () -> () {
         let action = { [weak self] in
-            self?.selectedOption = option
-            self?.navigation.titleButton.setTitle(option.name, for: .normal)
+            guard let self = self else { return }
+            self.changePage(from: self.selectedPage.rawValue, to: option.rawValue)
+            self.navigation.titleButton.setTitle(option.name, for: .normal)
+            self.selectedPage = option
         }
         return action
     }
     
     // MARK: Navigation
     
+    func changePage(from: Int, to: Int) {
+        if from > to {
+            page.setViewControllers([pages[to]], direction: .reverse, animated: true, completion: nil)
+        } else if from < to {
+            page.setViewControllers([pages[to]], direction: .forward, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: Delegate
+    
+    var pages: [UIViewController] = []
+    
+    public func addPage(_ controller: UIViewController) {
+        pages.append(controller)
+        page.addChild(controller)
+    }
+    
 }
 
 //extension MenuController: UIPageViewControllerDelegate {
+//
+//    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+//        guard completed else { return }
+//        guard let controller = pageViewController.viewControllers?.first else { return }
+//        guard let index = pages.firstIndex(of: controller) else { return }
+//
+//        switch index {
+//        case MenuPageType.create.rawValue:
+//            createButton.sendActions(for: .primaryActionTriggered)
+//        case MenuPageType.memories.rawValue:
+//            memoriesButton.sendActions(for: .primaryActionTriggered)
+//        case MenuPageType.settings.rawValue:
+//            settingsButton.sendActions(for: .primaryActionTriggered)
+//        default:
+//            break
+//        }
+//    }
 //
 //}
 //
 //extension MenuController: UIPageViewControllerDataSource {
 //
+//    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+//        guard let index = pages.firstIndex(of: viewController) else { return nil }
+//
+//        if index > 0 {
+//            return pages[index - 1]
+//        } else {
+//            return nil
+//        }
+//    }
+//
+//    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+//        guard let index = pages.firstIndex(of: viewController) else { return nil }
+//
+//        if index < pages.count - 1 {
+//            return pages[index + 1]
+//        } else {
+//            return nil
+//        }
+//    }
+//
 //}
+
+class a1: UIViewController {
+    
+    override func viewDidLoad() {
+        view.backgroundColor = .white
+    }
+    
+}
+
+class a2: UIViewController {
+    
+    override func viewDidLoad() {
+        view.backgroundColor = .black
+    }
+    
+}
+
+class a3: UIViewController {
+    
+    override func viewDidLoad() {
+        view.backgroundColor = .red
+    }
+    
+}
