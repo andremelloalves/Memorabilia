@@ -1,5 +1,5 @@
 //
-//  CreateEntity.swift
+//  StudioEntity.swift
 //  Memorabilia
 //
 //  Created by André Mello Alves on 29/03/20.

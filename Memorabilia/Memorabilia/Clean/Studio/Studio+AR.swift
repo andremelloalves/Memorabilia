@@ -1,5 +1,5 @@
 //
-//  Create+AR.swift
+//  Studio+AR.swift
 //  Memorabilia
 //
 //  Created by André Mello Alves on 29/03/20.
@@ -9,7 +9,7 @@
 import Foundation
 import ARKit
 
-extension CreateViewController: ARSessionDelegate {
+extension StudioViewController: ARSessionDelegate {
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         infoView.info = camera.trackingState.description

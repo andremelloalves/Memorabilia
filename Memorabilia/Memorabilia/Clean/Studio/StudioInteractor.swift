@@ -1,5 +1,5 @@
 //
-//  CreateInteractor.swift
+//  StudioInteractor.swift
 //  Memorabilia
 //
 //  Created by André Mello Alves on 29/03/20.
@@ -9,7 +9,7 @@
 import Foundation
 import PromiseKit
 
-protocol CreateInteractorInput {
+protocol StudioInteractorInput {
     
     // Create
 
@@ -23,7 +23,7 @@ protocol CreateInteractorInput {
     
 }
 
-protocol CreateInteractorData {
+protocol StudioInteractorData {
     
     // Data
     
@@ -33,11 +33,11 @@ protocol CreateInteractorData {
     
 }
 
-class CreateInteractor: CreateInteractorInput, CreateInteractorData {
+class StudioInteractor: StudioInteractorInput, StudioInteractorData {
     
     // MARK: Clean Properties
     
-    var presenter: CreatePresenterInput?
+    var presenter: StudioPresenterInput?
     
     // MARK: Properties
     
@@ -87,7 +87,7 @@ class CreateInteractor: CreateInteractorInput, CreateInteractorData {
 }
 
 
-extension CreateInteractor: DatabaseObserver {
+extension StudioInteractor: DatabaseObserver {
     
     func notify() {
         

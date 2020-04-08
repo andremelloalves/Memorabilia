@@ -1,5 +1,5 @@
 //
-//  CreatePresenter.swift
+//  StudioPresenter.swift
 //  Memorabilia
 //
 //  Created by André Mello Alves on 29/03/20.
@@ -8,17 +8,17 @@
 
 import Foundation
 
-protocol CreatePresenterInput {
+protocol StudioPresenterInput {
     
     // Present
     
 }
 
-class CreatePresenter: CreatePresenterInput {
+class StudioPresenter: StudioPresenterInput {
     
     // MARK: Clean Properties
     
-    weak var viewController: CreateViewInput?
+    weak var viewController: StudioViewInput?
     
     // MARK: Properties
     

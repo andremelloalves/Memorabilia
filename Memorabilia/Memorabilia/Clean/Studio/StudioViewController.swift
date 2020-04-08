@@ -1,5 +1,5 @@
 //
-//  CreateViewController.swift
+//  StudioViewController.swift
 //  Memorabilia
 //
 //  Created by André Mello Alves on 27/11/19.
@@ -10,17 +10,17 @@ import UIKit
 import ARKit
 import RealityKit
 
-protocol CreateViewInput: class {
+protocol StudioViewInput: class {
     
 }
 
-class CreateViewController: UIViewController {
+class StudioViewController: UIViewController {
     
     // MARK: Clean Properties
     
-    var interactor: CreateInteractorInput?
+    var interactor: StudioInteractorInput?
     
-    var router: (CreateRouterInput & CreateRouterOutput)?
+    var router: (StudioRouterInput & StudioRouterOutput)?
     
     // MARK: View properties
     
@@ -308,15 +308,15 @@ class CreateViewController: UIViewController {
     
 }
 
-extension CreateViewController {
+extension StudioViewController {
     
     // MARK: Clean setup
     
     private func cleanSetup() {
         let viewController = self
-        let interactor = CreateInteractor()
-        let presenter = CreatePresenter()
-        let router = CreateRouter()
+        let interactor = StudioInteractor()
+        let presenter = StudioPresenter()
+        let router = StudioRouter()
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
@@ -327,7 +327,7 @@ extension CreateViewController {
     
 }
 
-extension CreateViewController: CreateViewInput {
+extension StudioViewController: StudioViewInput {
     
     // Update
 }

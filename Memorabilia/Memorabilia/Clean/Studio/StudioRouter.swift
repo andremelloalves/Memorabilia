@@ -1,5 +1,5 @@
 //
-//  CreateRouter.swift
+//  StudioRouter.swift
 //  Memorabilia
 //
 //  Created by André Mello Alves on 29/03/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol CreateRouterInput {
+protocol StudioRouterInput {
     
     // Navigation
     
@@ -16,21 +16,21 @@ protocol CreateRouterInput {
     
 }
 
-protocol CreateRouterOutput {
+protocol StudioRouterOutput {
     
     // Data passing
     
-    var interactor: CreateInteractorData? { get }
+    var interactor: StudioInteractorData? { get }
     
 }
 
-class CreateRouter: CreateRouterInput, CreateRouterOutput {
+class StudioRouter: StudioRouterInput, StudioRouterOutput {
     
     // MARK: Clean Properties
     
-    weak var viewController: CreateViewController?
+    weak var viewController: StudioViewController?
     
-    var interactor: CreateInteractorData?
+    var interactor: StudioInteractorData?
     
     // MARK: Navigation
     
