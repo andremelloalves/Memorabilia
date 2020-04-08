@@ -166,20 +166,20 @@ class MenuController: UIViewController {
     private var pages: [MenuPage] = []
     
     private func configurePages(with db: Database) {
-        let a1vc = CreateViewController()
-//        var interactor = memories.router!.interactor!
-//        interactor.db = db
-        addPage(a1vc)
+        let create = CreateViewController()
+        var createInteractor = create.router!.interactor!
+        createInteractor.db = db
+        addPage(create)
         
         let memories = MemoriesViewController()
-        var interactor = memories.router!.interactor!
-        interactor.db = db
+        var memoriesInteractor = memories.router!.interactor!
+        memoriesInteractor.db = db
         addPage(memories)
         
-        let a3vc = SettingsViewController()
-//        var interactor = memories.router!.interactor!
-//        interactor.db = db
-        addPage(a3vc)
+        let settings = SettingsViewController()
+        var settingsInteractor = settings.router!.interactor!
+        settingsInteractor.db = db
+        addPage(settings)
         
         page.setViewControllers([pages[0]], direction: .forward, animated: true, completion: nil)
     }

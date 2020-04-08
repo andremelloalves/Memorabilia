@@ -10,10 +10,14 @@ import Foundation
 
 enum ReminderType: String {
     
+    // MARK: Cases
+    
     case text
     case photo
     case video
     case audio
+    
+    // MARK: Properties
     
     var symbol: String {
         switch self {
@@ -40,5 +44,7 @@ enum ReminderType: String {
             return "Áudio"
         }
     }
+    
+    // MARK: Functions
     
 }

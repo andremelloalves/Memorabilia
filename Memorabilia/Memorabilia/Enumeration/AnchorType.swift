@@ -10,9 +10,15 @@ import Foundation
 
 enum AnchorType: String {
     
+    // MARK: Cases
+    
     case text
     case photo
     case video
     case audio
+    
+    // MARK: Properties
+    
+    // MARK: Functions
     
 }

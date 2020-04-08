@@ -164,18 +164,3 @@ class SeriesChanges {
     }
     
 }
-
-extension Array where Element: Hashable {
-   
-    func filterDuplicates() -> Array<Element> {
-        var set = Set<Element>()
-        var filteredArray = Array<Element>()
-        for item in self {
-            if set.insert(item).inserted {
-                filteredArray.append(item)
-            }
-        }
-        return filteredArray
-    }
-    
-}

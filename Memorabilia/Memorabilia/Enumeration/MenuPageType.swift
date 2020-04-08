@@ -10,9 +10,13 @@ import Foundation
 
 enum MenuPageType: Int {
     
+    // MARK: Cases
+    
     case create
     case memories
     case settings
+    
+    // MARK: Properties
     
     var symbol: String {
         switch self {
@@ -35,5 +39,7 @@ enum MenuPageType: Int {
             return "Ajustes"
         }
     }
+    
+    // MARK: Functions
     
 }

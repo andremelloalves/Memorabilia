@@ -78,7 +78,7 @@ class MemoriesViewController: UIViewController, MenuPage {
     // MARK: Setup
     
     private func setup() {
-        // Background
+        // Self
         view.backgroundColor = .clear
         
         // CollectionView
