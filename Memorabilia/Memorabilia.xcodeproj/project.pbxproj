@@ -41,6 +41,16 @@
 		B6423FB1241D94B8004A7B5E /* UserDefaultsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6423FB0241D94B8004A7B5E /* UserDefaultsDatabase.swift */; };
 		B6423FB3241D99AD004A7B5E /* SeriesChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6423FB2241D99AD004A7B5E /* SeriesChanges.swift */; };
 		B6423FB5241D9A6C004A7B5E /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6423FB4241D9A6C004A7B5E /* App.swift */; };
+		B6654C4A243E5CD40081CD22 /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C49243E5CD40081CD22 /* CreateViewController.swift */; };
+		B6654C4C243E5CE40081CD22 /* CreateInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C4B243E5CE40081CD22 /* CreateInteractor.swift */; };
+		B6654C4E243E5CF60081CD22 /* CreatePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C4D243E5CF60081CD22 /* CreatePresenter.swift */; };
+		B6654C50243E5D010081CD22 /* CreateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C4F243E5D010081CD22 /* CreateEntity.swift */; };
+		B6654C52243E5D0D0081CD22 /* CreateRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C51243E5D0D0081CD22 /* CreateRouter.swift */; };
+		B6654C54243E5D260081CD22 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C53243E5D260081CD22 /* SettingsViewController.swift */; };
+		B6654C56243E5D310081CD22 /* SettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C55243E5D310081CD22 /* SettingsInteractor.swift */; };
+		B6654C58243E5D410081CD22 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C57243E5D410081CD22 /* SettingsPresenter.swift */; };
+		B6654C5A243E5D4E0081CD22 /* SettingsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C59243E5D4E0081CD22 /* SettingsEntity.swift */; };
+		B6654C5C243E5D640081CD22 /* SettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C5B243E5D640081CD22 /* SettingsRouter.swift */; };
 		B6996AAD2394372D00F4133D /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6996AAC2394372D00F4133D /* CircleButton.swift */; };
 		B6996AAF239439EB00F4133D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6996AAE239439EB00F4133D /* InfoView.swift */; };
 		B6A09EE02436B11A00EB700A /* OptionsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A09EDF2436B11A00EB700A /* OptionsBarView.swift */; };
@@ -97,6 +107,16 @@
 		B6423FB0241D94B8004A7B5E /* UserDefaultsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsDatabase.swift; sourceTree = "<group>"; };
 		B6423FB2241D99AD004A7B5E /* SeriesChanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesChanges.swift; sourceTree = "<group>"; };
 		B6423FB4241D9A6C004A7B5E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		B6654C49243E5CD40081CD22 /* CreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateViewController.swift; sourceTree = "<group>"; };
+		B6654C4B243E5CE40081CD22 /* CreateInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInteractor.swift; sourceTree = "<group>"; };
+		B6654C4D243E5CF60081CD22 /* CreatePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePresenter.swift; sourceTree = "<group>"; };
+		B6654C4F243E5D010081CD22 /* CreateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEntity.swift; sourceTree = "<group>"; };
+		B6654C51243E5D0D0081CD22 /* CreateRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRouter.swift; sourceTree = "<group>"; };
+		B6654C53243E5D260081CD22 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		B6654C55243E5D310081CD22 /* SettingsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInteractor.swift; sourceTree = "<group>"; };
+		B6654C57243E5D410081CD22 /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
+		B6654C59243E5D4E0081CD22 /* SettingsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEntity.swift; sourceTree = "<group>"; };
+		B6654C5B243E5D640081CD22 /* SettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRouter.swift; sourceTree = "<group>"; };
 		B6996AAC2394372D00F4133D /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		B6996AAE239439EB00F4133D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		B6A09EDF2436B11A00EB700A /* OptionsBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsBarView.swift; sourceTree = "<group>"; };
@@ -217,6 +237,11 @@
 		B6654C47243E56820081CD22 /* Create */ = {
 			isa = PBXGroup;
 			children = (
+				B6654C49243E5CD40081CD22 /* CreateViewController.swift */,
+				B6654C4B243E5CE40081CD22 /* CreateInteractor.swift */,
+				B6654C4D243E5CF60081CD22 /* CreatePresenter.swift */,
+				B6654C4F243E5D010081CD22 /* CreateEntity.swift */,
+				B6654C51243E5D0D0081CD22 /* CreateRouter.swift */,
 			);
 			path = Create;
 			sourceTree = "<group>";
@@ -224,6 +249,11 @@
 		B6654C48243E56F30081CD22 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				B6654C53243E5D260081CD22 /* SettingsViewController.swift */,
+				B6654C55243E5D310081CD22 /* SettingsInteractor.swift */,
+				B6654C57243E5D410081CD22 /* SettingsPresenter.swift */,
+				B6654C59243E5D4E0081CD22 /* SettingsEntity.swift */,
+				B6654C5B243E5D640081CD22 /* SettingsRouter.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -523,19 +553,26 @@
 				B6423FAE241D93A8004A7B5E /* DatabaseObserver.swift in Sources */,
 				B6102A2A241EC7730060E962 /* MemoriesRouter.swift in Sources */,
 				B6423FB1241D94B8004A7B5E /* UserDefaultsDatabase.swift in Sources */,
+				B6654C56243E5D310081CD22 /* SettingsInteractor.swift in Sources */,
+				B6654C5C243E5D640081CD22 /* SettingsRouter.swift in Sources */,
 				B6996AAF239439EB00F4133D /* InfoView.swift in Sources */,
 				B6E7F6772438C8C1001A5149 /* CGRect.swift in Sources */,
 				B6102A3A241ED1DC0060E962 /* Memories+Collection.swift in Sources */,
 				B6E7F67324379EC3001A5149 /* ActionView.swift in Sources */,
+				B6654C58243E5D410081CD22 /* SettingsPresenter.swift in Sources */,
 				B6F236B724379069002457DF /* PillButton.swift in Sources */,
 				B63663EF239448420008F5BD /* MemoriesViewController.swift in Sources */,
 				B6E7F68024394637001A5149 /* Experience+AR.swift in Sources */,
 				B6102A36241ECA4B0060E962 /* ExperienceRouter.swift in Sources */,
 				B6996AAD2394372D00F4133D /* CircleButton.swift in Sources */,
+				B6654C52243E5D0D0081CD22 /* CreateRouter.swift in Sources */,
 				B6C1ED9623809E8200AAE1B1 /* AppDelegate.swift in Sources */,
 				B6102A3C241ED3CA0060E962 /* ActionBarView.swift in Sources */,
 				B6F9579B24398BB40072EBD8 /* EmptyMemoryCollectionViewCell.swift in Sources */,
+				B6654C4A243E5CD40081CD22 /* CreateViewController.swift in Sources */,
 				B63663F2239448990008F5BD /* MemoryCollectionViewCell.swift in Sources */,
+				B6654C5A243E5D4E0081CD22 /* SettingsEntity.swift in Sources */,
+				B6654C54243E5D260081CD22 /* SettingsViewController.swift in Sources */,
 				B6102A26241EC75A0060E962 /* MemoriesInteractor.swift in Sources */,
 				B6102A32241ECA2E0060E962 /* ExperiencePresenter.swift in Sources */,
 				B6E7F6792438C8E0001A5149 /* CGPoint.swift in Sources */,
@@ -554,6 +591,7 @@
 				B6412CDD238EE49300BED236 /* DocumentsDatabase.swift in Sources */,
 				B60409652431414200C3D627 /* StudioRouter.swift in Sources */,
 				B6412CE7238EF9A500BED236 /* ARUtilities.swift in Sources */,
+				B6654C4C243E5CE40081CD22 /* CreateInteractor.swift in Sources */,
 				B6412CE1238EE6A900BED236 /* StudioViewController.swift in Sources */,
 				B6102A28241EC7640060E962 /* MemoriesPresenter.swift in Sources */,
 				B6423FB3241D99AD004A7B5E /* SeriesChanges.swift in Sources */,
@@ -562,8 +600,10 @@
 				B6423FAC241D9354004A7B5E /* Database.swift in Sources */,
 				B6E7F67E2438DB74001A5149 /* Memory.swift in Sources */,
 				B60409672431415C00C3D627 /* Studio+AR.swift in Sources */,
+				B6654C4E243E5CF60081CD22 /* CreatePresenter.swift in Sources */,
 				B6102A3E241ED4320060E962 /* ActionBarButton.swift in Sources */,
 				B6102A38241ED0250060E962 /* NavigationBarView.swift in Sources */,
+				B6654C50243E5D010081CD22 /* CreateEntity.swift in Sources */,
 				B6423FA8241D8DD6004A7B5E /* RealmDatabase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

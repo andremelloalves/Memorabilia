@@ -166,7 +166,7 @@ class MenuController: UIViewController {
     private var pages: [MenuPage] = []
     
     private func configurePages(with db: Database) {
-        let a1vc = a1()
+        let a1vc = CreateViewController()
 //        var interactor = memories.router!.interactor!
 //        interactor.db = db
         addPage(a1vc)
@@ -176,7 +176,7 @@ class MenuController: UIViewController {
         interactor.db = db
         addPage(memories)
         
-        let a3vc = a3()
+        let a3vc = SettingsViewController()
 //        var interactor = memories.router!.interactor!
 //        interactor.db = db
         addPage(a3vc)
@@ -236,23 +236,3 @@ class MenuController: UIViewController {
 //    }
 //
 //}
-
-class a1: UIViewController, MenuPage {
-    
-    var menu: MenuController?
-    
-    override func viewDidLoad() {
-        view.backgroundColor = .white
-    }
-    
-}
-
-class a3: UIViewController, MenuPage {
-    
-    var menu: MenuController?
-    
-    override func viewDidLoad() {
-        view.backgroundColor = .red
-    }
-    
-}
