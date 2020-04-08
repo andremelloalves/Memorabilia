@@ -20,7 +20,7 @@ protocol MemoriesViewInput: class {
     
 }
 
-class MemoriesViewController: UIViewController {
+class MemoriesViewController: UIViewController, MenuPage {
     
     // MARK: Clean Properties
     
@@ -39,9 +39,9 @@ class MemoriesViewController: UIViewController {
 //        layout.estimatedItemSize = CGSize(width: 343, height: 612)
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.translatesAutoresizingMaskIntoConstraints = false
-        let viewInsets = UIEdgeInsets(top: 72, left: 0, bottom: 72, right: 0)
-        view.contentInset = viewInsets
-        view.scrollIndicatorInsets = viewInsets
+//        let viewInsets = UIEdgeInsets(top: 72, left: 0, bottom: 72, right: 0)
+//        view.contentInset = viewInsets
+//        view.scrollIndicatorInsets = viewInsets
         view.backgroundColor = .clear
         view.isPagingEnabled = false
         view.delegate = self
@@ -51,26 +51,15 @@ class MemoriesViewController: UIViewController {
         return view
     }()
     
-    let navigation: NavigationBarView = {
-        let view = NavigationBarView()
-        view.leftButton.setImage(UIImage(systemName: "cloud.moon.fill"), for: .normal)
-        view.titleButton.setTitle("Memórias", for: .normal)
-        view.rightButton.setImage(UIImage(systemName: "ellipsis"), for: .normal)
-        return view
-    }()
-    
-    let action: ActionBarView = {
-        let view = ActionBarView()
-        view.button.setTitle("Criar memória", for: .normal)
-        view.button.addTarget(self, action: #selector(actionBarButtonAction), for: .primaryActionTriggered)
-        return view
-    }()
-    
     // MARK: View model
     
     var memoriesSections: [MemoriesSection] = [MemoriesEntity.Display.MemorySection(memories: [])]
     
     let photoDataCache = NSCache<NSString, NSData>()
+    
+    // MARK: Menu page
+    
+    var menu: MenuController?
     
     // MARK: Initializers
     
@@ -90,25 +79,10 @@ class MemoriesViewController: UIViewController {
     
     private func setup() {
         // Background
-        let gradient = CAGradientLayer()
-        gradient.frame = view.bounds
-        gradient.colors = [UIColor(named: "Memo1")!.cgColor, UIColor(named: "Memo2")!.cgColor]
-        gradient.startPoint = .init(x: 0, y: 0.3)
-        gradient.endPoint = .init(x: 0, y: 1)
-        view.backgroundColor = .systemBackground
-        view.layer.insertSublayer(gradient, at: 0)
+        view.backgroundColor = .clear
         
         // CollectionView
         view.addSubview(collection)
-        
-        // Navigation bar
-        view.addSubview(navigation)
-//        navigation.leftButton.addTarget(self, action: #selector(backButtonAction), for: .primaryActionTriggered)
-//        navigation.rightButton.addTarget(self, action: #selector(optionsButtonAction), for: .primaryActionTriggered)
-        
-        // Action bar
-        view.addSubview(action)
-//        action.button.addTarget(self, action: #selector(addItemButtonAction), for: .primaryActionTriggered)
         
         // Constraints
         setupConstraints()
@@ -119,22 +93,10 @@ class MemoriesViewController: UIViewController {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             // Collection
-            collection.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collection.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-            collection.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            collection.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
-            // Navigation bar
-            navigation.leftButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            navigation.topAnchor.constraint(equalTo: view.topAnchor),
-            navigation.leftAnchor.constraint(equalTo: view.leftAnchor),
-            navigation.rightAnchor.constraint(equalTo: view.rightAnchor),
-            
-            // Action bar
-            action.button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            action.leftAnchor.constraint(equalTo: view.leftAnchor),
-            action.rightAnchor.constraint(equalTo: view.rightAnchor),
-            action.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collection.topAnchor.constraint(equalTo: view.topAnchor),
+            collection.leftAnchor.constraint(equalTo: view.leftAnchor),
+            collection.rightAnchor.constraint(equalTo: view.rightAnchor),
+            collection.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -145,21 +107,14 @@ class MemoriesViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         interactor?.readMemories()
     }
     
     // MARK: Actions
     
-    @objc func actionBarButtonAction() {
-        routeToCreate()
-    }
-    
     // MARK: Navigation
     
-    func routeToCreate() {
-        router?.routeToCreateViewController()
-    }
-
 }
 
 extension MemoriesViewController {

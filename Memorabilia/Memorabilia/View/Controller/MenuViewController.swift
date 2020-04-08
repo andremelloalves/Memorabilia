@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol MenuPage: UIViewController {
+    
+    var menu: MenuController? { get set }
+    
+}
+
 class MenuController: UIViewController {
     
     // MARK: Properties
@@ -24,9 +30,7 @@ class MenuController: UIViewController {
         let controller = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 //        controller.delegate = self
 //        controller.dataSource = self
-        controller.view.backgroundColor = .systemBackground
-        controller.view.layer.cornerRadius = 20
-        controller.view.clipsToBounds = true
+        controller.view.backgroundColor = .clear
         controller.view.translatesAutoresizingMaskIntoConstraints = false
         return controller
     }()
@@ -116,10 +120,10 @@ class MenuController: UIViewController {
             navigation.rightAnchor.constraint(equalTo: view.rightAnchor),
             
             // PageView
-            page.view.topAnchor.constraint(equalTo: navigation.rightButton.bottomAnchor, constant: 16),
-            page.view.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
-            page.view.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
-            page.view.bottomAnchor.constraint(equalTo: optionsBar.topAnchor, constant: -16),
+            page.view.topAnchor.constraint(equalTo: navigation.rightButton.bottomAnchor),
+            page.view.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            page.view.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            page.view.bottomAnchor.constraint(equalTo: optionsBar.topAnchor),
             
             // Options bar
             optionsBar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
@@ -129,6 +133,11 @@ class MenuController: UIViewController {
     }
     
     // MARK: View life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configurePages(with: App.session.db)
+    }
     
     // MARK: Actions
     
@@ -152,11 +161,31 @@ class MenuController: UIViewController {
         }
     }
     
-    // MARK: Delegate
+    // MARK: Pages
     
-    var pages: [UIViewController] = []
+    private var pages: [MenuPage] = []
     
-    public func addPage(_ controller: UIViewController) {
+    private func configurePages(with db: Database) {
+        let a1vc = a1()
+//        var interactor = memories.router!.interactor!
+//        interactor.db = db
+        addPage(a1vc)
+        
+        let memories = MemoriesViewController()
+        var interactor = memories.router!.interactor!
+        interactor.db = db
+        addPage(memories)
+        
+        let a3vc = a3()
+//        var interactor = memories.router!.interactor!
+//        interactor.db = db
+        addPage(a3vc)
+        
+        page.setViewControllers([pages[0]], direction: .forward, animated: true, completion: nil)
+    }
+    
+    private func addPage(_ controller: MenuPage) {
+        controller.menu = self
         pages.append(controller)
         page.addChild(controller)
     }
@@ -208,7 +237,9 @@ class MenuController: UIViewController {
 //
 //}
 
-class a1: UIViewController {
+class a1: UIViewController, MenuPage {
+    
+    var menu: MenuController?
     
     override func viewDidLoad() {
         view.backgroundColor = .white
@@ -216,15 +247,9 @@ class a1: UIViewController {
     
 }
 
-class a2: UIViewController {
+class a3: UIViewController, MenuPage {
     
-    override func viewDidLoad() {
-        view.backgroundColor = .black
-    }
-    
-}
-
-class a3: UIViewController {
+    var menu: MenuController?
     
     override func viewDidLoad() {
         view.backgroundColor = .red
