@@ -28,8 +28,8 @@ class MenuController: UIViewController {
     
     lazy var page: UIPageViewController = {
         let controller = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-//        controller.delegate = self
-//        controller.dataSource = self
+        controller.delegate = self
+        controller.dataSource = self
         controller.view.backgroundColor = .clear
         controller.view.translatesAutoresizingMaskIntoConstraints = false
         return controller
@@ -192,47 +192,47 @@ class MenuController: UIViewController {
     
 }
 
-//extension MenuController: UIPageViewControllerDelegate {
-//
-//    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-//        guard completed else { return }
-//        guard let controller = pageViewController.viewControllers?.first else { return }
-//        guard let index = pages.firstIndex(of: controller) else { return }
-//
-//        switch index {
-//        case MenuPageType.create.rawValue:
-//            createButton.sendActions(for: .primaryActionTriggered)
-//        case MenuPageType.memories.rawValue:
-//            memoriesButton.sendActions(for: .primaryActionTriggered)
-//        case MenuPageType.settings.rawValue:
-//            settingsButton.sendActions(for: .primaryActionTriggered)
-//        default:
-//            break
-//        }
-//    }
-//
-//}
-//
-//extension MenuController: UIPageViewControllerDataSource {
-//
-//    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-//        guard let index = pages.firstIndex(of: viewController) else { return nil }
-//
-//        if index > 0 {
-//            return pages[index - 1]
-//        } else {
-//            return nil
-//        }
-//    }
-//
-//    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-//        guard let index = pages.firstIndex(of: viewController) else { return nil }
-//
-//        if index < pages.count - 1 {
-//            return pages[index + 1]
-//        } else {
-//            return nil
-//        }
-//    }
-//
-//}
+extension MenuController: UIPageViewControllerDelegate {
+
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        guard completed else { return }
+        guard let controller = pageViewController.viewControllers?.first else { return }
+        guard let index = pages.firstIndex(where: { $0 == controller }) else { return }
+
+        switch index {
+        case MenuPageType.create.rawValue:
+            createButton.sendActions(for: .primaryActionTriggered)
+        case MenuPageType.memories.rawValue:
+            memoriesButton.sendActions(for: .primaryActionTriggered)
+        case MenuPageType.settings.rawValue:
+            settingsButton.sendActions(for: .primaryActionTriggered)
+        default:
+            break
+        }
+    }
+
+}
+
+extension MenuController: UIPageViewControllerDataSource {
+
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard let index = pages.firstIndex(where: { $0 == viewController }) else { return nil }
+
+        if index > 0 {
+            return pages[index - 1]
+        } else {
+            return nil
+        }
+    }
+
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let index = pages.firstIndex(where: { $0 == viewController }) else { return nil }
+
+        if index < pages.count - 1 {
+            return pages[index + 1]
+        } else {
+            return nil
+        }
+    }
+
+}

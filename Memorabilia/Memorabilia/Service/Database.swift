@@ -73,10 +73,14 @@ class Database {
     
     func readMemories() -> Promise<[Memory]> {
         return Promise { seal in
-            let sort = NSSortDescriptor(key: "creationDate", ascending: false)
-            let results: Results<Memory> = realm.query(with: nil, sortDescriptors: [sort])
-            let memories: [Memory] = Array(results)
-            seal.fulfill(memories)
+            do {
+                let sort = NSSortDescriptor(key: "creationDate", ascending: false)
+                let results: Results<Memory> = try realm.query(with: nil, sortDescriptors: [sort])
+                let memories: [Memory] = Array(results)
+                seal.fulfill(memories)
+            } catch let error {
+                seal.reject(error)
+            }
         }
     }
     

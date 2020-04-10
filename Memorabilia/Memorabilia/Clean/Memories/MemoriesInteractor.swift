@@ -75,7 +75,7 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
         
         firstly {
             db.readMemoryPhoto(id: id)
-        }.done { photo in
+        }.done(on: .global(qos: .userInitiated)) { photo in
             self.presenter?.presentMemoryPhoto(photo, with: id, for: index)
         }.catch { error in
             print(error)
@@ -87,10 +87,10 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
         
         firstly {
             db.readMemories()
-        }.done { memories in
-            self.memories = memories
-            let entity = MemoriesEntity.Present(memories: memories)
-            self.presenter?.presentMemories(entity: entity)
+        }.map {
+            $0.map { MemoriesEntity.Present(uid: $0.uid, name: $0.name, creationDate: $0.creationDate) }
+        }.done(on: .global(qos: .userInitiated)) { memories in
+            self.presenter?.presentMemories(memories: memories)
         }.catch { error in
             print(error.localizedDescription)
         }
@@ -101,10 +101,10 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
         
         firstly {
             db.readMemories()
-        }.done { memories in
-            self.memories = memories
-            let entity = MemoriesEntity.Present(memories: memories)
-            self.presenter?.presentMemories(entity: entity)
+        }.map {
+            $0.map { MemoriesEntity.Present(uid: $0.uid, name: $0.name, creationDate: $0.creationDate) }
+        }.done(on: .global(qos: .userInitiated)) { memories in
+            self.presenter?.presentMemories(memories: memories)
         }.catch { error in
             print(error.localizedDescription)
         }

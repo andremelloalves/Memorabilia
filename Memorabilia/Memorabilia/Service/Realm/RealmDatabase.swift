@@ -14,14 +14,12 @@ class RealmDatabase {
     
     static let db = RealmDatabase()
     
-    private var realm: Realm {
-        let realm: Realm
+    private var realm: Realm? {
         do {
-            try realm = Realm()
-        } catch let error {
-            fatalError(error.localizedDescription)
+            return try Realm()
+        } catch {
+            return nil
         }
-        return realm
     }
     
     private var token: NotificationToken?
@@ -31,7 +29,7 @@ class RealmDatabase {
     // MARK: Initializers
     
     init() {
-        token = realm.observe({ (notification, realm) in
+        token = realm?.observe({ (notification, realm) in
             self.observers.forEach({ $0.notify() })
         })
     }
@@ -43,6 +41,7 @@ class RealmDatabase {
     // MARK: Create
     
     func createUpdate<RealmObject: Object>(object: RealmObject) throws {
+        guard let realm = realm else { throw RealmError.realm }
         try realm.write {
             realm.create(RealmObject.self, value: object, update: .modified)
         }
@@ -51,6 +50,7 @@ class RealmDatabase {
     // MARK: Read
     
     func get<RealmObject: Object>(type: RealmObject.Type, with primaryKey: String) throws -> RealmObject {
+        guard let realm = realm else { throw RealmError.realm }
         if let object = realm.object(ofType: type, forPrimaryKey: primaryKey) {
             return object
         } else {
@@ -58,7 +58,8 @@ class RealmDatabase {
         }
     }
     
-    func query<RealmObject: Object>(with predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor]) -> Results<RealmObject> {
+    func query<RealmObject: Object>(with predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor]) throws -> Results<RealmObject> {
+        guard let realm = realm else { throw RealmError.realm }
         var results = realm.objects(RealmObject.self)
         if let predicate = predicate {
             results = results.filter(predicate)
@@ -72,6 +73,7 @@ class RealmDatabase {
     // MARK: Update
     
     func update(changes: () -> ()?) throws {
+        guard let realm = realm else { throw RealmError.realm }
         try realm.write {
             changes()
         }
@@ -80,8 +82,8 @@ class RealmDatabase {
     // MARK: Delete
     
     func delete<RealmObject: Object>(type: RealmObject.Type, with primaryKey: String) throws {
-        let object = realm.object(ofType: type, forPrimaryKey: primaryKey)
-        if let object = object {
+        guard let realm = realm else { throw RealmError.realm }
+        if let object = realm.object(ofType: type, forPrimaryKey: primaryKey) {
             try realm.write {
                 realm.delete(object)
             }
@@ -100,12 +102,17 @@ class RealmDatabase {
         self.observers.removeAll(where: { $0.uid == observer.uid })
     }
     
+    // MARK: Error
+    
     enum RealmError: Error {
         
+        case realm
         case notFound
         
         var localizedDescription: String {
             switch self {
+            case .realm:
+                return "Realm failure."
             case .notFound:
                 return "File not found."
             }

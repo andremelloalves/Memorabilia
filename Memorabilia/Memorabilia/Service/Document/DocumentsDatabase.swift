@@ -95,6 +95,8 @@ class DocumentsDatabase {
         }
     }
     
+    // MARK: Error
+    
     enum DocumentError: Error {
         
         case notFound

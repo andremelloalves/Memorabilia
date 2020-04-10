@@ -34,7 +34,11 @@ struct MemoriesEntity {
     
     struct Present {
         
-        var memories: [Memory]
+        var uid: String
+        
+        var name: String
+        
+        var creationDate: Date
         
     }
     

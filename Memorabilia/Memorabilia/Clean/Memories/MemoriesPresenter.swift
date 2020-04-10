@@ -14,9 +14,9 @@ protocol MemoriesPresenterInput {
     
     func presentMemoryPhoto(_ data: Data, with id: String, for index: IndexPath)
     
-    func presentMemories(entity: MemoriesEntity.Present)
+    func presentMemories(memories: [MemoriesEntity.Present])
     
-    func presentMemoriesUpdate(entity: MemoriesEntity.Present)
+    func presentMemoriesUpdate(memories: [MemoriesEntity.Present])
     
 }
 
@@ -33,15 +33,17 @@ class MemoriesPresenter: MemoriesPresenterInput {
     // MARK: Functions
     
     func presentMemoryPhoto(_ data: Data, with id: String, for index: IndexPath) {
-        viewController?.loadPhoto(data, with: id, for: index)
+        DispatchQueue.main.async {
+            self.viewController?.loadPhoto(data, with: id, for: index)
+        }
     }
     
-    func presentMemories(entity: MemoriesEntity.Present) {
+    func presentMemories(memories: [MemoriesEntity.Present]) {
         var sections: [MemoriesSection] = []
         
         var memoryItems: [MemoriesEntity.Display.MemoryItem] = []
         
-        for memory in entity.memories {
+        for memory in memories {
             let memoryID = memory.uid
             let name = memory.name
             let format = DateFormatter()
@@ -56,15 +58,17 @@ class MemoriesPresenter: MemoriesPresenterInput {
         let memoriesSection = MemoriesEntity.Display.MemorySection(memories: memoryItems)
         sections.append(memoriesSection)
         
-        viewController?.loadSections(sections: [memoriesSection])
+        DispatchQueue.main.async {
+            self.viewController?.loadSections(sections: [memoriesSection])
+        }
     }
     
-    func presentMemoriesUpdate(entity: MemoriesEntity.Present) {
+    func presentMemoriesUpdate(memories: [MemoriesEntity.Present]) {
         var sections: [MemoriesSection] = []
         
         var memoryItems: [MemoriesEntity.Display.MemoryItem] = []
         
-        for memory in entity.memories {
+        for memory in memories {
             let memoryID = memory.uid
             let name = memory.name
             let format = DateFormatter()
@@ -88,7 +92,10 @@ class MemoriesPresenter: MemoriesPresenterInput {
         let changes = SeriesChanges.calculate(old: oldData, new: newData)
 
         sections = newSections
-        viewController?.reloadSections(changes: changes, sections: newSections)
+        
+        DispatchQueue.main.async {
+            self.viewController?.reloadSections(changes: changes, sections: newSections)
+        }
     }
 
     private func flatten(sections: [MemoriesSection]) -> [ReloadableSection<MemoriesEntity.Display.ItemWrapper>] {
