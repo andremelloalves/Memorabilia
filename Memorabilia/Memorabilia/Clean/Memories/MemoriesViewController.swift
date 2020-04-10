@@ -36,15 +36,17 @@ class MemoriesViewController: UIViewController, MenuPage {
     
     lazy var collection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        layout.itemSize = CGSize(width: 283, height: 503)
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 16
+        layout.minimumInteritemSpacing = 8
+        let width = (UIScreen.main.bounds.width - 48) / 2
+        let height = UIScreen.main.bounds.height * width / UIScreen.main.bounds.width
+        layout.itemSize = CGSize(width: width, height: height)
 //        layout.estimatedItemSize = CGSize(width: 343, height: 612)
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.translatesAutoresizingMaskIntoConstraints = false
-//        let viewInsets = UIEdgeInsets(top: 72, left: 0, bottom: 72, right: 0)
-//        view.contentInset = viewInsets
+        let viewInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        view.contentInset = viewInsets
 //        view.scrollIndicatorInsets = viewInsets
         view.backgroundColor = .clear
         view.isPagingEnabled = false

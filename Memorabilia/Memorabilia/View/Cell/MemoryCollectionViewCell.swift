@@ -24,20 +24,6 @@ class MemoryCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-//    let shadow: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = .systemBackground
-//        view.clipsToBounds = true
-//        view.layer.masksToBounds = false
-//        view.layer.cornerRadius = 20
-//        view.layer.shadowRadius = 8
-//        view.layer.shadowColor = UIColor.black.cgColor
-//        view.layer.shadowOpacity = 0.5
-//        view.layer.shadowOffset = .zero
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
-    
     let infoView: InfoView = {
         let view = InfoView()
         return view
@@ -60,8 +46,6 @@ class MemoryCollectionViewCell: UICollectionViewCell {
     private func setup() {
         // Self
         backgroundColor = .clear
-        
-        // Shadow
         
         // Photo
         addSubview(photo)
@@ -91,16 +75,10 @@ class MemoryCollectionViewCell: UICollectionViewCell {
             // Self
             
             // Photo
-            photo.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            photo.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
-            photo.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
-            photo.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
-            
-            // Shadow
-//            shadow.topAnchor.constraint(equalTo: photo.topAnchor),
-//            shadow.leftAnchor.constraint(equalTo: photo.leftAnchor),
-//            shadow.rightAnchor.constraint(equalTo: photo.rightAnchor),
-//            shadow.bottomAnchor.constraint(equalTo: photo.bottomAnchor),
+            photo.topAnchor.constraint(equalTo: topAnchor),
+            photo.leftAnchor.constraint(equalTo: leftAnchor),
+            photo.rightAnchor.constraint(equalTo: rightAnchor),
+            photo.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             // Info view
             infoView.leftAnchor.constraint(equalTo: photo.leftAnchor, constant: 8),
