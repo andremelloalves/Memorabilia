@@ -87,6 +87,8 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
         
         firstly {
             db.readMemories()
+        }.get { memories in
+            self.memories = memories
         }.map {
             $0.map { MemoriesEntity.Present(uid: $0.uid, name: $0.name, creationDate: $0.creationDate) }
         }.done(on: .global(qos: .userInitiated)) { memories in
@@ -101,6 +103,8 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
         
         firstly {
             db.readMemories()
+        }.get { memories in
+            self.memories = memories
         }.map {
             $0.map { MemoriesEntity.Present(uid: $0.uid, name: $0.name, creationDate: $0.creationDate) }
         }.done(on: .global(qos: .userInitiated)) { memories in

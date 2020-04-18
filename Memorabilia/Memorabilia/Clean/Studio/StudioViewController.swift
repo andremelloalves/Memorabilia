@@ -300,10 +300,12 @@ class StudioViewController: UIViewController {
         let sphere = MeshResource.generateSphere(radius: 0.1)
         let material = SimpleMaterial(color: .white, isMetallic: false)
         let entity = ModelEntity(mesh: sphere, materials: [material])
+        entity.generateCollisionShapes(recursive: true)
         
         anchorEntity.addChild(entity)
         
         arView.scene.addAnchor(anchorEntity)
+        arView.installGestures(.all, for: entity)
     }
     
 }
