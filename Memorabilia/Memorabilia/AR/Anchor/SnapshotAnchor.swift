@@ -7,7 +7,7 @@
 //
 
 import ARKit
-import RealityKit
+import SceneKit
 
 class SnapshotAnchor: ARAnchor {
     
@@ -17,7 +17,7 @@ class SnapshotAnchor: ARAnchor {
     
     // MARK: Initializers
     
-    convenience init?(from view: ARView) {
+    convenience init?(from view: ARSCNView) {
         guard let frame = view.session.currentFrame else { return nil }
         
         let image = CIImage(cvPixelBuffer: frame.capturedImage)

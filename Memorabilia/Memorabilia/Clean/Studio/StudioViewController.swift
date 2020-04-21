@@ -8,7 +8,7 @@
 
 import UIKit
 import ARKit
-import RealityKit
+import SceneKit
 
 protocol StudioViewInput: class {
     
@@ -102,12 +102,13 @@ class StudioViewController: UIViewController {
     
     // MARK: AR properties
     
-    lazy var arView: ARView = {
-        let view = ARView(frame: self.view.frame)
+    lazy var arView: ARSCNView = {
+        let view = ARSCNView(frame: self.view.frame)
+        view.session.delegate = self
+        view.autoenablesDefaultLighting = true
+        view.debugOptions = [.showFeaturePoints, .showWorldOrigin]
         let gesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(gesture)
-        view.session.delegate = self
-        view.debugOptions = [.showFeaturePoints]
         return view
     }()
     
@@ -244,7 +245,9 @@ class StudioViewController: UIViewController {
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         guard !isRelocalizingMap else { return }
-        guard let raycast = arView.raycast(from: sender.location(in: arView), allowing: .estimatedPlane, alignment: .any).first else { return }
+        let location = sender.location(in: arView)
+        guard let query = arView.raycastQuery(from: location, allowing: .estimatedPlane, alignment: .any) else { return }
+        guard let raycast = arView.session.raycast(query).first else { return }
         add(raycast: raycast)
     }
     
@@ -295,17 +298,12 @@ class StudioViewController: UIViewController {
         let anchor = ARAnchor(name: AnchorType.text.rawValue, transform: raycast.worldTransform)
         arView.session.add(anchor: anchor)
         
-        let anchorEntity = AnchorEntity(anchor: anchor)
+        let sphere = SCNSphere(radius: 0.1)
+        sphere.firstMaterial!.diffuse.contents = UIColor.white
+        let node = SCNNode(geometry: sphere)
+        node.transform = SCNMatrix4(raycast.worldTransform)
         
-        let sphere = MeshResource.generateSphere(radius: 0.1)
-        let material = SimpleMaterial(color: .white, isMetallic: false)
-        let entity = ModelEntity(mesh: sphere, materials: [material])
-        entity.generateCollisionShapes(recursive: true)
-        
-        anchorEntity.addChild(entity)
-        
-        arView.scene.addAnchor(anchorEntity)
-        arView.installGestures(.all, for: entity)
+        arView.scene.rootNode.addChildNode(node)
     }
     
 }
