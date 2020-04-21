@@ -9,6 +9,8 @@
 import UIKit
 import ARKit
 import SceneKit
+import MediaPlayer
+import MobileCoreServices
 
 protocol StudioViewInput: class {
     
@@ -96,9 +98,48 @@ class StudioViewController: UIViewController {
         return view
     }()
     
+    // MARK: Media properties
+    
+    lazy var photoPicker: UIImagePickerController = {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = false
+        picker.imageExportPreset = .compatible
+        picker.mediaTypes = [kUTTypeImage as String]
+        picker.sourceType = .photoLibrary
+        return picker
+    }()
+    
+    lazy var videoPicker: UIImagePickerController = {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = false
+        picker.videoExportPreset = AVAssetExportPresetMediumQuality
+        picker.mediaTypes = [kUTTypeMovie as String]
+        picker.sourceType = .photoLibrary
+        return picker
+    }()
+    
+    lazy var audioPicker: MPMediaPickerController = {
+        let picker = MPMediaPickerController(mediaTypes: .music)
+        picker.delegate = self
+        picker.allowsPickingMultipleItems = false
+        picker.showsCloudItems = false
+        picker.showsItemsWithProtectedAssets = true
+        return picker
+    }()
+    
     // MARK: Control properties
     
     var selectedOption: ReminderType = .text
+    
+    var canTakeSnapshot: Bool = false
+    
+    var isTakingSnapshot: Bool = false
+    
+    var isRelocalizingMap: Bool = false
+    
+    var isEditingReminder: Bool = false
     
     // MARK: AR properties
     
@@ -128,8 +169,6 @@ class StudioViewController: UIViewController {
 //        configuration.wantsHDREnvironmentTextures = false
         return configuration
     }()
-    
-    var isRelocalizingMap: Bool = false
     
     // MARK: Initializers
     
@@ -252,7 +291,8 @@ class StudioViewController: UIViewController {
     }
     
     @objc func infoButtonAction() {
-        infoView.info = "Esse texto informativo pode ocupar mais de uma linha se preciso."
+        reminderEditAction()
+//        infoView.info = "Esse texto informativo pode ocupar mais de uma linha se preciso."
     }
     
     @objc func backButtonAction() {
@@ -261,6 +301,23 @@ class StudioViewController: UIViewController {
     
     @objc func finishButtonAction() {
         saveARWorld()
+    }
+    
+    func reminderEditAction() {
+        let picker: UIViewController
+        
+        switch selectedOption {
+        case .text:
+            return
+        case .photo:
+            picker = photoPicker
+        case .video:
+            picker = videoPicker
+        case .audio:
+            picker = audioPicker
+        }
+        
+        present(picker, animated: true, completion: nil)
     }
     
     func optionButtonAction(option: ReminderType) -> () -> () {
