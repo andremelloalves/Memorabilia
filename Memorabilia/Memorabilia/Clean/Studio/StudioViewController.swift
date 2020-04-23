@@ -26,9 +26,16 @@ class StudioViewController: UIViewController {
     
     // MARK: View properties
     
-    let backButton: CircleButton = {
+    let exitButton: CircleButton = {
         let button = CircleButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.addTarget(self, action: #selector(exitButtonAction), for: .primaryActionTriggered)
+        return button
+    }()
+    
+    let backButton: CircleButton = {
+        let button = CircleButton()
+        button.setImage(UIImage(systemName: "arrow.turn.up.left"), for: .normal)
         button.addTarget(self, action: #selector(backButtonAction), for: .primaryActionTriggered)
         return button
     }()
@@ -50,6 +57,27 @@ class StudioViewController: UIViewController {
         let button = PillButton()
         button.setTitle("Finalizar", for: .normal)
         button.addTarget(self, action: #selector(finishButtonAction), for: .primaryActionTriggered)
+        return button
+    }()
+    
+    let deleteButton: CircleButton = {
+        let button = CircleButton()
+        button.setImage(UIImage(systemName: "trash.fill"), for: .normal)
+        button.addTarget(self, action: #selector(deleteButtonAction), for: .primaryActionTriggered)
+        return button
+    }()
+    
+    let editButton: CircleButton = {
+        let button = CircleButton()
+        button.setImage(UIImage(systemName: "square.and.arrow.down.fill"), for: .normal)
+        button.addTarget(self, action: #selector(editButtonAction), for: .primaryActionTriggered)
+        return button
+    }()
+    
+    let snapshotButton: CircleButton = {
+        let button = CircleButton()
+        button.setImage(UIImage(systemName: "largecircle.fill.circle"), for: .normal)
+        button.addTarget(self, action: #selector(snapshotButtonAction), for: .primaryActionTriggered)
         return button
     }()
     
@@ -131,15 +159,21 @@ class StudioViewController: UIViewController {
     
     // MARK: Control properties
     
+    var reminderCount: Int = 0
+    
     var selectedOption: ReminderType = .text
     
-    var canTakeSnapshot: Bool = false
+    var selectedReminder: ReminderAnchor?
+    
+    var canTakeSnapshot: Bool {
+        reminderCount > 0
+    }
     
     var isTakingSnapshot: Bool = false
     
-    var isRelocalizingMap: Bool = false
-    
     var isEditingReminder: Bool = false
+    
+    var isRelocalizingMap: Bool = false
     
     // MARK: AR properties
     
@@ -194,6 +228,9 @@ class StudioViewController: UIViewController {
         // AR view
         view.addSubview(arView)
         
+        // Exit button
+        view.addSubview(exitButton)
+        
         // Back button
         view.addSubview(backButton)
         
@@ -205,6 +242,15 @@ class StudioViewController: UIViewController {
         
         // Finish button
         view.addSubview(finishButton)
+        
+        // Delete button
+        view.addSubview(deleteButton)
+        
+        // Edit button
+        view.addSubview(editButton)
+        
+        // Snapshot button
+        view.addSubview(snapshotButton)
         
         // Options bar
         view.addSubview(optionsBar)
@@ -226,13 +272,17 @@ class StudioViewController: UIViewController {
             arView.rightAnchor.constraint(equalTo: view.rightAnchor),
             arView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
+            // Exit button
+            exitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            exitButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
+            
             // Back button
             backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             backButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
             
             // Info view
             infoView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            infoView.leftAnchor.constraint(equalTo: backButton.rightAnchor, constant: 16),
+            infoView.leftAnchor.constraint(equalTo: exitButton.rightAnchor, constant: 16),
             infoView.rightAnchor.constraint(equalTo: infoButton.leftAnchor, constant: -16),
             
             // Info button
@@ -243,6 +293,18 @@ class StudioViewController: UIViewController {
             finishButton.bottomAnchor.constraint(equalTo: optionsBar.topAnchor, constant: -16),
             finishButton.widthAnchor.constraint(equalToConstant: 120),
             finishButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            
+            // Delete button
+            deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            deleteButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
+            
+            // Edit button
+            editButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            editButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
+            
+            // Snapshot button
+            snapshotButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            snapshotButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             
             // Options bar
             optionsBar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
@@ -259,6 +321,7 @@ class StudioViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        showCreating()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -281,16 +344,55 @@ class StudioViewController: UIViewController {
         arView.session.pause()
     }
     
+    // MARK: View
+    
+    func showCreating() {
+        isTakingSnapshot = false
+        isEditingReminder = false
+        updateLayout()
+    }
+    
+    func showEditing() {
+        isTakingSnapshot = false
+        isEditingReminder = true
+        updateLayout()
+    }
+    
+    func showSaving() {
+        isTakingSnapshot = true
+        isEditingReminder = false
+        updateLayout()
+    }
+    
+    func updateLayout() {
+        hideView(view: exitButton, hidden: isTakingSnapshot || isEditingReminder)
+        hideView(view: backButton, hidden: !(isTakingSnapshot || isEditingReminder))
+        hideView(view: finishButton, hidden: !canTakeSnapshot || isTakingSnapshot || isEditingReminder)
+        hideView(view: deleteButton, hidden: !isEditingReminder)
+        hideView(view: editButton, hidden: !isEditingReminder)
+        hideView(view: snapshotButton, hidden: !isTakingSnapshot)
+        hideView(view: optionsBar, hidden: isTakingSnapshot || isEditingReminder)
+    }
+    
+    func hideView(view: UIView, hidden: Bool) {
+        UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            view.isHidden = hidden
+        })
+    }
+    
     // MARK: Action
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        guard !isTakingSnapshot else { return }
         guard !isRelocalizingMap else { return }
         
         let point = sender.location(in: arView)
         
-        if let node = arView.hitTest(point).first?.node, node.name != nil {
-            print(node.worldPosition)
+        if let node = arView.hitTest(point).first?.node, let reminder = arView.anchor(for: node) as? ReminderAnchor {
+            selectedReminder = reminder
+            showEditing()
         } else {
+            guard !isEditingReminder else { return }
             guard let query = arView.raycastQuery(from: point, allowing: .estimatedPlane, alignment: .any) else { return }
             guard let raycast = arView.session.raycast(query).first else { return }
             addReminderAnchor(with: raycast)
@@ -298,22 +400,38 @@ class StudioViewController: UIViewController {
     }
     
     @objc func infoButtonAction() {
-        reminderEditAction()
-//        infoView.info = "Esse texto informativo pode ocupar mais de uma linha se preciso."
+        infoView.info = "Esse texto informativo pode ocupar mais de uma linha se preciso."
     }
     
-    @objc func backButtonAction() {
+    @objc func exitButtonAction() {
         routeBack()
     }
     
+    @objc func backButtonAction() {
+        showCreating()
+    }
+    
     @objc func finishButtonAction() {
+        showSaving()
+    }
+    
+    @objc func deleteButtonAction() {
+        removeReminderAnchor(selectedReminder)
+        showCreating()
+    }
+    
+    @objc func editButtonAction() {
+        reminderEditAction()
+    }
+    
+    @objc func snapshotButtonAction() {
         saveARWorld()
     }
     
     func reminderEditAction() {
         let picker: UIViewController
         
-        switch selectedOption {
+        switch selectedReminder?.type {
         case .text:
             return
         case .photo:
@@ -322,6 +440,8 @@ class StudioViewController: UIViewController {
             picker = videoPicker
         case .audio:
             picker = audioPicker
+        case .none:
+            return
         }
         
         present(picker, animated: true, completion: nil)
@@ -361,6 +481,16 @@ class StudioViewController: UIViewController {
     func addReminderAnchor(with raycast: ARRaycastResult) {
         let anchor = ReminderAnchor(type: selectedOption, transform: raycast.worldTransform)
         arView.session.add(anchor: anchor)
+        selectedReminder = anchor
+        reminderCount += 1
+        showEditing()
+    }
+    
+    func removeReminderAnchor(_ anchor: ARAnchor?) {
+        guard let anchor = anchor else { return }
+        arView.session.remove(anchor: anchor)
+        reminderCount -= 1
+        showCreating()
     }
     
 }

@@ -29,7 +29,7 @@ protocol StudioInteractorData {
     
     var db: Database? { get set }
     
-    var memories: [Memory]? { get set }
+//    var memories: [Memory]? { get set }
     
 }
 
@@ -52,7 +52,7 @@ class StudioInteractor: StudioInteractorInput, StudioInteractorData {
         }
     }
     
-    var memories: [Memory]?
+//    var memories: [Memory]?
     
     // MARK: Initializers
     
@@ -72,7 +72,7 @@ class StudioInteractor: StudioInteractorInput, StudioInteractorData {
         firstly {
             db.createMemory(with: worldData, photo: photo)
         }.done { _ in
-            print("World created successfully!")
+            print("Memory saved successfully!")
         }.catch { error in
             print(error.localizedDescription)
         }

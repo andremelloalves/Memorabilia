@@ -37,7 +37,8 @@ class ReminderAnchor: ARAnchor {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        guard let type = aDecoder.decodeObject(forKey: "type") as? ReminderType else { return nil }
+        guard let value = aDecoder.decodeObject(forKey: "type") as? String else { return nil }
+        guard let type = ReminderType(rawValue: value) else { return nil }
         let fileName = aDecoder.decodeObject(forKey: "fileName") as? String
         
         self.type = type
@@ -48,7 +49,7 @@ class ReminderAnchor: ARAnchor {
     
     override func encode(with aCoder: NSCoder) {
         super.encode(with: aCoder)
-        aCoder.encode(type, forKey: "type")
+        aCoder.encode(type.rawValue, forKey: "type")
         aCoder.encode(fileName, forKey: "fileName")
     }
     

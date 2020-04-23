@@ -71,6 +71,7 @@ extension StudioViewController: ARSessionDelegate {
             do {
                 let worldData = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
                 self.interactor?.createMemory(with: worldData, photo: photo)
+                self.routeBack()
             } catch let error {
                 print(error)
             }
