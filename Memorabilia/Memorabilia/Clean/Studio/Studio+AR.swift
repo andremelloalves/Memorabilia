@@ -8,6 +8,7 @@
 
 import Foundation
 import ARKit
+import SceneKit
 
 extension StudioViewController: ARSessionDelegate {
     
@@ -76,4 +77,19 @@ extension StudioViewController: ARSessionDelegate {
         }
     }
     
+}
+
+extension StudioViewController: ARSCNViewDelegate {
+
+    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
+        guard let reminder = anchor as? ReminderAnchor else { return nil }
+
+        let sphere = SCNSphere(radius: 0.1)
+        sphere.firstMaterial!.diffuse.contents = UIColor.white
+        let node = SCNNode(geometry: sphere)
+        node.name = reminder.name
+
+        return node
+    }
+
 }

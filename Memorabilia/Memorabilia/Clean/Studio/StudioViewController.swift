@@ -145,9 +145,10 @@ class StudioViewController: UIViewController {
     
     lazy var arView: ARSCNView = {
         let view = ARSCNView(frame: self.view.frame)
+        view.delegate = self
         view.session.delegate = self
         view.autoenablesDefaultLighting = true
-        view.debugOptions = [.showFeaturePoints, .showWorldOrigin]
+//        view.debugOptions = [.showFeaturePoints, .showWorldOrigin]
         let gesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(gesture)
         return view
@@ -284,10 +285,16 @@ class StudioViewController: UIViewController {
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         guard !isRelocalizingMap else { return }
-        let location = sender.location(in: arView)
-        guard let query = arView.raycastQuery(from: location, allowing: .estimatedPlane, alignment: .any) else { return }
-        guard let raycast = arView.session.raycast(query).first else { return }
-        add(raycast: raycast)
+        
+        let point = sender.location(in: arView)
+        
+        if let node = arView.hitTest(point).first?.node, node.name != nil {
+            print(node.worldPosition)
+        } else {
+            guard let query = arView.raycastQuery(from: point, allowing: .estimatedPlane, alignment: .any) else { return }
+            guard let raycast = arView.session.raycast(query).first else { return }
+            addReminderAnchor(with: raycast)
+        }
     }
     
     @objc func infoButtonAction() {
@@ -351,16 +358,9 @@ class StudioViewController: UIViewController {
     
     // MARK: AR
     
-    func add(raycast: ARRaycastResult) {
-        let anchor = ARAnchor(name: AnchorType.text.rawValue, transform: raycast.worldTransform)
+    func addReminderAnchor(with raycast: ARRaycastResult) {
+        let anchor = ReminderAnchor(type: selectedOption, transform: raycast.worldTransform)
         arView.session.add(anchor: anchor)
-        
-        let sphere = SCNSphere(radius: 0.1)
-        sphere.firstMaterial!.diffuse.contents = UIColor.white
-        let node = SCNNode(geometry: sphere)
-        node.transform = SCNMatrix4(raycast.worldTransform)
-        
-        arView.scene.rootNode.addChildNode(node)
     }
     
 }
