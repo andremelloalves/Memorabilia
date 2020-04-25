@@ -23,7 +23,21 @@ extension StudioViewController: UIImagePickerControllerDelegate {
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        print("Chosen!")
+        let nsurl: NSURL?
+        
+        switch selectedReminder?.type {
+        case .photo:
+            nsurl = info[.imageURL] as? NSURL
+            selectedReminder?.fileName = nsurl?.path
+        case .video:
+            nsurl = info[.mediaURL] as? NSURL
+            selectedReminder?.fileName = nsurl?.absoluteString
+        default:
+            nsurl = nil
+        }
+        
+        replaceNode()
+
         picker.dismiss(animated: true, completion: nil)
     }
     
@@ -36,7 +50,18 @@ extension StudioViewController: MPMediaPickerControllerDelegate {
     }
     
     func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
-        print(mediaItemCollection)
+        let url: URL?
+        
+        switch selectedReminder?.type {
+        case .audio:
+            url = mediaItemCollection.items[0].assetURL
+            selectedReminder?.fileName = url?.absoluteString
+        default:
+            url = nil
+        }
+        
+        replaceNode()
+        
         mediaPicker.dismiss(animated: true, completion: nil)
     }
     

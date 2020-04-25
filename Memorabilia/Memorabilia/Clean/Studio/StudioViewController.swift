@@ -78,7 +78,17 @@ class StudioViewController: UIViewController {
         let button = CircleButton()
         button.setImage(UIImage(systemName: "largecircle.fill.circle"), for: .normal)
         button.addTarget(self, action: #selector(snapshotButtonAction), for: .primaryActionTriggered)
+        let configuration = UIImage.SymbolConfiguration(pointSize: 64, weight: .regular, scale: .medium)
+        button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
+        button.layer.cornerRadius = 40
+        button.removeConstraints(button.constraints)
         return button
+    }()
+    
+    let textInput: InputTextView = {
+        let view = InputTextView()
+        view.placeholder = "Digite aqui"
+        return view
     }()
     
     lazy var textButton: OptionsBarButton = {
@@ -153,9 +163,11 @@ class StudioViewController: UIViewController {
         picker.delegate = self
         picker.allowsPickingMultipleItems = false
         picker.showsCloudItems = false
-        picker.showsItemsWithProtectedAssets = true
+        picker.showsItemsWithProtectedAssets = false
         return picker
     }()
+    
+    var player: AVPlayer?
     
     // MARK: Control properties
     
@@ -252,6 +264,9 @@ class StudioViewController: UIViewController {
         // Snapshot button
         view.addSubview(snapshotButton)
         
+        // Text input
+        view.addSubview(textInput)
+        
         // Options bar
         view.addSubview(optionsBar)
         
@@ -303,8 +318,16 @@ class StudioViewController: UIViewController {
             editButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
             
             // Snapshot button
+            snapshotButton.heightAnchor.constraint(equalToConstant: 80),
+            snapshotButton.widthAnchor.constraint(equalToConstant: 80),
             snapshotButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             snapshotButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            
+            // Text input
+            textInput.heightAnchor.constraint(equalToConstant: 40),
+            textInput.leftAnchor.constraint(equalTo: deleteButton.rightAnchor, constant: 16),
+            textInput.rightAnchor.constraint(equalTo: editButton.leftAnchor, constant: -16),
+            textInput.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             
             // Options bar
             optionsBar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
@@ -371,6 +394,7 @@ class StudioViewController: UIViewController {
         hideView(view: deleteButton, hidden: !isEditingReminder)
         hideView(view: editButton, hidden: !isEditingReminder)
         hideView(view: snapshotButton, hidden: !isTakingSnapshot)
+        hideView(view: textInput, hidden: !(isEditingReminder && selectedReminder?.type == .some(.text)))
         hideView(view: optionsBar, hidden: isTakingSnapshot || isEditingReminder)
     }
     

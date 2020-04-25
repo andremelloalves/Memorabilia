@@ -52,6 +52,7 @@
 		B6654C58243E5D410081CD22 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C57243E5D410081CD22 /* SettingsPresenter.swift */; };
 		B6654C5A243E5D4E0081CD22 /* SettingsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C59243E5D4E0081CD22 /* SettingsEntity.swift */; };
 		B6654C5C243E5D640081CD22 /* SettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C5B243E5D640081CD22 /* SettingsRouter.swift */; };
+		B67F2FFF2453C42900C42324 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67F2FFE2453C42900C42324 /* InputTextView.swift */; };
 		B6996AAD2394372D00F4133D /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6996AAC2394372D00F4133D /* CircleButton.swift */; };
 		B6996AAF239439EB00F4133D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6996AAE239439EB00F4133D /* InfoView.swift */; };
 		B69ADD4C244F98F2001D9625 /* Studio+Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69ADD4B244F98F2001D9625 /* Studio+Media.swift */; };
@@ -121,6 +122,7 @@
 		B6654C57243E5D410081CD22 /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
 		B6654C59243E5D4E0081CD22 /* SettingsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEntity.swift; sourceTree = "<group>"; };
 		B6654C5B243E5D640081CD22 /* SettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRouter.swift; sourceTree = "<group>"; };
+		B67F2FFE2453C42900C42324 /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
 		B6996AAC2394372D00F4133D /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		B6996AAE239439EB00F4133D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		B69ADD4B244F98F2001D9625 /* Studio+Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Studio+Media.swift"; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				B6A09EDF2436B11A00EB700A /* OptionsBarView.swift */,
 				B6E7F67224379EC3001A5149 /* ActionView.swift */,
 				B6F2AD32243AB174009273CC /* SnapshotView.swift */,
+				B67F2FFE2453C42900C42324 /* InputTextView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -616,6 +619,7 @@
 				B6102A3E241ED4320060E962 /* ActionBarButton.swift in Sources */,
 				B6102A38241ED0250060E962 /* NavigationBarView.swift in Sources */,
 				B6654C50243E5D010081CD22 /* CreateEntity.swift in Sources */,
+				B67F2FFF2453C42900C42324 /* InputTextView.swift in Sources */,
 				B6423FA8241D8DD6004A7B5E /* RealmDatabase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -81,15 +81,96 @@ extension StudioViewController: ARSessionDelegate {
 }
 
 extension StudioViewController: ARSCNViewDelegate {
+    
+    func replaceNode() {
+        guard let reminder = selectedReminder else { return }
+        guard let old = arView.node(for: reminder) else { return }
+        guard let new = renderNode(for: reminder) else { return }
+        new.transform = old.transform
+        arView.scene.rootNode.replaceChildNode(old, with: new)
+    }
 
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
+        return renderNode(for: anchor)
+    }
+    
+    func renderNode(for anchor: ARAnchor) -> SCNNode? {
         guard let reminder = anchor as? ReminderAnchor else { return nil }
+        guard let fileName = reminder.fileName else { return renderDefaultNode(reminder.name) }
+        
+        let node: SCNNode?
 
+        switch reminder.type {
+        case .text:
+            node = renderTextNode(fileName)
+        case .photo:
+            node = renderPhotoNode(fileName)
+        case .video:
+            node = renderVideoNode(fileName)
+        case .audio:
+            node = renderAudioNode(fileName)
+        }
+        node?.name = reminder.name
+
+        return node
+    }
+    
+    func renderDefaultNode(_ name: String) -> SCNNode {
         let sphere = SCNSphere(radius: 0.1)
         sphere.firstMaterial!.diffuse.contents = UIColor.white
         let node = SCNNode(geometry: sphere)
-        node.name = reminder.name
+        node.name = name
 
+        return node
+    }
+    
+    func renderTextNode(_ message: String) -> SCNNode {
+        let text = SCNText(string: message, extrusionDepth: 0)
+        text.firstMaterial?.isDoubleSided = true
+        text.firstMaterial?.diffuse.contents = UIColor.white
+        let node = SCNNode(geometry: text)
+        
+        return node
+    }
+    
+    func renderPhotoNode(_ fileName: String) -> SCNNode? {
+        guard let image = UIImage(contentsOfFile: fileName) else { return nil }
+        
+        let plane = SCNPlane(width: image.size.width / 10000, height: image.size.height / 10000)
+        plane.firstMaterial!.diffuse.contents = image
+        let node = SCNNode(geometry: plane)
+        
+        return node
+    }
+    
+    func renderVideoNode(_ fileName: String) -> SCNNode? {
+        guard let url = URL(string: fileName) else { return nil }
+        
+        player = AVPlayer(url: url)
+        player?.play()
+        
+        let plane = SCNPlane(width: 0.3, height: 0.4)
+        plane.firstMaterial!.diffuse.contents = player
+        let node = SCNNode(geometry: plane)
+        
+        return node
+    }
+    
+    func renderAudioNode(_ fileName: String) -> SCNNode? {
+        guard let url = URL(string: fileName) else { return nil }
+        
+        guard let source = SCNAudioSource(url: url) else { return nil }
+        source.loops = true
+        source.load()
+        
+        let player = SCNAudioPlayer(source: source)
+        
+        let torus = SCNTorus(ringRadius: 0.1, pipeRadius: 0.05)
+        torus.firstMaterial?.diffuse.contents = UIColor.white
+        
+        let node = SCNNode(geometry: torus)
+        node.addAudioPlayer(player)
+        
         return node
     }
 
