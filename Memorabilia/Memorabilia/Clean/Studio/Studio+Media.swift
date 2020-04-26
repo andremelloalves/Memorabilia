@@ -23,20 +23,20 @@ extension StudioViewController: UIImagePickerControllerDelegate {
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let nsurl: NSURL?
+        let name: String?
         
         switch selectedReminder?.type {
         case .photo:
-            nsurl = info[.imageURL] as? NSURL
-            selectedReminder?.fileName = nsurl?.path
+            let nsurl = info[.imageURL] as? NSURL
+            name = nsurl?.path
         case .video:
-            nsurl = info[.mediaURL] as? NSURL
-            selectedReminder?.fileName = nsurl?.absoluteString
+            let nsurl = info[.mediaURL] as? NSURL
+            name = nsurl?.absoluteString
         default:
-            nsurl = nil
+            name = nil
         }
         
-        renderMediaNode()
+        updateReminderAnchor(name: name)
 
         picker.dismiss(animated: true, completion: nil)
     }
@@ -50,17 +50,17 @@ extension StudioViewController: MPMediaPickerControllerDelegate {
     }
     
     func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
-        let url: URL?
+        let name: String?
         
         switch selectedReminder?.type {
         case .audio:
-            url = mediaItemCollection.items[0].assetURL
-            selectedReminder?.fileName = url?.absoluteString
+            let url = mediaItemCollection.items[0].assetURL
+            name = url?.absoluteString
         default:
-            url = nil
+            name = nil
         }
         
-        renderMediaNode()
+        updateReminderAnchor(name: name)
         
         mediaPicker.dismiss(animated: true, completion: nil)
     }
@@ -72,8 +72,9 @@ extension StudioViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
-        selectedReminder?.fileName = textField.text
-        renderMediaNode()
+        let name = textField.text
+        
+        updateReminderAnchor(name: name)
         
         return false
     }

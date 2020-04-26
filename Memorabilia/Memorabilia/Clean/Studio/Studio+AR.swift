@@ -66,14 +66,8 @@ extension StudioViewController: ARSessionDelegate {
             
             guard let snapshotAnchor = SnapshotAnchor(from: self.arView) else { return }
             worldMap.anchors.append(snapshotAnchor)
-            let photo = snapshotAnchor.photo
             
-            guard let reminders = worldMap.anchors.filter({ $0.isMember(of: ReminderAnchor.self) }) as? [ReminderAnchor] else { return }
-            for reminder in reminders {
-                reminder.fileName = self.reminders.filter { $0.uid == reminder.uid } .first?.fileName
-            }
-            
-            self.saveMemory(worldMap: worldMap, photo: photo)
+            self.saveMemory(worldMap: worldMap, photo: snapshotAnchor.photo)
         }
     }
     
@@ -95,18 +89,9 @@ extension StudioViewController: ARSCNViewDelegate {
         return renderNode(for: anchor)
     }
     
-    func renderMediaNode() {
-        guard let reminder = selectedReminder else { return }
-        guard let reminderNode = arView.node(for: reminder) else { return }
-        guard let mediaNode = renderNode(for: reminder) else { return }
-        mediaNode.transform = reminderNode.transform
-        
-        reminderNode.addChildNode(mediaNode)
-    }
-    
     func renderNode(for anchor: ARAnchor) -> SCNNode? {
         guard let reminder = anchor as? ReminderAnchor else { return nil }
-        guard let fileName = reminder.fileName else { return renderDefaultNode(reminder.name) }
+        guard let fileName = reminder.name else { return renderDefaultNode() }
         
         let node: SCNNode?
 
@@ -125,11 +110,10 @@ extension StudioViewController: ARSCNViewDelegate {
         return node
     }
     
-    func renderDefaultNode(_ name: String) -> SCNNode {
+    func renderDefaultNode() -> SCNNode {
         let sphere = SCNSphere(radius: 0.1)
         sphere.firstMaterial!.diffuse.contents = UIColor.white
         let node = SCNNode(geometry: sphere)
-        node.name = name
 
         return node
     }
@@ -177,10 +161,9 @@ extension StudioViewController: ARSCNViewDelegate {
         
         let player = SCNAudioPlayer(source: source)
         
-        let torus = SCNTorus(ringRadius: 0.1, pipeRadius: 0.05)
-        torus.firstMaterial?.diffuse.contents = UIColor.white
-        
-        let node = SCNNode(geometry: torus)
+        let sphere = SCNSphere(radius: 0.1)
+        sphere.firstMaterial?.diffuse.contents = UIColor.white
+        let node = SCNNode(geometry: sphere)
         node.addAudioPlayer(player)
         
         return node

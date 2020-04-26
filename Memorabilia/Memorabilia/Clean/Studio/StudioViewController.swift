@@ -172,14 +172,14 @@ class StudioViewController: UIViewController {
     
     // MARK: Control properties
     
-    var reminders: [ReminderAnchor] = []
+    var reminderCount: Int = 0
     
     var selectedOption: ReminderType = .text
     
     var selectedReminder: ReminderAnchor?
     
     var canTakeSnapshot: Bool {
-        reminders.count > 0
+        reminderCount > 0
     }
     
     var isTakingSnapshot: Bool = false
@@ -402,7 +402,7 @@ class StudioViewController: UIViewController {
     }
     
     func updateLayout() {
-        textInput.text = selectedReminder?.fileName
+        textInput.text = selectedReminder?.name
         hideView(view: exitButton, hidden: isTakingSnapshot || isEditingReminder)
         hideView(view: backButton, hidden: !(isTakingSnapshot || isEditingReminder))
         hideView(view: finishButton, hidden: !canTakeSnapshot || isTakingSnapshot || isEditingReminder)
@@ -448,7 +448,7 @@ class StudioViewController: UIViewController {
         let point = sender.location(in: arView)
         
         if let node = arView.hitTest(point).first?.node, let reminder = arView.anchor(for: node) as? ReminderAnchor {
-            selectedReminder = reminders.filter { $0.uid == reminder.uid } .first
+            selectedReminder = reminder
             showEditing()
         } else {
             guard !isEditingReminder else { return }
@@ -538,7 +538,7 @@ class StudioViewController: UIViewController {
     func addReminderAnchor(with raycast: ARRaycastResult) {
         let anchor = ReminderAnchor(type: selectedOption, transform: raycast.worldTransform)
         arView.session.add(anchor: anchor)
-        reminders.append(anchor)
+        reminderCount += 1
         selectedReminder = anchor
         showEditing()
     }
@@ -546,8 +546,17 @@ class StudioViewController: UIViewController {
     func removeReminderAnchor(_ anchor: ARAnchor?) {
         guard let anchor = anchor as? ReminderAnchor else { return }
         arView.session.remove(anchor: anchor)
-        reminders.remove(object: anchor)
+        reminderCount -= 1
         showCreating()
+    }
+    
+    func updateReminderAnchor(name: String?) {
+        guard let reminder = selectedReminder else { return }
+        let anchor = ReminderAnchor(name: name, type: reminder.type, transform: reminder.transform)
+        arView.session.remove(anchor: reminder)
+        arView.session.add(anchor: anchor)
+        selectedReminder = anchor
+        showEditing()
     }
     
 }

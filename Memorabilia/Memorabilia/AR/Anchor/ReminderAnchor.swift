@@ -12,52 +12,40 @@ class ReminderAnchor: ARAnchor {
     
     // MARK: Properties
     
-    var uid: String
-    
     var type: ReminderType
-    
-    var fileName: String?
-    
-    override var name: String {
-        type.rawValue
-    }
     
     // MARK: Initializers
     
-    init(type: ReminderType, transform: simd_float4x4) {
-        self.uid = UUID().uuidString
+    init(name: String? = nil, type: ReminderType, transform: simd_float4x4) {
         self.type = type
-        super.init(name: type.name, transform: transform)
+        
+        if let name = name {
+            super.init(name: name, transform: transform)
+        } else {
+            super.init(transform: transform)
+        }
     }
     
     required init(anchor: ARAnchor) {
         let reminder = anchor as! ReminderAnchor
         
-        self.uid = reminder.uid
         self.type = reminder.type
-        self.fileName = reminder.fileName
         
         super.init(anchor: anchor)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        guard let uid = aDecoder.decodeObject(forKey: "uid") as? String else { return nil }
         guard let value = aDecoder.decodeObject(forKey: "type") as? String else { return nil }
         guard let type = ReminderType(rawValue: value) else { return nil }
-        let fileName = aDecoder.decodeObject(forKey: "fileName") as? String
         
-        self.uid = uid
         self.type = type
-        self.fileName = fileName
         
         super.init(coder: aDecoder)
     }
     
     override func encode(with aCoder: NSCoder) {
         super.encode(with: aCoder)
-        aCoder.encode(uid, forKey: "uid")
         aCoder.encode(type.rawValue, forKey: "type")
-        aCoder.encode(fileName, forKey: "fileName")
     }
     
     override class var supportsSecureCoding: Bool {
