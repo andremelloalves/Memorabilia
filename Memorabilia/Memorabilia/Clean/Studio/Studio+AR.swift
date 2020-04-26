@@ -105,7 +105,7 @@ extension StudioViewController: ARSCNViewDelegate {
         case .audio:
             node = renderAudioNode()
         }
-        node?.name = reminder.name
+        node?.name = reminder.type.rawValue
 
         return node
     }
@@ -131,8 +131,9 @@ extension StudioViewController: ARSCNViewDelegate {
     
     func renderPhotoNode(_ fileName: String) -> SCNNode? {
         guard let image = UIImage(contentsOfFile: fileName) else { return nil }
+        let aspectRatio = image.size.height / image.size.width
         
-        let plane = SCNPlane(width: image.size.width / 10000, height: image.size.height / 10000)
+        let plane = SCNPlane(width: 0.3, height: 0.3 * aspectRatio)
         plane.firstMaterial!.diffuse.contents = image
         let node = SCNNode(geometry: plane)
         
@@ -142,7 +143,10 @@ extension StudioViewController: ARSCNViewDelegate {
     func renderVideoNode(_ anchor: ReminderAnchor) -> SCNNode? {
         guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? VideoReminder else { return nil }
         
-        let plane = SCNPlane(width: 0.3, height: 0.4)
+        guard let url = URL(string: reminder.name ?? "") else { return nil }
+        guard let aspectRatio = AVAsset(url: url).aspectRatio else { return nil }
+        
+        let plane = SCNPlane(width: 0.3, height: 0.3 * aspectRatio)
         plane.firstMaterial!.diffuse.contents = reminder.player
         let node = SCNNode(geometry: plane)
         
