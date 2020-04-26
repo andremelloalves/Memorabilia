@@ -192,8 +192,16 @@ class StudioViewController: UIViewController {
         view.session.delegate = self
         view.autoenablesDefaultLighting = true
 //        view.debugOptions = [.showFeaturePoints, .showWorldOrigin]
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        view.addGestureRecognizer(gesture)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        view.addGestureRecognizer(tap)
+        let press = UILongPressGestureRecognizer(target: self, action: #selector(handlePress))
+        view.addGestureRecognizer(press)
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        view.addGestureRecognizer(pan)
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch))
+        view.addGestureRecognizer(pinch)
+        let rotation = UIRotationGestureRecognizer(target: self, action: #selector(handleRotation))
+        view.addGestureRecognizer(rotation)
         return view
     }()
     
@@ -384,14 +392,12 @@ class StudioViewController: UIViewController {
         isTakingSnapshot = false
         isEditingReminder = false
         updateLayout()
-        controlMediaPlayback()
     }
     
     func showEditing() {
         isTakingSnapshot = false
         isEditingReminder = true
         updateLayout()
-        controlMediaPlayback()
     }
     
     func showSaving() {
@@ -420,47 +426,26 @@ class StudioViewController: UIViewController {
     
     // MARK: Control
     
-    func controlMediaPlayback() {
-        guard let reminders = interactor?.readReminders() else { return }
-        for reminder in reminders {
-            if let videoReminder = reminder as? VideoReminder {
-                if selectedReminder?.identifier.uuidString == reminder.identifier {
-                    videoReminder.player?.play()
-                } else {
-                    videoReminder.player?.pause()
-                }
-            } else if let audioReminder = reminder as? AudioReminder {
-                if selectedReminder?.identifier.uuidString == reminder.identifier {
-                    audioReminder.player?.prepareToPlay()
-                    audioReminder.player?.play()
-                } else {
-                    audioReminder.player?.pause()
-                }
+    func controlMediaPlayback(with identifier: String?, play: Bool = true) {
+        guard let identifier = identifier else { return }
+        guard let reminder = interactor?.readReminder(identifier: identifier) else { return }
+        
+        if let video = reminder as? VideoReminder, let player = video.player {
+            if player.timeControlStatus == .playing || !play {
+                player.pause()
+            } else {
+                player.play()
+            }
+        } else if let audio = reminder as? AudioReminder, let player = audio.player {
+            if player.isPlaying || !play {
+                player.pause()
+            } else {
+                player.play()
             }
         }
     }
     
     // MARK: Action
-    
-    @objc func keyboardWillShow(_ notification: Notification) {
-        guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
-        let height = value.cgRectValue.size.height
-        
-        UIView.animate(withDuration: duration) {
-            self.bottomAnchor.constant = self.view.safeAreaInsets.bottom - height - 16
-            self.view.layoutIfNeeded()
-        }
-    }
-
-    @objc func keyboardWillHide(_ notification: Notification) {
-        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
-        
-        UIView.animate(withDuration: duration) {
-            self.bottomAnchor.constant = -16
-            self.view.layoutIfNeeded()
-        }
-    }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         guard !isTakingSnapshot else { return }
@@ -468,14 +453,79 @@ class StudioViewController: UIViewController {
         
         let point = sender.location(in: arView)
         
-        if let node = arView.hitTest(point).first?.node, let reminder = arView.anchor(for: node) as? ReminderAnchor {
-            selectedReminder = reminder
+        if let node = arView.hitTest(point).first?.node, let anchor = arView.anchor(for: node) as? ReminderAnchor {
+            controlMediaPlayback(with: selectedReminder?.identifier.uuidString, play: false)
+            selectedReminder = anchor
             showEditing()
         } else {
             guard !isEditingReminder else { return }
             guard let query = arView.raycastQuery(from: point, allowing: .estimatedPlane, alignment: .any) else { return }
             guard let raycast = arView.session.raycast(query).first else { return }
             addReminderAnchor(with: raycast)
+        }
+    }
+    
+    @objc func handlePress(_ sender: UILongPressGestureRecognizer) {
+        guard let anchor = selectedReminder else { return }
+        
+        switch sender.state {
+        case .began:
+            controlMediaPlayback(with: anchor.identifier.uuidString)
+        default:
+            return
+        }
+    }
+    
+    @objc func handlePinch(_ sender: UIPinchGestureRecognizer) {
+        guard let anchor = selectedReminder else { return }
+        guard let node = arView.node(for: anchor) else { return }
+        
+        switch sender.state {
+        case .changed:
+            let scale = Float(sender.scale)
+            
+            node.scale = SCNVector3(scale * node.scale.x, scale * node.scale.y, scale * node.scale.z)
+            
+            sender.scale = 1
+        default:
+            return
+        }
+    }
+    
+    var angles: SCNVector3 = SCNVector3(0, 0, 0)
+    
+    @objc func handlePan(_ sender: UIPanGestureRecognizer) {
+        guard let anchor = selectedReminder else { return }
+        guard let node = arView.node(for: anchor) else { return }
+        
+        switch sender.state {
+        case .began:
+            angles = node.eulerAngles
+        case .changed:
+            let translation = sender.translation(in: sender.view)
+            
+            let x = Float(translation.y) * .pi / 180
+            let y = Float(translation.x) * .pi / 180
+            
+            node.eulerAngles = SCNVector3(angles.x + x, angles.y + y, angles.z)
+        default:
+            return
+        }
+    }
+    
+    @objc func handleRotation(_ sender: UIRotationGestureRecognizer) {
+        guard let anchor = selectedReminder else { return }
+        guard let node = arView.node(for: anchor) else { return }
+        
+        switch sender.state {
+        case .began:
+            angles = node.eulerAngles
+        case .changed:
+            let rotation = Float(sender.rotation)
+            
+            node.eulerAngles = SCNVector3(angles.x, angles.y, angles.z - rotation)
+        default:
+            return
         }
     }
     
@@ -488,6 +538,7 @@ class StudioViewController: UIViewController {
     }
     
     @objc func backButtonAction() {
+        controlMediaPlayback(with: selectedReminder?.identifier.uuidString, play: false)
         showCreating()
     }
     
@@ -533,6 +584,26 @@ class StudioViewController: UIViewController {
             self?.showActionView()
         }
         return action
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
+        let height = value.cgRectValue.size.height
+        
+        UIView.animate(withDuration: duration) {
+            self.bottomAnchor.constant = self.view.safeAreaInsets.bottom - height - 16
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    @objc func keyboardWillHide(_ notification: Notification) {
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
+        
+        UIView.animate(withDuration: duration) {
+            self.bottomAnchor.constant = -16
+            self.view.layoutIfNeeded()
+        }
     }
     
     // MARK: Animation
