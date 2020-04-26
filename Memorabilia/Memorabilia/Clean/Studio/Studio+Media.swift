@@ -36,7 +36,7 @@ extension StudioViewController: UIImagePickerControllerDelegate {
             nsurl = nil
         }
         
-        replaceNode()
+        renderMediaNode()
 
         picker.dismiss(animated: true, completion: nil)
     }
@@ -60,9 +60,22 @@ extension StudioViewController: MPMediaPickerControllerDelegate {
             url = nil
         }
         
-        replaceNode()
+        renderMediaNode()
         
         mediaPicker.dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+extension StudioViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        selectedReminder?.fileName = textField.text
+        renderMediaNode()
+        
+        return false
     }
     
 }

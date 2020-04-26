@@ -19,6 +19,7 @@ class InputTextView: UITextField {
         let blur = UIBlurEffect(style: .regular)
         let blurView = UIVisualEffectView(effect: blur)
         blurView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        blurView.isUserInteractionEnabled = false
         
         return blurView
     }()
@@ -42,6 +43,7 @@ class InputTextView: UITextField {
         layer.cornerRadius = 20
         clipsToBounds = true
         textColor = .white
+        attributedPlaceholder = NSAttributedString(string: "Digite aqui", attributes: [.foregroundColor:UIColor.init(white: 1, alpha: 0.5)])
         font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         keyboardType = .asciiCapable
         autocorrectionType = .default

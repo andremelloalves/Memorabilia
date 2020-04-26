@@ -85,9 +85,9 @@ class StudioViewController: UIViewController {
         return button
     }()
     
-    let textInput: InputTextView = {
+    lazy var textInput: InputTextView = {
         let view = InputTextView()
-        view.placeholder = "Digite aqui"
+        view.delegate = self
         return view
     }()
     
@@ -171,14 +171,14 @@ class StudioViewController: UIViewController {
     
     // MARK: Control properties
     
-    var reminderCount: Int = 0
+    var reminders: [ReminderAnchor] = []
     
     var selectedOption: ReminderType = .text
     
     var selectedReminder: ReminderAnchor?
     
     var canTakeSnapshot: Bool {
-        reminderCount > 0
+        reminders.count > 0
     }
     
     var isTakingSnapshot: Bool = false
@@ -231,6 +231,11 @@ class StudioViewController: UIViewController {
         setup()
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     // MARK: Setup
     
     func setup() {
@@ -273,11 +278,19 @@ class StudioViewController: UIViewController {
         // Action view
         view.addSubview(actionView)
         
+        // Keyboard
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         // Constraints
         setupConstraints()
     }
     
     // MARK: Constraints
+    
+    lazy var bottomAnchor: NSLayoutConstraint = {
+        deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
+    }()
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
@@ -310,11 +323,11 @@ class StudioViewController: UIViewController {
             finishButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             
             // Delete button
-            deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            bottomAnchor,
             deleteButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
             
             // Edit button
-            editButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            editButton.bottomAnchor.constraint(equalTo: deleteButton.bottomAnchor),
             editButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
             
             // Snapshot button
@@ -326,8 +339,8 @@ class StudioViewController: UIViewController {
             // Text input
             textInput.heightAnchor.constraint(equalToConstant: 40),
             textInput.leftAnchor.constraint(equalTo: deleteButton.rightAnchor, constant: 16),
-            textInput.rightAnchor.constraint(equalTo: editButton.leftAnchor, constant: -16),
-            textInput.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            textInput.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
+            textInput.bottomAnchor.constraint(equalTo: deleteButton.bottomAnchor),
             
             // Options bar
             optionsBar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
@@ -388,11 +401,12 @@ class StudioViewController: UIViewController {
     }
     
     func updateLayout() {
+        textInput.text = selectedReminder?.fileName
         hideView(view: exitButton, hidden: isTakingSnapshot || isEditingReminder)
         hideView(view: backButton, hidden: !(isTakingSnapshot || isEditingReminder))
         hideView(view: finishButton, hidden: !canTakeSnapshot || isTakingSnapshot || isEditingReminder)
         hideView(view: deleteButton, hidden: !isEditingReminder)
-        hideView(view: editButton, hidden: !isEditingReminder)
+        hideView(view: editButton, hidden: !isEditingReminder || selectedReminder?.type == .some(.text))
         hideView(view: snapshotButton, hidden: !isTakingSnapshot)
         hideView(view: textInput, hidden: !(isEditingReminder && selectedReminder?.type == .some(.text)))
         hideView(view: optionsBar, hidden: isTakingSnapshot || isEditingReminder)
@@ -406,6 +420,26 @@ class StudioViewController: UIViewController {
     
     // MARK: Action
     
+    @objc func keyboardWillShow(_ notification: Notification) {
+        guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
+        let height = value.cgRectValue.size.height
+        
+        UIView.animate(withDuration: duration) {
+            self.bottomAnchor.constant = self.view.safeAreaInsets.bottom - height - 16
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    @objc func keyboardWillHide(_ notification: Notification) {
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
+        
+        UIView.animate(withDuration: duration) {
+            self.bottomAnchor.constant = -16
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         guard !isTakingSnapshot else { return }
         guard !isRelocalizingMap else { return }
@@ -413,7 +447,7 @@ class StudioViewController: UIViewController {
         let point = sender.location(in: arView)
         
         if let node = arView.hitTest(point).first?.node, let reminder = arView.anchor(for: node) as? ReminderAnchor {
-            selectedReminder = reminder
+            selectedReminder = reminders.filter { $0.uid == reminder.uid } .first
             showEditing()
         } else {
             guard !isEditingReminder else { return }
@@ -505,15 +539,15 @@ class StudioViewController: UIViewController {
     func addReminderAnchor(with raycast: ARRaycastResult) {
         let anchor = ReminderAnchor(type: selectedOption, transform: raycast.worldTransform)
         arView.session.add(anchor: anchor)
+        reminders.append(anchor)
         selectedReminder = anchor
-        reminderCount += 1
         showEditing()
     }
     
     func removeReminderAnchor(_ anchor: ARAnchor?) {
-        guard let anchor = anchor else { return }
+        guard let anchor = anchor as? ReminderAnchor else { return }
         arView.session.remove(anchor: anchor)
-        reminderCount -= 1
+        reminders.remove(object: anchor)
         showCreating()
     }
     

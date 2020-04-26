@@ -81,17 +81,18 @@ extension StudioViewController: ARSessionDelegate {
 }
 
 extension StudioViewController: ARSCNViewDelegate {
-    
-    func replaceNode() {
-        guard let reminder = selectedReminder else { return }
-        guard let old = arView.node(for: reminder) else { return }
-        guard let new = renderNode(for: reminder) else { return }
-        new.transform = old.transform
-        arView.scene.rootNode.replaceChildNode(old, with: new)
-    }
 
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
         return renderNode(for: anchor)
+    }
+    
+    func renderMediaNode() {
+        guard let reminder = selectedReminder else { return }
+        guard let reminderNode = arView.node(for: reminder) else { return }
+        guard let mediaNode = renderNode(for: reminder) else { return }
+        mediaNode.transform = reminderNode.transform
+        
+        reminderNode.addChildNode(mediaNode)
     }
     
     func renderNode(for anchor: ARAnchor) -> SCNNode? {
@@ -124,7 +125,9 @@ extension StudioViewController: ARSCNViewDelegate {
         return node
     }
     
-    func renderTextNode(_ message: String) -> SCNNode {
+    func renderTextNode(_ message: String) -> SCNNode? {
+        guard !message.isEmpty else { return nil }
+        
         let text = SCNText(string: message, extrusionDepth: 0)
         text.firstMaterial?.isDoubleSided = true
         text.firstMaterial?.diffuse.contents = UIColor.white
