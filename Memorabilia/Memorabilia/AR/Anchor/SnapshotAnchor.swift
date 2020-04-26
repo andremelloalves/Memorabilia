@@ -13,45 +13,49 @@ class SnapshotAnchor: ARAnchor {
     
     // MARK: Properties
     
-    let image: Data
+    let photo: Data
     
     // MARK: Initializers
     
     convenience init?(from view: ARSCNView) {
         guard let frame = view.session.currentFrame else { return nil }
         
-        let image = CIImage(cvPixelBuffer: frame.capturedImage)
+        let photo = CIImage(cvPixelBuffer: frame.capturedImage)
         let orientation = CGImagePropertyOrientation(cameraOrientation: UIDevice.current.orientation)
         let context = CIContext(options: [.useSoftwareRenderer: false])
         
-        guard let data = context.jpegRepresentation(of: image.oriented(orientation), colorSpace: CGColorSpaceCreateDeviceRGB(), options: [kCGImageDestinationLossyCompressionQuality as CIImageRepresentationOption: 0.7]) else { return nil }
+        guard let data = context.jpegRepresentation(of: photo.oriented(orientation),
+                                                    colorSpace: CGColorSpaceCreateDeviceRGB(),
+                                                    options: [kCGImageDestinationLossyCompressionQuality
+                                                        as CIImageRepresentationOption: 0.7]) else { return nil }
         
-        self.init(image: data, transform: frame.camera.transform)
+        self.init(photo: data, transform: frame.camera.transform)
     }
     
-    init(image: Data, transform: float4x4) {
-        self.image = image
+    init(photo: Data, transform: float4x4) {
+        self.photo = photo
         super.init(name: "snapshot", transform: transform)
     }
     
     required init(anchor: ARAnchor) {
-        self.image = (anchor as! SnapshotAnchor).image
+        let snapshot = anchor as! SnapshotAnchor
+        
+        self.photo = snapshot.photo
+        
         super.init(anchor: anchor)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        if let snapshot = aDecoder.decodeObject(forKey: "snapshot") as? Data {
-            self.image = snapshot
-        } else {
-            return nil
-        }
+        guard let snapshot = aDecoder.decodeObject(forKey: "snapshot") as? Data else { return nil }
+        
+        self.photo = snapshot
         
         super.init(coder: aDecoder)
     }
     
     override func encode(with aCoder: NSCoder) {
         super.encode(with: aCoder)
-        aCoder.encode(image, forKey: "snapshot")
+        aCoder.encode(photo, forKey: "snapshot")
     }
     
     override class var supportsSecureCoding: Bool {

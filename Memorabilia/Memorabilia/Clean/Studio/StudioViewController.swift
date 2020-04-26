@@ -67,10 +67,10 @@ class StudioViewController: UIViewController {
         return button
     }()
     
-    let editButton: CircleButton = {
+    let mediaButton: CircleButton = {
         let button = CircleButton()
         button.setImage(UIImage(systemName: "square.and.arrow.down.fill"), for: .normal)
-        button.addTarget(self, action: #selector(editButtonAction), for: .primaryActionTriggered)
+        button.addTarget(self, action: #selector(mediaButtonAction), for: .primaryActionTriggered)
         return button
     }()
     
@@ -81,6 +81,7 @@ class StudioViewController: UIViewController {
         let configuration = UIImage.SymbolConfiguration(pointSize: 64, weight: .regular, scale: .medium)
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         button.layer.cornerRadius = 40
+        button.background.removeFromSuperview()
         button.removeConstraints(button.constraints)
         return button
     }()
@@ -263,8 +264,8 @@ class StudioViewController: UIViewController {
         // Delete button
         view.addSubview(deleteButton)
         
-        // Edit button
-        view.addSubview(editButton)
+        // Media button
+        view.addSubview(mediaButton)
         
         // Snapshot button
         view.addSubview(snapshotButton)
@@ -326,9 +327,9 @@ class StudioViewController: UIViewController {
             bottomAnchor,
             deleteButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
             
-            // Edit button
-            editButton.bottomAnchor.constraint(equalTo: deleteButton.bottomAnchor),
-            editButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
+            // Media button
+            mediaButton.bottomAnchor.constraint(equalTo: deleteButton.bottomAnchor),
+            mediaButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
             
             // Snapshot button
             snapshotButton.heightAnchor.constraint(equalToConstant: 80),
@@ -406,7 +407,7 @@ class StudioViewController: UIViewController {
         hideView(view: backButton, hidden: !(isTakingSnapshot || isEditingReminder))
         hideView(view: finishButton, hidden: !canTakeSnapshot || isTakingSnapshot || isEditingReminder)
         hideView(view: deleteButton, hidden: !isEditingReminder)
-        hideView(view: editButton, hidden: !isEditingReminder || selectedReminder?.type == .some(.text))
+        hideView(view: mediaButton, hidden: !isEditingReminder || selectedReminder?.type == .some(.text))
         hideView(view: snapshotButton, hidden: !isTakingSnapshot)
         hideView(view: textInput, hidden: !(isEditingReminder && selectedReminder?.type == .some(.text)))
         hideView(view: optionsBar, hidden: isTakingSnapshot || isEditingReminder)
@@ -478,27 +479,25 @@ class StudioViewController: UIViewController {
         showCreating()
     }
     
-    @objc func editButtonAction() {
-        reminderEditAction()
+    @objc func mediaButtonAction() {
+        reminderMediaAction()
     }
     
     @objc func snapshotButtonAction() {
         saveARWorld()
     }
     
-    func reminderEditAction() {
+    func reminderMediaAction() {
         let picker: UIViewController
         
         switch selectedReminder?.type {
-        case .text:
-            return
         case .photo:
             picker = photoPicker
         case .video:
             picker = videoPicker
         case .audio:
             picker = audioPicker
-        case .none:
+        default:
             return
         }
         

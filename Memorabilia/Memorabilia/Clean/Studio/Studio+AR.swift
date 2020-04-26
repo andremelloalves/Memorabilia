@@ -60,21 +60,30 @@ extension StudioViewController: ARSessionDelegate {
         arView.session.run(worldTrackingConfiguration, options: [.resetTracking, .removeExistingAnchors])
     }
     
-    public func saveARWorld() {
+    func saveARWorld() {
         arView.session.getCurrentWorldMap { arWorld, error in
             guard let worldMap = arWorld else { return }
             
             guard let snapshotAnchor = SnapshotAnchor(from: self.arView) else { return }
             worldMap.anchors.append(snapshotAnchor)
-            let photo = snapshotAnchor.image
+            let photo = snapshotAnchor.photo
             
-            do {
-                let worldData = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
-                self.interactor?.createMemory(with: worldData, photo: photo)
-                self.routeBack()
-            } catch let error {
-                print(error)
+            guard let reminders = worldMap.anchors.filter({ $0.isMember(of: ReminderAnchor.self) }) as? [ReminderAnchor] else { return }
+            for reminder in reminders {
+                reminder.fileName = self.reminders.filter { $0.uid == reminder.uid } .first?.fileName
             }
+            
+            self.saveMemory(worldMap: worldMap, photo: photo)
+        }
+    }
+    
+    func saveMemory(worldMap: ARWorldMap, photo: Data) {
+        do {
+            let worldData = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
+            self.interactor?.createMemory(with: worldData, photo: photo)
+            self.routeBack()
+        } catch let error {
+            print(error)
         }
     }
     

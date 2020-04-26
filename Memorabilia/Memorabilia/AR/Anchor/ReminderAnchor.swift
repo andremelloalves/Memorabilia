@@ -31,11 +31,11 @@ class ReminderAnchor: ARAnchor {
     }
     
     required init(anchor: ARAnchor) {
-        let new = anchor as! ReminderAnchor
+        let reminder = anchor as! ReminderAnchor
         
-        self.uid = new.uid
-        self.type = new.type
-        self.fileName = new.fileName
+        self.uid = reminder.uid
+        self.type = reminder.type
+        self.fileName = reminder.fileName
         
         super.init(anchor: anchor)
     }
