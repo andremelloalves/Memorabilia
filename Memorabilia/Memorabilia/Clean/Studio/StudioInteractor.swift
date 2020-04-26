@@ -14,12 +14,22 @@ protocol StudioInteractorInput {
     // Create
 
     func createMemory(with worldData: Data, photo: Data)
+    
+    func createReminder(identifier: String, type: ReminderType, name: String?)
 
     // Read
+    
+    func readReminder(identifier: String) -> Reminder?
+    
+    func readReminders() -> [Reminder]
+    
+    func readReminderCount() -> Int
 
     // Update
 
     // Delete
+    
+    func deleteReminder(identifier: String)
     
 }
 
@@ -29,7 +39,7 @@ protocol StudioInteractorData {
     
     var db: Database? { get set }
     
-//    var memories: [Memory]? { get set }
+    var reminders: [Reminder] { get set }
     
 }
 
@@ -52,7 +62,7 @@ class StudioInteractor: StudioInteractorInput, StudioInteractorData {
         }
     }
     
-//    var memories: [Memory]?
+    var reminders: [Reminder] = []
     
     // MARK: Initializers
     
@@ -78,11 +88,44 @@ class StudioInteractor: StudioInteractorInput, StudioInteractorData {
         }
     }
     
+    func createReminder(identifier: String, type: ReminderType, name: String? = nil) {
+        let reminder: Reminder
+        
+        switch type {
+        case .text:
+            reminder = TextReminder(identifier: identifier, name: name)
+        case .photo:
+            reminder = PhotoReminder(identifier: identifier, name: name)
+        case .video:
+            reminder = VideoReminder(identifier: identifier, name: name)
+        case .audio:
+            reminder = AudioReminder(identifier: identifier, name: name)
+        }
+        
+        reminders.append(reminder)
+    }
+    
     // Read
+    
+    func readReminder(identifier: String) -> Reminder? {
+        reminders.first(where: { $0.identifier == identifier })
+    }
+    
+    func readReminders() -> [Reminder] {
+        reminders
+    }
+    
+    func readReminderCount() -> Int {
+        reminders.count
+    }
     
     // Update
     
     // Delete
+    
+    func deleteReminder(identifier: String) {
+        reminders.removeAll(where: { $0.identifier == identifier })
+    }
     
 }
 

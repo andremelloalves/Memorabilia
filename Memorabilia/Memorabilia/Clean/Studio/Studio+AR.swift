@@ -140,7 +140,7 @@ extension StudioViewController: ARSCNViewDelegate {
     }
     
     func renderVideoNode(_ anchor: ReminderAnchor) -> SCNNode? {
-        guard let reminder = reminders.first(where: { $0.identifier == anchor.identifier.uuidString }) as? VideoReminder else { return nil }
+        guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? VideoReminder else { return nil }
         
         let plane = SCNPlane(width: 0.3, height: 0.4)
         plane.firstMaterial!.diffuse.contents = reminder.player

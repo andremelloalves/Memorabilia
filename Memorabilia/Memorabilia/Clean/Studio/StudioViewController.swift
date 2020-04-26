@@ -170,14 +170,12 @@ class StudioViewController: UIViewController {
     
     // MARK: Control properties
     
-    var reminders: [Reminder] = []
-    
     var selectedOption: ReminderType = .text
     
     var selectedReminder: ReminderAnchor?
     
     var canTakeSnapshot: Bool {
-        reminders.count > 0
+        interactor?.readReminderCount() ?? 0 > 0
     }
     
     var isTakingSnapshot: Bool = false
@@ -386,12 +384,14 @@ class StudioViewController: UIViewController {
         isTakingSnapshot = false
         isEditingReminder = false
         updateLayout()
+        controlMediaPlayback()
     }
     
     func showEditing() {
         isTakingSnapshot = false
         isEditingReminder = true
         updateLayout()
+        controlMediaPlayback()
     }
     
     func showSaving() {
@@ -401,7 +401,6 @@ class StudioViewController: UIViewController {
     }
     
     func updateLayout() {
-        play()
         textInput.text = selectedReminder?.name
         hideView(view: exitButton, hidden: isTakingSnapshot || isEditingReminder)
         hideView(view: backButton, hidden: !(isTakingSnapshot || isEditingReminder))
@@ -421,25 +420,24 @@ class StudioViewController: UIViewController {
     
     // MARK: Control
     
-    func addReminder(identifier: String, type: ReminderType, name: String? = nil) {
-        let reminder: Reminder
-        
-        switch type {
-        case .text:
-            reminder = TextReminder(identifier: identifier, name: name)
-        case .photo:
-            reminder = PhotoReminder(identifier: identifier, name: name)
-        case .video:
-            reminder = VideoReminder(identifier: identifier, name: name)
-        case .audio:
-            reminder = AudioReminder(identifier: identifier, name: name)
+    func controlMediaPlayback() {
+        guard let reminders = interactor?.readReminders() else { return }
+        for reminder in reminders {
+            if let videoReminder = reminder as? VideoReminder {
+                if selectedReminder?.identifier.uuidString == reminder.identifier {
+                    videoReminder.player?.play()
+                } else {
+                    videoReminder.player?.pause()
+                }
+            } else if let audioReminder = reminder as? AudioReminder {
+                if selectedReminder?.identifier.uuidString == reminder.identifier {
+                    audioReminder.player?.prepareToPlay()
+                    audioReminder.player?.play()
+                } else {
+                    audioReminder.player?.pause()
+                }
+            }
         }
-        
-        reminders.append(reminder)
-    }
-    
-    func removeReminder(identifier: String) {
-        reminders.removeAll(where: { $0.identifier == identifier })
     }
     
     // MARK: Action
@@ -537,25 +535,6 @@ class StudioViewController: UIViewController {
         return action
     }
     
-    func play() {
-        for reminder in reminders {
-            if let videoReminder = reminder as? VideoReminder {
-                if selectedReminder?.identifier.uuidString == reminder.identifier {
-                    videoReminder.player?.play()
-                } else {
-                    videoReminder.player?.pause()
-                }
-            } else if let audioReminder = reminder as? AudioReminder {
-                if selectedReminder?.identifier.uuidString == reminder.identifier {
-                    audioReminder.player?.prepareToPlay()
-                    audioReminder.player?.play()
-                } else {
-                    audioReminder.player?.pause()
-                }
-            }
-        }
-    }
-    
     // MARK: Animation
     
     func showActionView() {
@@ -580,7 +559,7 @@ class StudioViewController: UIViewController {
     func addReminderAnchor(with raycast: ARRaycastResult) {
         let anchor = ReminderAnchor(type: selectedOption, transform: raycast.worldTransform)
         
-        addReminder(identifier: anchor.identifier.uuidString, type: selectedOption)
+        interactor?.createReminder(identifier: anchor.identifier.uuidString, type: selectedOption, name: nil)
         arView.session.add(anchor: anchor)
         
         selectedReminder = anchor
@@ -591,10 +570,10 @@ class StudioViewController: UIViewController {
         guard let reminder = selectedReminder else { return }
         let anchor = ReminderAnchor(name: name, type: reminder.type, transform: reminder.transform)
         
-        removeReminder(identifier: reminder.identifier.uuidString)
+        interactor?.deleteReminder(identifier: reminder.identifier.uuidString)
         arView.session.remove(anchor: reminder)
         
-        addReminder(identifier: anchor.identifier.uuidString, type: reminder.type, name: name)
+        interactor?.createReminder(identifier: anchor.identifier.uuidString, type: reminder.type, name: name)
         arView.session.add(anchor: anchor)
         
         selectedReminder = anchor
@@ -604,7 +583,7 @@ class StudioViewController: UIViewController {
     func removeReminderAnchor() {
         guard let anchor = selectedReminder else { return }
         
-        removeReminder(identifier: anchor.identifier.uuidString)
+        interactor?.deleteReminder(identifier: anchor.identifier.uuidString)
         arView.session.remove(anchor: anchor)
         
         showCreating()
