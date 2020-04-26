@@ -101,9 +101,9 @@ extension StudioViewController: ARSCNViewDelegate {
         case .photo:
             node = renderPhotoNode(fileName)
         case .video:
-            node = renderVideoNode(fileName)
+            node = renderVideoNode(reminder)
         case .audio:
-            node = renderAudioNode(fileName)
+            node = renderAudioNode()
         }
         node?.name = reminder.name
 
@@ -139,32 +139,20 @@ extension StudioViewController: ARSCNViewDelegate {
         return node
     }
     
-    func renderVideoNode(_ fileName: String) -> SCNNode? {
-        guard let url = URL(string: fileName) else { return nil }
-        
-        player = AVPlayer(url: url)
-        player?.play()
+    func renderVideoNode(_ anchor: ReminderAnchor) -> SCNNode? {
+        guard let reminder = reminders.first(where: { $0.identifier == anchor.identifier.uuidString }) as? VideoReminder else { return nil }
         
         let plane = SCNPlane(width: 0.3, height: 0.4)
-        plane.firstMaterial!.diffuse.contents = player
+        plane.firstMaterial!.diffuse.contents = reminder.player
         let node = SCNNode(geometry: plane)
         
         return node
     }
     
-    func renderAudioNode(_ fileName: String) -> SCNNode? {
-        guard let url = URL(string: fileName) else { return nil }
-        
-        guard let source = SCNAudioSource(url: url) else { return nil }
-        source.loops = true
-        source.load()
-        
-        let player = SCNAudioPlayer(source: source)
-        
+    func renderAudioNode() -> SCNNode? {
         let sphere = SCNSphere(radius: 0.1)
         sphere.firstMaterial?.diffuse.contents = UIColor.white
         let node = SCNNode(geometry: sphere)
-        node.addAudioPlayer(player)
         
         return node
     }

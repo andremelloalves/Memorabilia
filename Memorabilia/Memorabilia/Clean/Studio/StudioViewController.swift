@@ -168,18 +168,16 @@ class StudioViewController: UIViewController {
         return picker
     }()
     
-    var player: AVPlayer?
-    
     // MARK: Control properties
     
-    var reminderCount: Int = 0
+    var reminders: [Reminder] = []
     
     var selectedOption: ReminderType = .text
     
     var selectedReminder: ReminderAnchor?
     
     var canTakeSnapshot: Bool {
-        reminderCount > 0
+        reminders.count > 0
     }
     
     var isTakingSnapshot: Bool = false
@@ -384,6 +382,7 @@ class StudioViewController: UIViewController {
     // MARK: View
     
     func showCreating() {
+        selectedReminder = nil
         isTakingSnapshot = false
         isEditingReminder = false
         updateLayout()
@@ -402,6 +401,7 @@ class StudioViewController: UIViewController {
     }
     
     func updateLayout() {
+        play()
         textInput.text = selectedReminder?.name
         hideView(view: exitButton, hidden: isTakingSnapshot || isEditingReminder)
         hideView(view: backButton, hidden: !(isTakingSnapshot || isEditingReminder))
@@ -417,6 +417,29 @@ class StudioViewController: UIViewController {
         UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
             view.isHidden = hidden
         })
+    }
+    
+    // MARK: Control
+    
+    func addReminder(identifier: String, type: ReminderType, name: String? = nil) {
+        let reminder: Reminder
+        
+        switch type {
+        case .text:
+            reminder = TextReminder(identifier: identifier, name: name)
+        case .photo:
+            reminder = PhotoReminder(identifier: identifier, name: name)
+        case .video:
+            reminder = VideoReminder(identifier: identifier, name: name)
+        case .audio:
+            reminder = AudioReminder(identifier: identifier, name: name)
+        }
+        
+        reminders.append(reminder)
+    }
+    
+    func removeReminder(identifier: String) {
+        reminders.removeAll(where: { $0.identifier == identifier })
     }
     
     // MARK: Action
@@ -475,7 +498,7 @@ class StudioViewController: UIViewController {
     }
     
     @objc func deleteButtonAction() {
-        removeReminderAnchor(selectedReminder)
+        removeReminderAnchor()
         showCreating()
     }
     
@@ -514,6 +537,25 @@ class StudioViewController: UIViewController {
         return action
     }
     
+    func play() {
+        for reminder in reminders {
+            if let videoReminder = reminder as? VideoReminder {
+                if selectedReminder?.identifier.uuidString == reminder.identifier {
+                    videoReminder.player?.play()
+                } else {
+                    videoReminder.player?.pause()
+                }
+            } else if let audioReminder = reminder as? AudioReminder {
+                if selectedReminder?.identifier.uuidString == reminder.identifier {
+                    audioReminder.player?.prepareToPlay()
+                    audioReminder.player?.play()
+                } else {
+                    audioReminder.player?.pause()
+                }
+            }
+        }
+    }
+    
     // MARK: Animation
     
     func showActionView() {
@@ -537,26 +579,35 @@ class StudioViewController: UIViewController {
     
     func addReminderAnchor(with raycast: ARRaycastResult) {
         let anchor = ReminderAnchor(type: selectedOption, transform: raycast.worldTransform)
+        
+        addReminder(identifier: anchor.identifier.uuidString, type: selectedOption)
         arView.session.add(anchor: anchor)
-        reminderCount += 1
+        
         selectedReminder = anchor
         showEditing()
-    }
-    
-    func removeReminderAnchor(_ anchor: ARAnchor?) {
-        guard let anchor = anchor as? ReminderAnchor else { return }
-        arView.session.remove(anchor: anchor)
-        reminderCount -= 1
-        showCreating()
     }
     
     func updateReminderAnchor(name: String?) {
         guard let reminder = selectedReminder else { return }
         let anchor = ReminderAnchor(name: name, type: reminder.type, transform: reminder.transform)
+        
+        removeReminder(identifier: reminder.identifier.uuidString)
         arView.session.remove(anchor: reminder)
+        
+        addReminder(identifier: anchor.identifier.uuidString, type: reminder.type, name: name)
         arView.session.add(anchor: anchor)
+        
         selectedReminder = anchor
         showEditing()
+    }
+    
+    func removeReminderAnchor() {
+        guard let anchor = selectedReminder else { return }
+        
+        removeReminder(identifier: anchor.identifier.uuidString)
+        arView.session.remove(anchor: anchor)
+        
+        showCreating()
     }
     
 }
