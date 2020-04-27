@@ -130,7 +130,7 @@ extension StudioViewController: ARSCNViewDelegate {
     }
     
     func renderPhotoNode(_ fileName: String) -> SCNNode? {
-        guard let image = UIImage(contentsOfFile: fileName) else { return nil }
+        guard let image = UIImage(contentsOfFile: fileName)?.orientedImage else { return nil }
         let aspectRatio = image.size.height / image.size.width
         
         let plane = SCNPlane(width: 0.3, height: 0.3 * aspectRatio)

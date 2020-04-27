@@ -504,8 +504,8 @@ class StudioViewController: UIViewController {
         case .changed:
             let translation = sender.translation(in: sender.view)
             
-            let x = Float(translation.y) * .pi / 180
-            let y = Float(translation.x) * .pi / 180
+            let x = Float(translation.y) * .pi / 360
+            let y = Float(translation.x) * .pi / 360
             
             node.eulerAngles = SCNVector3(angles.x + x, angles.y + y, angles.z)
         default:
