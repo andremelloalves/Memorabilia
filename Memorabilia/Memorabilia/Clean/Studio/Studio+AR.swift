@@ -141,13 +141,17 @@ extension StudioViewController: ARSCNViewDelegate {
     }
     
     func renderVideoNode(_ anchor: ReminderAnchor) -> SCNNode? {
-        guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? VideoReminder else { return nil }
+        guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? VideoReminder,
+            let player = reminder.player,
+            let fileName = reminder.name,
+            let url = URL(string: fileName)
+            else { return nil }
         
-        guard let url = URL(string: reminder.name ?? "") else { return nil }
-        guard let aspectRatio = AVAsset(url: url).aspectRatio else { return nil }
+        let asset = AVAsset(url: url)
+        guard let aspectRatio = asset.aspectRatio else { return nil }
         
         let plane = SCNPlane(width: 0.3, height: 0.3 * aspectRatio)
-        plane.firstMaterial!.diffuse.contents = reminder.player
+        plane.firstMaterial!.diffuse.contents = player
         let node = SCNNode(geometry: plane)
         
         return node
