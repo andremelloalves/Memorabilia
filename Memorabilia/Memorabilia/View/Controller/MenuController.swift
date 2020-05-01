@@ -21,7 +21,7 @@ class MenuController: UIViewController {
     let navigation: NavigationBarView = {
         let view = NavigationBarView()
         view.leftButton.setImage(UIImage(systemName: "person.fill"), for: .normal)
-        view.titleButton.setTitle(MenuPageType.create.name, for: .normal)
+        view.titleButton.setTitle(MenuPageType.memories.name, for: .normal)
         view.rightButton.setImage(UIImage(systemName: "info"), for: .normal)
         return view
     }()
@@ -58,6 +58,7 @@ class MenuController: UIViewController {
     
     lazy var optionsBar: OptionsBarView = {
         let view = OptionsBarView()
+        view.setInitialIndex(1)
         view.addButton(createButton)
         view.addButton(memoriesButton)
         view.addButton(settingsButton)
@@ -66,7 +67,7 @@ class MenuController: UIViewController {
     
     // MARK: Control properties
     
-    var selectedPage: MenuPageType = .create
+    var selectedPage: MenuPageType = .memories
     
     // MARK: View model
     
@@ -181,7 +182,7 @@ class MenuController: UIViewController {
         settingsInteractor.db = db
         addPage(settings)
         
-        page.setViewControllers([pages[0]], direction: .forward, animated: true, completion: nil)
+        page.setViewControllers([pages[1]], direction: .forward, animated: true, completion: nil)
     }
     
     private func addPage(_ controller: MenuPage) {

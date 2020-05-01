@@ -25,6 +25,7 @@
 		B6102A3A241ED1DC0060E962 /* Memories+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6102A39241ED1DC0060E962 /* Memories+Collection.swift */; };
 		B6102A3C241ED3CA0060E962 /* ActionBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6102A3B241ED3CA0060E962 /* ActionBarView.swift */; };
 		B6102A3E241ED4320060E962 /* ActionBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6102A3D241ED4320060E962 /* ActionBarButton.swift */; };
+		B6303373245CBF7B00DFDA0D /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6303372245CBF7B00DFDA0D /* Collection.swift */; };
 		B6304255243A3A890026FA1D /* ReminderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6304254243A3A890026FA1D /* ReminderType.swift */; };
 		B63663ED239444420008F5BD /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63663EC239444420008F5BD /* NavigationController.swift */; };
 		B63663EF239448420008F5BD /* MemoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63663EE239448420008F5BD /* MemoriesViewController.swift */; };
@@ -98,6 +99,7 @@
 		B6102A39241ED1DC0060E962 /* Memories+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Memories+Collection.swift"; sourceTree = "<group>"; };
 		B6102A3B241ED3CA0060E962 /* ActionBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionBarView.swift; sourceTree = "<group>"; };
 		B6102A3D241ED4320060E962 /* ActionBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionBarButton.swift; sourceTree = "<group>"; };
+		B6303372245CBF7B00DFDA0D /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		B6304254243A3A890026FA1D /* ReminderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderType.swift; sourceTree = "<group>"; };
 		B63663EC239444420008F5BD /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		B63663EE239448420008F5BD /* MemoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesViewController.swift; sourceTree = "<group>"; };
@@ -385,9 +387,10 @@
 			children = (
 				B6E3E88C243E771100656B21 /* Array.swift */,
 				B6412CE6238EF9A500BED236 /* ARUtilities.swift */,
+				B6D033432456058800511544 /* AVAsset.swift */,
 				B6E7F6762438C8C1001A5149 /* CGRect.swift */,
 				B6E7F6782438C8E0001A5149 /* CGPoint.swift */,
-				B6D033432456058800511544 /* AVAsset.swift */,
+				B6303372245CBF7B00DFDA0D /* Collection.swift */,
 				B6D033452456630A00511544 /* UIImage.swift */,
 			);
 			path = Extension;
@@ -585,6 +588,7 @@
 				B6E7F67324379EC3001A5149 /* ActionView.swift in Sources */,
 				B6654C58243E5D410081CD22 /* SettingsPresenter.swift in Sources */,
 				B6F236B724379069002457DF /* PillButton.swift in Sources */,
+				B6303373245CBF7B00DFDA0D /* Collection.swift in Sources */,
 				B6D033442456058800511544 /* AVAsset.swift in Sources */,
 				B63663EF239448420008F5BD /* MemoriesViewController.swift in Sources */,
 				B6E7F68024394637001A5149 /* Experience+AR.swift in Sources */,

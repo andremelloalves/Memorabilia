@@ -101,7 +101,7 @@ class OptionsBarView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        updateFocus()
+        setFocus(on: index)
     }
     
     // MARK: Action
@@ -155,8 +155,8 @@ class OptionsBarView: UIView {
         focus.center = CGPoint(x: focus.center.x + translation.x, y: focus.center.y)
     }
     
-    public func updateFocus() {
-        focusedButton = buttons.first
+    private func updateFocus() {
+        focusedButton = buttons[optional: index] ?? buttons.first
         let action: (UIViewAnimatingPosition) -> () = { [weak self] _ in self?.focusedButton?.execute() }
         
         let width = buttons.count != 0 ? stack.frame.width / CGFloat(buttons.count) : 10
@@ -168,7 +168,16 @@ class OptionsBarView: UIView {
         animator.startAnimation()
     }
     
+    private func setFocus(on index: Int) {
+        let width = buttons.count != 0 ? stack.frame.width / CGFloat(buttons.count) : 10
+        let height = stack.frame.height
+        let x = 4 + CGFloat(index) * width
+        focus.frame = CGRect(x: x, y: 4, width: width, height: height)
+    }
+    
     // MARK: Delegate
+    
+    private var index: Int = 0
     
     private var focusedButton: OptionsBarButton?
     
@@ -185,6 +194,10 @@ class OptionsBarView: UIView {
         button.removeFromSuperview()
         buttons.removeAll(where: { $0 == button })
         updateFocus()
+    }
+    
+    public func setInitialIndex(_ index: Int) {
+        self.index = index
     }
     
 }
