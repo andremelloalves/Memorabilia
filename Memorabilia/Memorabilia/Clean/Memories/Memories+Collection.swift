@@ -42,4 +42,16 @@ extension MemoriesViewController: UICollectionViewDelegate {
         router?.routeToExperienceViewController(memoryID: memory.memoryID)
     }
     
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        guard let memory = memoriesSections[indexPath.section].items[indexPath.item].item as? MemoriesEntity.Display.MemoryItem else { return nil }
+        
+        let delete = UIAction(title: "Exluir memória", image: UIImage(named: "trash.fill"), attributes: .destructive) { _ in
+            self.interactor?.deleteMemory(id: memory.memoryID)
+        }
+        let menu = UIMenu(title: "", image: nil, children: [delete])
+        let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in return menu }
+        
+        return configuration
+    }
+    
 }

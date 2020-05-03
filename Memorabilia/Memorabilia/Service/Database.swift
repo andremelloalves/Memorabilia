@@ -121,6 +121,19 @@ class Database {
     
     // MARK: Delete
     
+    func deleteMemory(id: String) -> Promise<Void> {
+        return Promise { seal in
+            do {
+                try realm.delete(type: Memory.self, with: id)
+                try documents.delete(file: id, folder: .experiences)
+                try documents.delete(file: id, folder: .photos)
+                seal.fulfill(())
+            } catch let error {
+                seal.reject(error)
+            }
+        }
+    }
+    
     // MARK: Notification
     
     func startNotifications(observer: DatabaseObserver) {

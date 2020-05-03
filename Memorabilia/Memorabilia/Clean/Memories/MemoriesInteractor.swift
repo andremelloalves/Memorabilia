@@ -23,6 +23,8 @@ protocol MemoriesInteractorInput {
 
     // Delete
     
+    func deleteMemory(id: String)
+    
 }
 
 protocol MemoriesInteractorData {
@@ -108,7 +110,7 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
         }.map {
             $0.map { MemoriesEntity.Present(uid: $0.uid, name: $0.name, creationDate: $0.creationDate) }
         }.done(on: .global(qos: .userInitiated)) { memories in
-            self.presenter?.presentMemories(memories: memories)
+            self.presenter?.presentMemoriesUpdate(memories: memories)
         }.catch { error in
             print(error.localizedDescription)
         }
@@ -117,6 +119,18 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
     // Update
     
     // Delete
+    
+    func deleteMemory(id: String) {
+        guard let db = db else { return }
+        
+        firstly {
+            db.deleteMemory(id: id)
+        }.done { _ in
+            self.readMemoriesUpdate()
+        }.catch { error in
+            print(error.localizedDescription)
+        }
+    }
     
 }
 
