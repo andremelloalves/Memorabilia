@@ -49,9 +49,17 @@ extension MemoriesViewController: UICollectionViewDelegate {
             self.interactor?.deleteMemory(id: memory.memoryID)
         }
         let menu = UIMenu(title: "", image: nil, children: [delete])
-        let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in return menu }
+        let configuration = UIContextMenuConfiguration(identifier: NSString(string: memory.memoryID), previewProvider: nil) { _ in return menu }
         
         return configuration
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        guard let identifier = configuration.identifier as? String else { return }
+        
+        animator.addCompletion {
+            self.router?.routeToExperienceViewController(memoryID: identifier)
+        }
     }
     
 }
