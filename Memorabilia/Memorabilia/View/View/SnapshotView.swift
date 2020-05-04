@@ -12,6 +12,8 @@ class SnapshotView: UIImageView {
     
     // MARK: Properties
     
+    let parentFrame: CGRect
+    
     let sizeIcon: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = .clear
@@ -25,8 +27,6 @@ class SnapshotView: UIImageView {
     }()
     
     // MARK: Control properties
-    
-    var parentFrame: CGRect
     
     var isExpanded = false
     
@@ -53,7 +53,9 @@ class SnapshotView: UIImageView {
         clipsToBounds = true
         backgroundColor = .systemBackground
         isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(sizeAction))
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        addGestureRecognizer(pan)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         addGestureRecognizer(tap)
         
         // Background
@@ -81,11 +83,38 @@ class SnapshotView: UIImageView {
     
     // MARK: Action
     
-    @objc func sizeAction() {
-        if isExpanded {
-            contractSnapshot()
-        } else {
-            expandSnapshot()
+    @objc func handleTap() {
+        animate()
+    }
+    
+    @objc func handlePan(_ sender: UIPanGestureRecognizer) {
+        switch sender.state {
+        case .began:
+            animate()
+            animator.pauseAnimation()
+        case .changed:
+            let translation = sender.translation(in: sender.view)
+            var fraction: CGFloat
+            
+            if isExpanded {
+                fraction = collapseProgress(translation: translation)
+            } else {
+                fraction = expandProgress(translation: translation)
+            }
+            
+            animator.fractionComplete = fraction
+        case .ended:
+            let velocity = sender.velocity(in: sender.view)
+            
+            var canEnd = canComplete(velocity: velocity)
+            if velocity.x == 0 && velocity.y == 0 {
+                canEnd = animator.fractionComplete >= 0.5
+            }
+            
+            animator.isReversed = !canEnd
+            animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+        default:
+            return
         }
     }
     
@@ -93,30 +122,65 @@ class SnapshotView: UIImageView {
     
     private let animator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut, animations: nil)
     
-    private func expandSnapshot() {
+    private func animate() {
+        if isExpanded {
+            collapse()
+        } else {
+            expand()
+        }
+    }
+    
+    private func expand() {
         let animation = { [unowned self] in
             self.frame = self.snapshotFrame(multiplier: 0.7)
         }
-        let completion: (UIViewAnimatingPosition) -> () = { [weak self] _ in
-            self?.isExpanded = true
-            self?.sizeIcon.image = UIImage(systemName: "arrow.down.right.and.arrow.up.left")
+        let completion: (UIViewAnimatingPosition) -> () = { [weak self] state in
+            if state == .end {
+                self?.isExpanded = true
+                self?.sizeIcon.image = UIImage(systemName: "arrow.down.right.and.arrow.up.left")
+            }
+        }
+        animator.addAnimations(animation)
+        animator.addCompletion(completion)
+        animator.startAnimation()
+    }
+
+    private func collapse() {
+        let animation = { [unowned self] in
+            self.frame = self.snapshotFrame(multiplier: 0.3)
+        }
+        let completion: (UIViewAnimatingPosition) -> () = { [weak self] state in
+            if state == .end {
+                self?.isExpanded = false
+                self?.sizeIcon.image = UIImage(systemName: "arrow.up.left.and.arrow.down.right")
+            }
         }
         animator.addAnimations(animation)
         animator.addCompletion(completion)
         animator.startAnimation()
     }
     
-    private func contractSnapshot() {
-        let animation = { [unowned self] in
-            self.frame = self.snapshotFrame(multiplier: 0.3)
+    private func canComplete(velocity: CGPoint) -> Bool {
+        let max = signedMax(velocity.x, velocity.y)
+        if isExpanded {
+            return max > 0
+        } else {
+            return max < 0
         }
-        let completion: (UIViewAnimatingPosition) -> () = { [weak self] _ in
-            self?.isExpanded = false
-            self?.sizeIcon.image = UIImage(systemName: "arrow.up.left.and.arrow.down.right")
-        }
-        animator.addAnimations(animation)
-        animator.addCompletion(completion)
-        animator.startAnimation()
+    }
+    
+    private func expandProgress(translation: CGPoint) -> CGFloat {
+        let size = snapshotFrame(multiplier: 0.7).size - snapshotFrame(multiplier: 0.3).size
+        let xFraction = -translation.x / size.width
+        let yFraction = -translation.y / size.height
+        return max(xFraction, yFraction)
+    }
+    
+    private func collapseProgress(translation: CGPoint) -> CGFloat {
+        let size = snapshotFrame(multiplier: 0.7).size - snapshotFrame(multiplier: 0.3).size
+        let xFraction = translation.x / size.width
+        let yFraction = translation.y / size.height
+        return max(xFraction, yFraction)
     }
     
     private func snapshotFrame(multiplier: CGFloat) -> CGRect {

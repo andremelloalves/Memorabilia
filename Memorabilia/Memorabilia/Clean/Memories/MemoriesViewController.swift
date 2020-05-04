@@ -37,17 +37,17 @@ class MemoriesViewController: UIViewController, MenuPage {
     lazy var collection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 16
+        layout.minimumLineSpacing = 8
         layout.minimumInteritemSpacing = 8
-        let width = (UIScreen.main.bounds.width - 48) / 2
-        let height = UIScreen.main.bounds.height * width / UIScreen.main.bounds.width
+        let width = UIScreen.main.bounds.width - 16
+        let height = width
         layout.itemSize = CGSize(width: width, height: height)
 //        layout.estimatedItemSize = CGSize(width: 343, height: 612)
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.translatesAutoresizingMaskIntoConstraints = false
-        let viewInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        let viewInsets = UIEdgeInsets(top: 72, left: 0, bottom: 82, right: 0)
         view.contentInset = viewInsets
-//        view.scrollIndicatorInsets = viewInsets
+        view.scrollIndicatorInsets = viewInsets
         view.backgroundColor = .clear
         view.isPagingEnabled = false
         view.delegate = self
@@ -163,6 +163,23 @@ extension MemoriesViewController: MemoriesViewInput {
         collection.reloadItems(at: changes.updates.reloads)
         collection.insertItems(at: changes.updates.inserts)
         collection.deleteItems(at: changes.updates.deletes)
+    }
+    
+}
+
+extension MemoriesViewController: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if presented is ExperienceViewController {
+            return SnapshotTransition()
+        } else {
+            return nil
+        }
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        menu?.view.alpha = 1
+        return nil
     }
     
 }

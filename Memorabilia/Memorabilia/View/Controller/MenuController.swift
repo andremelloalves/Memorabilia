@@ -18,14 +18,6 @@ class MenuController: UIViewController {
     
     // MARK: Properties
     
-    let navigation: NavigationBarView = {
-        let view = NavigationBarView()
-        view.leftButton.setImage(UIImage(systemName: "person.fill"), for: .normal)
-        view.titleButton.setTitle(MenuPageType.memories.name, for: .normal)
-        view.rightButton.setImage(UIImage(systemName: "info"), for: .normal)
-        return view
-    }()
-    
     lazy var page: UIPageViewController = {
         let controller = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         controller.delegate = self
@@ -33,6 +25,14 @@ class MenuController: UIViewController {
         controller.view.backgroundColor = .clear
         controller.view.translatesAutoresizingMaskIntoConstraints = false
         return controller
+    }()
+    
+    let navigation: NavigationBarView = {
+        let view = NavigationBarView()
+        view.leftButton.setImage(UIImage(systemName: "person.fill"), for: .normal)
+        view.titleButton.setTitle(MenuPageType.memories.name, for: .normal)
+        view.rightButton.setImage(UIImage(systemName: "info"), for: .normal)
+        return view
     }()
     
     lazy var createButton: OptionsBarButton = {
@@ -95,13 +95,13 @@ class MenuController: UIViewController {
         view.backgroundColor = .systemBackground
         view.layer.insertSublayer(gradient, at: 0)
         
+        // PageView
+        view.addSubview(page.view)
+        
         // Navigation bar
         view.addSubview(navigation)
 //        navigation.leftButton.addTarget(self, action: #selector(backButtonAction), for: .primaryActionTriggered)
 //        navigation.rightButton.addTarget(self, action: #selector(optionsButtonAction), for: .primaryActionTriggered)
-        
-        // PageView
-        view.addSubview(page.view)
         
         // Options bar
         view.addSubview(optionsBar)
@@ -114,17 +114,17 @@ class MenuController: UIViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
+            // PageView
+            page.view.topAnchor.constraint(equalTo: view.topAnchor),
+            page.view.leftAnchor.constraint(equalTo: view.leftAnchor),
+            page.view.rightAnchor.constraint(equalTo: view.rightAnchor),
+            page.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
             // Navigation bar
             navigation.leftButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             navigation.topAnchor.constraint(equalTo: view.topAnchor),
             navigation.leftAnchor.constraint(equalTo: view.leftAnchor),
             navigation.rightAnchor.constraint(equalTo: view.rightAnchor),
-            
-            // PageView
-            page.view.topAnchor.constraint(equalTo: navigation.rightButton.bottomAnchor),
-            page.view.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-            page.view.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            page.view.bottomAnchor.constraint(equalTo: optionsBar.topAnchor),
             
             // Options bar
             optionsBar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
@@ -189,6 +189,10 @@ class MenuController: UIViewController {
         controller.menu = self
         pages.append(controller)
         page.addChild(controller)
+    }
+    
+    public func getPage(type: AnyClass) -> MenuPage? {
+        return pages.first(where: { $0.classForCoder == type })
     }
     
 }

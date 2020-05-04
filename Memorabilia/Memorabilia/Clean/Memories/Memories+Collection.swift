@@ -22,7 +22,6 @@ extension MemoriesViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoryCollectionViewCell.identifier,for: indexPath) as? MemoryCollectionViewCell else { return UICollectionViewCell() }
         guard let memory = memoriesSections[indexPath.section].items[indexPath.row].item as? MemoriesEntity.Display.MemoryItem else { return UICollectionViewCell() }
         
-        cell.infoView.layer.cornerRadius = 12
         cell.update(memory: memory)
         if let data = photoDataCache.object(forKey: NSString(string: memory.photoID)) {
             cell.updatePhoto(data as Data)
@@ -45,11 +44,11 @@ extension MemoriesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         guard let memory = memoriesSections[indexPath.section].items[indexPath.item].item as? MemoriesEntity.Display.MemoryItem else { return nil }
         
-        let delete = UIAction(title: "Exluir memória", image: UIImage(named: "trash.fill"), attributes: .destructive) { _ in
+        let delete = UIAction(title: "Exluir memória", image: UIImage(systemName: "trash.fill"), attributes: .destructive) { _ in
             self.interactor?.deleteMemory(id: memory.memoryID)
         }
         let menu = UIMenu(title: "", image: nil, children: [delete])
-        let configuration = UIContextMenuConfiguration(identifier: NSString(string: memory.memoryID), previewProvider: nil) { _ in return menu }
+        let configuration = UIContextMenuConfiguration(identifier: NSString(string: memory.memoryID), previewProvider: previewController) { _ in return menu }
         
         return configuration
     }
@@ -60,6 +59,23 @@ extension MemoriesViewController: UICollectionViewDelegate {
         animator.addCompletion {
             self.router?.routeToExperienceViewController(memoryID: identifier)
         }
+    }
+    
+    func previewController() -> UIViewController {
+      let viewController = UIViewController()
+      
+      // 1
+      let imageView = UIImageView(image: UIImage(systemName: "paperplane.fill"))
+      viewController.view = imageView
+      
+      // 2
+      imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+      imageView.translatesAutoresizingMaskIntoConstraints = false
+      
+      // 3
+      viewController.preferredContentSize = imageView.frame.size
+      
+      return viewController
     }
     
 }

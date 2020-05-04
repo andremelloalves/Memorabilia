@@ -39,6 +39,7 @@ class MemoriesRouter: MemoriesRouterInput, MemoriesRouterOutput {
         let experienceViewController = ExperienceViewController()
         experienceViewController.modalTransitionStyle = .coverVertical
         experienceViewController.modalPresentationStyle = .fullScreen
+        experienceViewController.transitioningDelegate = viewController
         
         var dInteractor = experienceViewController.router!.interactor!
         

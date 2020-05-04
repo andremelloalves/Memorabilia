@@ -17,17 +17,19 @@ class MemoryCollectionViewCell: UICollectionViewCell {
     let photo: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = .systemPurple
-        view.layer.cornerRadius = 20
+//        view.layer.cornerRadius = 20
+//        view.layer.borderWidth = 1
+//        view.layer.borderColor = UIColor.white.cgColor
         view.clipsToBounds = true
         view.contentMode = .scaleAspectFill
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let infoView: InfoView = {
-        let view = InfoView()
-        return view
-    }()
+//    let infoView: InfoView = {
+//        let view = InfoView()
+//        return view
+//    }()
     
     // MARK: Initializers
     
@@ -46,12 +48,14 @@ class MemoryCollectionViewCell: UICollectionViewCell {
     private func setup() {
         // Self
         backgroundColor = .clear
+        layer.cornerRadius = 20
+        clipsToBounds = true
         
         // Photo
         addSubview(photo)
         
-        // Info
-        photo.addSubview(infoView)
+//        // Info
+//        photo.addSubview(infoView)
         
         // Constraints
         setupConstraints()
@@ -60,8 +64,8 @@ class MemoryCollectionViewCell: UICollectionViewCell {
     // MARK: Update
     
     public func update(memory: MemoriesEntity.Display.MemoryItem) {
-        infoView.titleLabel.text = memory.name
-        infoView.infoLabel.text = memory.date
+//        infoView.titleLabel.text = memory.name
+//        infoView.infoLabel.text = memory.date
     }
     
     public func updatePhoto(_ data: Data) {
@@ -80,42 +84,11 @@ class MemoryCollectionViewCell: UICollectionViewCell {
             photo.rightAnchor.constraint(equalTo: rightAnchor),
             photo.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            // Info view
-            infoView.leftAnchor.constraint(equalTo: photo.leftAnchor, constant: 8),
-            infoView.rightAnchor.constraint(equalTo: photo.rightAnchor, constant: -8),
-            infoView.bottomAnchor.constraint(equalTo: photo.bottomAnchor, constant: -8),
+//            // Info view
+//            infoView.leftAnchor.constraint(equalTo: photo.leftAnchor, constant: 8),
+//            infoView.rightAnchor.constraint(equalTo: photo.rightAnchor, constant: -8),
+//            infoView.bottomAnchor.constraint(equalTo: photo.bottomAnchor, constant: -8),
         ])
-    }
-    
-    // MARK: Animation
-    
-    private func startAnimation() {
-        UIView.animate(withDuration: 0.15) {
-            self.photo.transform = CGAffineTransform(scaleX: 0.975, y: 0.975)
-        }
-    }
-    
-    private func stopAnimation() {
-        UIView.animate(withDuration: 0.15) {
-            self.photo.transform = .identity
-        }
-    }
-    
-    // MARK: Touch
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        startAnimation()
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesCancelled(touches, with: event)
-        stopAnimation()
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
-        stopAnimation()
     }
 
 }
