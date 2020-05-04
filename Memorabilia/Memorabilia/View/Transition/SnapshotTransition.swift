@@ -10,8 +10,23 @@ import UIKit
 
 class SnapshotTransition: NSObject {
     
+    // MARK: Properties
+    
     let duration = 0.5
-    var presenting = true
+    
+    var isPresenting = false
+    
+    var cellFrame: CGRect = .zero
+    
+    var snapshotFrame: CGRect = .zero
+    
+    let imageView: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        return view
+    }()
     
 }
 
@@ -22,30 +37,64 @@ extension SnapshotTransition: UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        if isPresenting {
+            animateFrom(using: transitionContext)
+        } else {
+            animateTo(using: transitionContext)
+        }
+
+        isPresenting.toggle()
+    }
+    
+    private func animateTo(using transitionContext: UIViewControllerContextTransitioning) {
         guard let menu = transitionContext.viewController(forKey: .from) as? MenuController,
             let from = menu.getPage(type: MemoriesViewController.self) as? MemoriesViewController,
             let to = transitionContext.viewController(forKey: .to) as? ExperienceViewController,
             let index = from.collection.indexPathsForSelectedItems?.first,
             let cell = from.collection.cellForItem(at: index) as? MemoryCollectionViewCell,
-            let frame = cell.superview?.convert(cell.frame, to: nil) else { return }
+            let frame = cell.superview?.convert(cell.frame, to: nil)
+            else {
+                transitionContext.completeTransition(false)
+                return
+        }
         
-        let image = UIImageView(frame: frame)
-        image.image = cell.photo.image
-        image.contentMode = cell.photo.contentMode
-        image.layer.cornerRadius = cell.layer.cornerRadius
-        image.clipsToBounds = true
+        self.cellFrame = frame
+        self.snapshotFrame = to.snapshotView.frame
+        
+        imageView.frame = cellFrame
+        imageView.image = cell.photo.image
         
         let container = transitionContext.containerView
-        
-        container.addSubview(image)
-        
+        container.addSubview(imageView)
+
         UIView.animate(withDuration: duration, animations: {
+            self.imageView.frame = self.snapshotFrame
             menu.view.alpha = 0
-            image.frame = to.snapshotView.frame
-            image.layer.cornerRadius = to.snapshotView.layer.cornerRadius
         }) { _ in
-            image.removeFromSuperview()
+            self.imageView.removeFromSuperview()
             container.addSubview(to.view)
+            transitionContext.completeTransition(true)
+        }
+    }
+    
+    private func animateFrom(using transitionContext: UIViewControllerContextTransitioning) {
+        guard let menu = transitionContext.viewController(forKey: .to) as? MenuController,
+            let from = transitionContext.viewController(forKey: .from) as? ExperienceViewController else {
+            transitionContext.completeTransition(false)
+            return
+        }
+        
+        imageView.frame = from.snapshotView.frame
+        
+        let container = transitionContext.containerView
+        from.view.removeFromSuperview()
+        container.addSubview(imageView)
+
+        UIView.animate(withDuration: duration, animations: {
+            self.imageView.frame = self.cellFrame
+            menu.view.alpha = 1
+        }) { _ in
+            self.imageView.removeFromSuperview()
             transitionContext.completeTransition(true)
         }
     }

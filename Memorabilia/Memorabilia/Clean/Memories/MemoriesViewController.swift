@@ -117,6 +117,8 @@ class MemoriesViewController: UIViewController, MenuPage {
     
     // MARK: Navigation
     
+    let transition = SnapshotTransition()
+    
 }
 
 extension MemoriesViewController {
@@ -170,16 +172,11 @@ extension MemoriesViewController: MemoriesViewInput {
 extension MemoriesViewController: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if presented is ExperienceViewController {
-            return SnapshotTransition()
-        } else {
-            return nil
-        }
+        transition
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        menu?.view.alpha = 1
-        return nil
+        transition
     }
     
 }

@@ -52,6 +52,7 @@ class SnapshotView: UIImageView {
         layer.cornerRadius = 20
         clipsToBounds = true
         backgroundColor = .systemBackground
+        contentMode = .scaleAspectFill
         isUserInteractionEnabled = true
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         addGestureRecognizer(pan)
