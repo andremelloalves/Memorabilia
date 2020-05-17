@@ -9,6 +9,7 @@
 import UIKit
 import ARKit
 import SceneKit
+import Photos
 import MediaPlayer
 import MobileCoreServices
 
@@ -573,7 +574,7 @@ class StudioViewController: UIViewController {
             return
         }
         
-        present(picker, animated: true, completion: nil)
+        routeToPicker(picker)
     }
     
     func optionButtonAction(option: ReminderType) -> () -> () {
@@ -625,26 +626,39 @@ class StudioViewController: UIViewController {
         router?.routeBack()
     }
     
+    func routeToPicker(_ picker: UIViewController) {
+        PHPhotoLibrary.requestAuthorization { status in
+            switch status {
+            case .authorized:
+                DispatchQueue.main.async {
+                    self.present(picker, animated: true, completion: nil)
+                }
+            default:
+                self.showActionView()
+            }
+        }
+    }
+    
     // MARK: AR
     
     func addReminderAnchor(with raycast: ARRaycastResult) {
         let anchor = ReminderAnchor(type: selectedOption, transform: raycast.worldTransform)
         
-        interactor?.createReminder(identifier: anchor.identifier.uuidString, type: selectedOption, name: nil)
+        interactor?.createReminder(identifier: anchor.identifier.uuidString, type: selectedOption, name: nil, url: nil)
         arView.session.add(anchor: anchor)
         
         selectedReminder = anchor
         showEditing()
     }
     
-    func updateReminderAnchor(name: String?) {
+    func updateReminderAnchor(name: String?, url: URL? = nil) {
         guard let reminder = selectedReminder else { return }
         let anchor = ReminderAnchor(name: name, type: reminder.type, transform: reminder.transform)
         
         interactor?.deleteReminder(identifier: reminder.identifier.uuidString)
         arView.session.remove(anchor: reminder)
         
-        interactor?.createReminder(identifier: anchor.identifier.uuidString, type: reminder.type, name: name)
+        interactor?.createReminder(identifier: anchor.identifier.uuidString, type: reminder.type, name: name, url: url)
         arView.session.add(anchor: anchor)
         
         selectedReminder = anchor

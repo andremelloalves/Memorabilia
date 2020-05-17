@@ -30,6 +30,16 @@ struct PhotoReminder: Reminder {
     
     var name: String?
     
+    var data: Data?
+    
+    init(identifier: String, name: String?, url: URL?) {
+        self.identifier = identifier
+        self.name = name
+        
+        guard let url = url else { return }
+        self.data = try? Data(contentsOf: url)
+    }
+    
 }
 
 struct VideoReminder: Reminder {
@@ -40,14 +50,15 @@ struct VideoReminder: Reminder {
     
     var player: AVPlayer?
     
-    init(identifier: String, name: String?) {
+    var aspectRatio: CGFloat?
+    
+    init(identifier: String, name: String?, url: URL?) {
         self.identifier = identifier
         self.name = name
         
-        guard let fileName = name else { return }
-        guard let url = URL(string: fileName) else { return }
-        
+        guard let url = url else { return }
         self.player = AVPlayer(url: url)
+        self.aspectRatio = AVAsset(url: url).aspectRatio
     }
     
 }
@@ -60,13 +71,11 @@ struct AudioReminder: Reminder {
     
     var player: AVAudioPlayer?
     
-    init(identifier: String, name: String?) {
+    init(identifier: String, name: String?, url: URL?) {
         self.identifier = identifier
         self.name = name
         
-        guard let fileName = name else { return }
-        guard let url = URL(string: fileName) else { return }
-        
+        guard let url = url else { return }
         self.player = try? AVAudioPlayer(contentsOf: url)
     }
     

@@ -15,7 +15,7 @@ protocol StudioInteractorInput {
 
     func createMemory(with worldData: Data, photo: Data)
     
-    func createReminder(identifier: String, type: ReminderType, name: String?)
+    func createReminder(identifier: String, type: ReminderType, name: String?, url: URL?)
 
     // Read
     
@@ -88,18 +88,18 @@ class StudioInteractor: StudioInteractorInput, StudioInteractorData {
         }
     }
     
-    func createReminder(identifier: String, type: ReminderType, name: String? = nil) {
+    func createReminder(identifier: String, type: ReminderType, name: String? = nil, url: URL? = nil) {
         let reminder: Reminder
         
         switch type {
         case .text:
             reminder = TextReminder(identifier: identifier, name: name)
         case .photo:
-            reminder = PhotoReminder(identifier: identifier, name: name)
+            reminder = PhotoReminder(identifier: identifier, name: name, url: url)
         case .video:
-            reminder = VideoReminder(identifier: identifier, name: name)
+            reminder = VideoReminder(identifier: identifier, name: name, url: url)
         case .audio:
-            reminder = AudioReminder(identifier: identifier, name: name)
+            reminder = AudioReminder(identifier: identifier, name: name, url: url)
         }
         
         reminders.append(reminder)

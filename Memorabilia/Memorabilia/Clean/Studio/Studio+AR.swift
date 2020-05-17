@@ -91,15 +91,15 @@ extension StudioViewController: ARSCNViewDelegate {
     
     func renderNode(for anchor: ARAnchor) -> SCNNode? {
         guard let reminder = anchor as? ReminderAnchor else { return nil }
-        guard let fileName = reminder.name else { return renderDefaultNode() }
+        guard reminder.name != nil else { return renderDefaultNode() }
         
         let node: SCNNode?
 
         switch reminder.type {
         case .text:
-            node = renderTextNode(fileName)
+            node = renderTextNode(reminder)
         case .photo:
-            node = renderPhotoNode(fileName)
+            node = renderPhotoNode(reminder)
         case .video:
             node = renderVideoNode(reminder)
         case .audio:
@@ -118,8 +118,10 @@ extension StudioViewController: ARSCNViewDelegate {
         return node
     }
     
-    func renderTextNode(_ message: String) -> SCNNode? {
-        guard !message.isEmpty else { return nil }
+    func renderTextNode(_ anchor: ReminderAnchor) -> SCNNode? {
+        guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? TextReminder,
+            let message = reminder.name
+            else { return nil }
         
         let text = SCNText(string: message, extrusionDepth: 0)
         text.firstMaterial?.isDoubleSided = true
@@ -129,8 +131,12 @@ extension StudioViewController: ARSCNViewDelegate {
         return node
     }
     
-    func renderPhotoNode(_ fileName: String) -> SCNNode? {
-        guard let image = UIImage(contentsOfFile: fileName)?.orientedImage else { return nil }
+    func renderPhotoNode(_ anchor: ReminderAnchor) -> SCNNode? {
+        guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? PhotoReminder,
+            let data = reminder.data,
+            let image = UIImage(data: data)?.orientedImage
+            else { return nil }
+        
         let aspectRatio = image.size.height / image.size.width
         
         let plane = SCNPlane(width: 0.3, height: 0.3 * aspectRatio)
@@ -143,12 +149,8 @@ extension StudioViewController: ARSCNViewDelegate {
     func renderVideoNode(_ anchor: ReminderAnchor) -> SCNNode? {
         guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? VideoReminder,
             let player = reminder.player,
-            let fileName = reminder.name,
-            let url = URL(string: fileName)
+            let aspectRatio = reminder.aspectRatio
             else { return nil }
-        
-        let asset = AVAsset(url: url)
-        guard let aspectRatio = asset.aspectRatio else { return nil }
         
         let plane = SCNPlane(width: 0.3, height: 0.3 * aspectRatio)
         plane.firstMaterial!.diffuse.contents = player

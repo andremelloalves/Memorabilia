@@ -24,6 +24,8 @@
 	<string>This application will use the camera for Augmented Reality.</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>This application will use the media library for Augmented Reality experiences.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This application will use the photo library for Augmented Reality experiences.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

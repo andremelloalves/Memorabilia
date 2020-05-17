@@ -7,10 +7,8 @@
 //
 
 import UIKit
-//import ARKit
-//import SceneKit
+import Photos
 import MediaPlayer
-//import MobileCoreServices
 
 extension StudioViewController: UINavigationControllerDelegate {
     
@@ -23,21 +21,21 @@ extension StudioViewController: UIImagePickerControllerDelegate {
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let name: String?
+        let asset = info[.phAsset] as? PHAsset
+        let nsurl: NSURL?
         
         switch selectedReminder?.type {
         case .photo:
-            let nsurl = info[.imageURL] as? NSURL
-            name = nsurl?.path
+            nsurl = info[.imageURL] as? NSURL
         case .video:
-            let nsurl = info[.mediaURL] as? NSURL
-            name = nsurl?.absoluteString
+            nsurl = info[.mediaURL] as? NSURL
         default:
-            name = nil
+            nsurl = nil
+            break
         }
-        
-        updateReminderAnchor(name: name)
 
+        updateReminderAnchor(name: asset?.localIdentifier, url: nsurl?.absoluteURL)
+        
         picker.dismiss(animated: true, completion: nil)
     }
     
@@ -50,17 +48,18 @@ extension StudioViewController: MPMediaPickerControllerDelegate {
     }
     
     func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
-        let name: String?
+        let item = mediaItemCollection.items.first
+        let url: URL?
         
         switch selectedReminder?.type {
         case .audio:
-            let url = mediaItemCollection.items[0].assetURL
-            name = url?.absoluteString
+            url = item?.assetURL
         default:
-            name = nil
+            url = nil
+            break
         }
         
-        updateReminderAnchor(name: name)
+        updateReminderAnchor(name: url?.absoluteString, url: url)
         
         mediaPicker.dismiss(animated: true, completion: nil)
     }
