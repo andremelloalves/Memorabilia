@@ -8,7 +8,9 @@
 
 import UIKit
 import ARKit
-import RealityKit
+import SceneKit
+import MediaPlayer
+import MobileCoreServices
 
 protocol ExperienceViewInput: class {
     
@@ -17,6 +19,8 @@ protocol ExperienceViewInput: class {
     func loadPhoto(_ photo: Data)
     
     func loadARWorld(_ world: Data)
+    
+    func reloadReminder(identifier: String)
     
 }
 
@@ -30,10 +34,10 @@ class ExperienceViewController: UIViewController {
     
     // MARK: View properties
     
-    let backButton: CircleButton = {
+    let exitButton: CircleButton = {
         let button = CircleButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
-        button.addTarget(self, action: #selector(backButtonAction), for: .primaryActionTriggered)
+        button.addTarget(self, action: #selector(exitButtonAction), for: .primaryActionTriggered)
         return button
     }()
     
@@ -70,14 +74,24 @@ class ExperienceViewController: UIViewController {
         return view
     }()
     
+    // MARK: Control properties
+    
+    var selectedReminder: ReminderAnchor?
+    
+    var isRelocalizingMap: Bool = false
+    
     // MARK: AR properties
     
     var world: ARWorldMap?
         
-    lazy var arView: ARView = {
-        let view = ARView(frame: self.view.frame)
+    lazy var arView: ARSCNView = {
+        let view = ARSCNView(frame: self.view.frame)
+        view.delegate = self
         view.session.delegate = self
-        view.debugOptions = [.showFeaturePoints]
+        view.autoenablesDefaultLighting = true
+//        view.debugOptions = [.showFeaturePoints, .showWorldOrigin]
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        view.addGestureRecognizer(tap)
         return view
     }()
     
@@ -88,8 +102,6 @@ class ExperienceViewController: UIViewController {
         configuration.planeDetection = .vertical
         return configuration
     }()
-    
-    var isRelocalizingMap: Bool = false
     
     // MARK: Initializers
     
@@ -114,8 +126,8 @@ class ExperienceViewController: UIViewController {
         // AR view
         view.addSubview(arView)
         
-        // Back button
-        view.addSubview(backButton)
+        // Exit button
+        view.addSubview(exitButton)
         
         // Info view
         view.addSubview(infoView)
@@ -146,13 +158,13 @@ class ExperienceViewController: UIViewController {
             arView.rightAnchor.constraint(equalTo: view.rightAnchor),
             arView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            // Back button
-            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            backButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
+            // Exit button
+            exitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            exitButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
             
             // Info view
             infoView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            infoView.leftAnchor.constraint(equalTo: backButton.rightAnchor, constant: 16),
+            infoView.leftAnchor.constraint(equalTo: exitButton.rightAnchor, constant: 16),
             infoView.rightAnchor.constraint(equalTo: infoButton.leftAnchor, constant: -16),
             
             // Info button
@@ -162,10 +174,6 @@ class ExperienceViewController: UIViewController {
             // Restart button
             restartButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
             restartButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            
-            // Snapshot view
-//            snapshotView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
-//            snapshotView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             
             // Action view
             actionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -204,18 +212,56 @@ class ExperienceViewController: UIViewController {
         arView.session.pause()
     }
     
+    // MARK: Control
+    
+    func controlMediaPlayback(with identifier: String?, play: Bool = true) {
+        guard let identifier = identifier else { return }
+        guard let reminder = interactor?.readReminder(identifier: identifier) else { return }
+        
+        if let video = reminder as? VideoReminder, let player = video.player {
+            if player.timeControlStatus == .playing || !play {
+                player.pause()
+            } else {
+                player.play()
+            }
+        } else if let audio = reminder as? AudioReminder, let player = audio.player {
+            if player.isPlaying || !play {
+                player.pause()
+            } else {
+                player.play()
+            }
+        }
+    }
+    
     // MARK: Action
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        guard !isRelocalizingMap else { return }
+        
+        let point = sender.location(in: arView)
+        
+        if let node = arView.hitTest(point).first?.node, let anchor = arView.anchor(for: node) as? ReminderAnchor {
+            guard selectedReminder?.identifier != anchor.identifier else { return }
+            
+            controlMediaPlayback(with: selectedReminder?.identifier.uuidString, play: false)
+            controlMediaPlayback(with: anchor.identifier.uuidString)
+            selectedReminder = anchor
+        } else {
+            controlMediaPlayback(with: selectedReminder?.identifier.uuidString, play: false)
+            selectedReminder = nil
+        }
+    }
     
     @objc func infoButtonAction() {
         infoView.info = "Esse texto informativo pode ocupar mais de uma linha se preciso."
     }
     
-    @objc func backButtonAction() {
+    @objc func exitButtonAction() {
         routeBack()
     }
     
     @objc func restartButtonAction() {
-        
+        infoView.info = "O mundo AR será reiniciado."
     }
     
     // MARK: Navigation
@@ -225,10 +271,6 @@ class ExperienceViewController: UIViewController {
     }
     
     // MARK: AR
-    
-    func startARSession() {
-        
-    }
 
 }
 
@@ -261,13 +303,30 @@ extension ExperienceViewController: ExperienceViewInput {
     
     func loadARWorld(_ world: Data) {
         do {
-            guard let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: world) else { fatalError("No ARWorldMap in archive.") }
-            worldMap.anchors.removeAll(where: { $0 is SnapshotAnchor })
+            guard let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: world)
+                else { fatalError("No ARWorldMap in archive.") }
+            
+            var anchors = worldMap.anchors
+            anchors.removeAll(where: { $0 is SnapshotAnchor })
+            
             self.world = worldMap
+            
+            guard let reminderAnchors = anchors.filter({ $0.isMember(of: ReminderAnchor.self) }) as? [ReminderAnchor] else { return }
+            let reminders = reminderAnchors.map({ ExperienceEntity.Fetch(identifier: $0.identifier.uuidString, type: $0.type, name: $0.name)})
+            interactor?.createReminders(reminders)
+            interactor?.readVisualReminders()
+            
             arView.session.run(worldTrackingConfiguration, options: [.resetTracking, .removeExistingAnchors])
         } catch let error {
             fatalError("Can't unarchive ARWorldMap from file data: \(error)")
         }
+    }
+    
+    func reloadReminder(identifier: String) {
+        guard let anchor = world?.anchors.first(where: { $0.identifier.uuidString == identifier }) else { return }
+        
+        arView.session.remove(anchor: anchor)
+        arView.session.add(anchor: anchor)
     }
     
 }

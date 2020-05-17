@@ -8,16 +8,23 @@
 
 import Foundation
 import PromiseKit
+import Photos
 
 protocol ExperienceInteractorInput {
     
     // Create
+    
+    func createReminders(_ entities: [ExperienceEntity.Fetch])
 
     // Read
     
     func readMemoryPhoto()
     
     func readARWorld()
+    
+    func readReminder(identifier: String) -> Reminder?
+    
+    func readVisualReminders()
 
     // Update
 
@@ -32,8 +39,6 @@ protocol ExperienceInteractorData {
     var db: Database? { get set }
     
     var memory: Memory? { get set }
-    
-    var world: Data? { get }
     
 }
 
@@ -58,7 +63,7 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
     
     var memory: Memory?
     
-    var world: Data?
+    var reminders: [Reminder] = []
     
     // MARK: Initializers
     
@@ -72,38 +77,114 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
     
     // Create
     
+    func createReminders(_ entities: [ExperienceEntity.Fetch]) {
+        for entity in entities {
+            createReminder(identifier: entity.identifier, type: entity.type, name: entity.name)
+        }
+    }
+    
+    func createReminder(identifier: String, type: ReminderType, name: String?, media: Any? = nil) {
+        let reminder: Reminder
+        
+        switch type {
+        case .text:
+            reminder = TextReminder(identifier: identifier, name: name)
+        case .photo:
+            let data = media as? Data
+            reminder = PhotoReminder(identifier: identifier, name: name, data: data)
+        case .video:
+            let item = media as? AVPlayerItem
+            reminder = VideoReminder(identifier: identifier, name: name, item: item)
+        case .audio:
+            reminder = AudioReminder(identifier: identifier, name: name)
+        }
+        
+        reminders.append(reminder)
+    }
+    
     // Read
     
     func readMemoryPhoto() {
-        guard let db = db else { return }
-        guard let memory = memory else { return }
+        guard let db = db, let memory = memory else { return }
         
         firstly {
             db.readMemoryPhoto(id: memory.uid)
         }.done { photo in
             self.presenter?.presentMemoryPhoto(photo)
         }.catch { error in
-            print(error)
+            print(error.localizedDescription)
         }
     }
     
     func readARWorld() {
-        guard let db = db else { return }
-        guard let memory = memory else { return }
+        guard let db = db, let memory = memory else { return }
         
         firstly {
             db.readARWorld(id: memory.uid)
         }.done { world in
-            self.world = world
             self.presenter?.presentARWorld(world)
         }.catch { error in
             print(error.localizedDescription)
         }
     }
     
+    func readReminder(identifier: String) -> Reminder? {
+        reminders.first(where: { $0.identifier == identifier })
+    }
+    
+    func readVisualReminders() {
+        let photoReminders = reminders.filter({ $0.type == .photo })
+        let videoReminders = reminders.filter({ $0.type == .video })
+        let visualReminders = photoReminders + videoReminders
+        let identifiers = visualReminders.compactMap({ $0.name })
+        
+        let assets = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
+        assets.enumerateObjects { asset, index, stop in
+            let reminder = visualReminders[index]
+            let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
+            switch asset.mediaType {
+            case .image:
+                self.updatePhotoReminder(reminder: reminder, asset: asset, size: size)
+            case .video:
+                self.updateVideoReminder(reminder: reminder, asset: asset, size: size)
+            default:
+                break
+            }
+        }
+    }
+    
     // Update
     
+    func updatePhotoReminder(reminder: Reminder, asset: PHAsset, size: CGSize) {
+        let manager = PHImageManager.default()
+        let options = PHImageRequestOptions()
+        
+        manager.requestImage(for: asset, targetSize: size, contentMode: .default, options: options) { image, info in
+            self.deleteReminder(identifier: reminder.identifier)
+            self.createReminder(identifier: reminder.identifier, type: reminder.type, name: reminder.name, media: image?.pngData())
+            DispatchQueue.main.async {
+                self.presenter?.presentReminder(identifier: reminder.identifier)
+            }
+        }
+    }
+    
+    func updateVideoReminder(reminder: Reminder, asset: PHAsset, size: CGSize) {
+        let manager = PHImageManager.default()
+        let options = PHVideoRequestOptions()
+        manager.requestPlayerItem(forVideo: asset, options: options) { item, info in
+            self.deleteReminder(identifier: reminder.identifier)
+            self.createReminder(identifier: reminder.identifier, type: reminder.type, name: reminder.name, media: item)
+            DispatchQueue.main.async {
+                self.presenter?.presentReminder(identifier: reminder.identifier)
+            }
+        }
+    }
+    
     // Delete
+    
+    func deleteReminder(identifier: String) {
+        reminders.removeAll(where: { $0.identifier == identifier })
+    }
     
 }
 

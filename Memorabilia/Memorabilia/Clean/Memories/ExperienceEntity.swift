@@ -7,3 +7,25 @@
 //
 
 import Foundation
+
+struct ExperienceEntity {
+    
+    struct Fetch {
+        
+        var identifier: String
+        
+        var type: ReminderType
+        
+        var name: String?
+        
+    }
+    
+    struct Present {
+        
+    }
+    
+    struct Display {
+        
+    }
+    
+}

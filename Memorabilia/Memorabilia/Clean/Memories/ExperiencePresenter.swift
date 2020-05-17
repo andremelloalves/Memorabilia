@@ -16,6 +16,8 @@ protocol ExperiencePresenterInput {
     
     func presentARWorld(_ world: Data)
     
+    func presentReminder(identifier: String)
+    
 }
 
 class ExperiencePresenter: ExperiencePresenterInput {
@@ -34,6 +36,10 @@ class ExperiencePresenter: ExperiencePresenterInput {
     
     func presentARWorld(_ world: Data) {
         viewController?.loadARWorld(world)
+    }
+    
+    func presentReminder(identifier: String) {
+        viewController?.reloadReminder(identifier: identifier)
     }
     
 }

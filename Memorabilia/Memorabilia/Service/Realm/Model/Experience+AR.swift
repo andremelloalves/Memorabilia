@@ -8,7 +8,7 @@
 
 import Foundation
 import ARKit
-import RealityKit
+import SceneKit
 
 extension ExperienceViewController: ARSessionDelegate {
     
@@ -92,23 +92,101 @@ extension ExperienceViewController: ARSessionDelegate {
     }
     
     func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
-        for anchor in anchors {
-            if anchor.name == AnchorType.text.rawValue {
-                add(anchor: anchor)
-            }
+        
+    }
+    
+}
+
+extension ExperienceViewController: ARSCNViewDelegate {
+
+    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
+        return renderNode(for: anchor)
+    }
+    
+    func renderNode(for anchor: ARAnchor) -> SCNNode? {
+        guard let reminder = anchor as? ReminderAnchor else { return nil }
+        guard reminder.name != nil else { return renderDefaultNode() }
+        
+        let node: SCNNode?
+
+        switch reminder.type {
+        case .text:
+            node = renderTextNode(reminder)
+        case .photo:
+            node = renderPhotoNode(reminder)
+        case .video:
+            node = renderVideoNode(reminder)
+        case .audio:
+            node = renderAudioNode()
         }
+        node?.name = reminder.type.rawValue
+
+        return node
     }
     
-    func add(anchor: ARAnchor) {
-        let anchorEntity = AnchorEntity(anchor: anchor)
-        
-        let sphere = MeshResource.generateSphere(radius: 0.1)
-        let material = SimpleMaterial(color: .white, isMetallic: false)
-        let entity = ModelEntity(mesh: sphere, materials: [material])
-        
-        anchorEntity.addChild(entity)
-        
-        arView.scene.addAnchor(anchorEntity)
+    func renderDefaultNode() -> SCNNode {
+        let sphere = SCNSphere(radius: 0.1)
+        sphere.firstMaterial!.diffuse.contents = UIColor.white
+        let node = SCNNode(geometry: sphere)
+
+        return node
     }
     
+    func renderLoadingNode() -> SCNNode {
+        let sphere = SCNSphere(radius: 0.1)
+        sphere.firstMaterial!.diffuse.contents = UIColor.systemTeal
+        let node = SCNNode(geometry: sphere)
+
+        return node
+    }
+    
+    func renderTextNode(_ anchor: ReminderAnchor) -> SCNNode? {
+        guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? TextReminder,
+            let message = reminder.name
+            else { return renderLoadingNode() }
+        
+        let text = SCNText(string: message, extrusionDepth: 0)
+        text.firstMaterial?.isDoubleSided = true
+        text.firstMaterial?.diffuse.contents = UIColor.white
+        let node = SCNNode(geometry: text)
+        
+        return node
+    }
+    
+    func renderPhotoNode(_ anchor: ReminderAnchor) -> SCNNode? {
+        guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? PhotoReminder,
+            let data = reminder.data,
+            let image = UIImage(data: data)?.orientedImage
+            else { return renderLoadingNode() }
+        
+        let aspectRatio = image.size.height / image.size.width
+        
+        let plane = SCNPlane(width: 0.3, height: 0.3 * aspectRatio)
+        plane.firstMaterial!.diffuse.contents = image
+        let node = SCNNode(geometry: plane)
+        
+        return node
+    }
+    
+    func renderVideoNode(_ anchor: ReminderAnchor) -> SCNNode? {
+        guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? VideoReminder,
+            let player = reminder.player,
+            let aspectRatio = reminder.aspectRatio
+            else { return renderLoadingNode() }
+        
+        let plane = SCNPlane(width: 0.3, height: 0.3 * aspectRatio)
+        plane.firstMaterial!.diffuse.contents = player
+        let node = SCNNode(geometry: plane)
+        
+        return node
+    }
+    
+    func renderAudioNode() -> SCNNode? {
+        let sphere = SCNSphere(radius: 0.1)
+        sphere.firstMaterial?.diffuse.contents = UIColor.white
+        let node = SCNNode(geometry: sphere)
+        
+        return node
+    }
+
 }

@@ -10,6 +10,8 @@ import AVFoundation
 
 protocol Reminder {
     
+    var type: ReminderType { get }
+    
     var identifier: String { get set }
     
     var name: String? { get set }
@@ -17,6 +19,10 @@ protocol Reminder {
 }
 
 struct TextReminder: Reminder {
+    
+    var type: ReminderType {
+        .text
+    }
     
     var identifier: String
     
@@ -26,13 +32,17 @@ struct TextReminder: Reminder {
 
 struct PhotoReminder: Reminder {
     
+    var type: ReminderType {
+        .photo
+    }
+    
     var identifier: String
     
     var name: String?
     
     var data: Data?
     
-    init(identifier: String, name: String?, url: URL?) {
+    init(identifier: String, name: String?, url: URL? = nil) {
         self.identifier = identifier
         self.name = name
         
@@ -40,9 +50,19 @@ struct PhotoReminder: Reminder {
         self.data = try? Data(contentsOf: url)
     }
     
+    init(identifier: String, name: String?, data: Data?) {
+        self.identifier = identifier
+        self.name = name
+        self.data = data
+    }
+    
 }
 
 struct VideoReminder: Reminder {
+    
+    var type: ReminderType {
+        .video
+    }
     
     var identifier: String
     
@@ -52,7 +72,7 @@ struct VideoReminder: Reminder {
     
     var aspectRatio: CGFloat?
     
-    init(identifier: String, name: String?, url: URL?) {
+    init(identifier: String, name: String?, url: URL? = nil) {
         self.identifier = identifier
         self.name = name
         
@@ -61,9 +81,20 @@ struct VideoReminder: Reminder {
         self.aspectRatio = AVAsset(url: url).aspectRatio
     }
     
+    init(identifier: String, name: String?, item: AVPlayerItem?) {
+        self.identifier = identifier
+        self.name = name
+        self.player = AVPlayer(playerItem: item)
+        self.aspectRatio = item?.asset.aspectRatio
+    }
+    
 }
 
 struct AudioReminder: Reminder {
+    
+    var type: ReminderType {
+        .audio
+    }
     
     var identifier: String
     
@@ -71,11 +102,19 @@ struct AudioReminder: Reminder {
     
     var player: AVAudioPlayer?
     
-    init(identifier: String, name: String?, url: URL?) {
+    init(identifier: String, name: String?, url: URL? = nil) {
         self.identifier = identifier
         self.name = name
         
         guard let url = url else { return }
+        self.player = try? AVAudioPlayer(contentsOf: url)
+    }
+    
+    init(identifier: String, name: String?) {
+        self.identifier = identifier
+        self.name = name
+        
+        guard let name = name, let url = URL(string: name) else { return }
         self.player = try? AVAudioPlayer(contentsOf: url)
     }
     
