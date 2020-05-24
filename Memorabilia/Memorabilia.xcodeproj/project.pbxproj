@@ -12,6 +12,12 @@
 		B60409632431413800C3D627 /* StudioEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60409622431413800C3D627 /* StudioEntity.swift */; };
 		B60409652431414200C3D627 /* StudioRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60409642431414200C3D627 /* StudioRouter.swift */; };
 		B60409672431415C00C3D627 /* Studio+AR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60409662431415C00C3D627 /* Studio+AR.swift */; };
+		B60E2420247AE6CA0010A363 /* InformationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60E241F247AE6CA0010A363 /* InformationType.swift */; };
+		B60E2427247AEA380010A363 /* InformationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60E2422247AEA380010A363 /* InformationInteractor.swift */; };
+		B60E2428247AEA380010A363 /* InformationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60E2423247AEA380010A363 /* InformationEntity.swift */; };
+		B60E2429247AEA380010A363 /* InformationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60E2424247AEA380010A363 /* InformationRouter.swift */; };
+		B60E242A247AEA380010A363 /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60E2425247AEA380010A363 /* InformationViewController.swift */; };
+		B60E242B247AEA380010A363 /* InformationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60E2426247AEA380010A363 /* InformationPresenter.swift */; };
 		B6102A26241EC75A0060E962 /* MemoriesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6102A25241EC75A0060E962 /* MemoriesInteractor.swift */; };
 		B6102A28241EC7640060E962 /* MemoriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6102A27241EC7640060E962 /* MemoriesPresenter.swift */; };
 		B6102A2A241EC7730060E962 /* MemoriesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6102A29241EC7730060E962 /* MemoriesRouter.swift */; };
@@ -77,7 +83,6 @@
 		B6E7F68024394637001A5149 /* Experience+AR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7F67F24394637001A5149 /* Experience+AR.swift */; };
 		B6F236B724379069002457DF /* PillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F236B624379069002457DF /* PillButton.swift */; };
 		B6F2AD33243AB174009273CC /* SnapshotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F2AD32243AB174009273CC /* SnapshotView.swift */; };
-		B6F9579924398A250072EBD8 /* AnchorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F9579824398A250072EBD8 /* AnchorType.swift */; };
 		B6F9579B24398BB40072EBD8 /* EmptyMemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F9579A24398BB40072EBD8 /* EmptyMemoryCollectionViewCell.swift */; };
 		C6BE42FFDC075E42C630E3CC /* Pods_Memorabilia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FF160F8A56DEDA37463E238 /* Pods_Memorabilia.framework */; };
 /* End PBXBuildFile section */
@@ -89,6 +94,12 @@
 		B60409622431413800C3D627 /* StudioEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioEntity.swift; sourceTree = "<group>"; };
 		B60409642431414200C3D627 /* StudioRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioRouter.swift; sourceTree = "<group>"; };
 		B60409662431415C00C3D627 /* Studio+AR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Studio+AR.swift"; sourceTree = "<group>"; };
+		B60E241F247AE6CA0010A363 /* InformationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationType.swift; sourceTree = "<group>"; };
+		B60E2422247AEA380010A363 /* InformationInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationInteractor.swift; sourceTree = "<group>"; };
+		B60E2423247AEA380010A363 /* InformationEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationEntity.swift; sourceTree = "<group>"; };
+		B60E2424247AEA380010A363 /* InformationRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationRouter.swift; sourceTree = "<group>"; };
+		B60E2425247AEA380010A363 /* InformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
+		B60E2426247AEA380010A363 /* InformationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationPresenter.swift; sourceTree = "<group>"; };
 		B6102A25241EC75A0060E962 /* MemoriesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesInteractor.swift; sourceTree = "<group>"; };
 		B6102A27241EC7640060E962 /* MemoriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesPresenter.swift; sourceTree = "<group>"; };
 		B6102A29241EC7730060E962 /* MemoriesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesRouter.swift; sourceTree = "<group>"; };
@@ -156,7 +167,6 @@
 		B6E7F67F24394637001A5149 /* Experience+AR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Experience+AR.swift"; path = "Memorabilia/Service/Realm/Model/Experience+AR.swift"; sourceTree = SOURCE_ROOT; };
 		B6F236B624379069002457DF /* PillButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillButton.swift; sourceTree = "<group>"; };
 		B6F2AD32243AB174009273CC /* SnapshotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotView.swift; sourceTree = "<group>"; };
-		B6F9579824398A250072EBD8 /* AnchorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchorType.swift; sourceTree = "<group>"; };
 		B6F9579A24398BB40072EBD8 /* EmptyMemoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMemoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		C7F620167391D6FD12C1DD89 /* Pods-Memorabilia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memorabilia.debug.xcconfig"; path = "Target Support Files/Pods-Memorabilia/Pods-Memorabilia.debug.xcconfig"; sourceTree = "<group>"; };
 		F4EC53CCB888ED32ABB0F659 /* Pods-Memorabilia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memorabilia.release.xcconfig"; path = "Target Support Files/Pods-Memorabilia/Pods-Memorabilia.release.xcconfig"; sourceTree = "<group>"; };
@@ -180,6 +190,18 @@
 				7FF160F8A56DEDA37463E238 /* Pods_Memorabilia.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B60E2421247AE9CA0010A363 /* Information */ = {
+			isa = PBXGroup;
+			children = (
+				B60E2425247AEA380010A363 /* InformationViewController.swift */,
+				B60E2422247AEA380010A363 /* InformationInteractor.swift */,
+				B60E2426247AEA380010A363 /* InformationPresenter.swift */,
+				B60E2423247AEA380010A363 /* InformationEntity.swift */,
+				B60E2424247AEA380010A363 /* InformationRouter.swift */,
+			);
+			path = Information;
 			sourceTree = "<group>";
 		};
 		B63663F0239448760008F5BD /* Cell */ = {
@@ -357,6 +379,7 @@
 				B6654C47243E56820081CD22 /* Create */,
 				B6412CDA238EE3FD00BED236 /* Memories */,
 				B6654C48243E56F30081CD22 /* Settings */,
+				B60E2421247AE9CA0010A363 /* Information */,
 				B6412CDE238EE66300BED236 /* Studio */,
 				B6412CDF238EE68D00BED236 /* Experience */,
 			);
@@ -390,9 +413,9 @@
 		B6C1EDAC23809FF600AAE1B1 /* Enumeration */ = {
 			isa = PBXGroup;
 			children = (
-				B6F9579824398A250072EBD8 /* AnchorType.swift */,
-				B6304254243A3A890026FA1D /* ReminderType.swift */,
+				B60E241F247AE6CA0010A363 /* InformationType.swift */,
 				B6CD6611243C10810026F1EA /* MenuPageType.swift */,
+				B6304254243A3A890026FA1D /* ReminderType.swift */,
 			);
 			path = Enumeration;
 			sourceTree = "<group>";
@@ -586,6 +609,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B60E242A247AEA380010A363 /* InformationViewController.swift in Sources */,
 				B63E3C3824522CA400F41EEB /* ReminderAnchor.swift in Sources */,
 				B604095F2431412000C3D627 /* StudioInteractor.swift in Sources */,
 				B6CD6612243C10810026F1EA /* MenuPageType.swift in Sources */,
@@ -594,6 +618,7 @@
 				B60409632431413800C3D627 /* StudioEntity.swift in Sources */,
 				B6423FAE241D93A8004A7B5E /* DatabaseObserver.swift in Sources */,
 				B6102A2A241EC7730060E962 /* MemoriesRouter.swift in Sources */,
+				B60E2429247AEA380010A363 /* InformationRouter.swift in Sources */,
 				B6423FB1241D94B8004A7B5E /* UserDefaultsDatabase.swift in Sources */,
 				B6D033422455E6C400511544 /* Reminder.swift in Sources */,
 				B6654C56243E5D310081CD22 /* SettingsInteractor.swift in Sources */,
@@ -610,12 +635,14 @@
 				B63663EF239448420008F5BD /* MemoriesViewController.swift in Sources */,
 				B6E7F68024394637001A5149 /* Experience+AR.swift in Sources */,
 				B6102A36241ECA4B0060E962 /* ExperienceRouter.swift in Sources */,
+				B60E2428247AEA380010A363 /* InformationEntity.swift in Sources */,
 				B6996AAD2394372D00F4133D /* CircleButton.swift in Sources */,
 				B6654C52243E5D0D0081CD22 /* CreateRouter.swift in Sources */,
 				B6C1ED9623809E8200AAE1B1 /* AppDelegate.swift in Sources */,
 				B6102A3C241ED3CA0060E962 /* ActionBarView.swift in Sources */,
 				B6F9579B24398BB40072EBD8 /* EmptyMemoryCollectionViewCell.swift in Sources */,
 				B6654C4A243E5CD40081CD22 /* CreateViewController.swift in Sources */,
+				B60E2427247AEA380010A363 /* InformationInteractor.swift in Sources */,
 				B63663F2239448990008F5BD /* MemoryCollectionViewCell.swift in Sources */,
 				B6654C5A243E5D4E0081CD22 /* SettingsEntity.swift in Sources */,
 				B6654C54243E5D260081CD22 /* SettingsViewController.swift in Sources */,
@@ -634,13 +661,13 @@
 				B6C1898F245F8644002B6FEA /* Comparable.swift in Sources */,
 				B6102A2E241EC9AB0060E962 /* ExperienceViewController.swift in Sources */,
 				B6C1898B245F5C07002B6FEA /* SnapshotTransition.swift in Sources */,
-				B6F9579924398A250072EBD8 /* AnchorType.swift in Sources */,
 				B63663ED239444420008F5BD /* NavigationController.swift in Sources */,
 				B6102A2C241EC7900060E962 /* MemoriesEntity.swift in Sources */,
 				B6412CDD238EE49300BED236 /* DocumentsDatabase.swift in Sources */,
 				B60409652431414200C3D627 /* StudioRouter.swift in Sources */,
 				B6C1898D245F7D5D002B6FEA /* CGSize.swift in Sources */,
 				B6412CE7238EF9A500BED236 /* ARUtilities.swift in Sources */,
+				B60E242B247AEA380010A363 /* InformationPresenter.swift in Sources */,
 				B6654C4C243E5CE40081CD22 /* CreateInteractor.swift in Sources */,
 				B6412CE1238EE6A900BED236 /* StudioViewController.swift in Sources */,
 				B6102A28241EC7640060E962 /* MemoriesPresenter.swift in Sources */,
@@ -650,6 +677,7 @@
 				B6423FAC241D9354004A7B5E /* Database.swift in Sources */,
 				B6E7F67E2438DB74001A5149 /* Memory.swift in Sources */,
 				B6D033462456630A00511544 /* UIImage.swift in Sources */,
+				B60E2420247AE6CA0010A363 /* InformationType.swift in Sources */,
 				B60409672431415C00C3D627 /* Studio+AR.swift in Sources */,
 				B6654C4E243E5CF60081CD22 /* CreatePresenter.swift in Sources */,
 				B6102A3E241ED4320060E962 /* ActionBarButton.swift in Sources */,
