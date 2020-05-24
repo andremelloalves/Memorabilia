@@ -29,19 +29,12 @@ class InformationViewController: UIViewController {
     // MARK: View properties
 
     // MARK: Control properties
-    
-    var type: InformationType = .app
 
     // MARK: ... properties
     
     // MARK: View model
     
     // MARK: Initializers
-    
-    init(type: InformationType) {
-        super.init(nibName: nil, bundle: nil)
-        self.type = type
-    }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)

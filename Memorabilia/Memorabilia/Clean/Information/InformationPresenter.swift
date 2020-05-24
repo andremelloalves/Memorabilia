@@ -12,6 +12,8 @@ protocol InformationPresenterInput {
     
     // Present
     
+    func present(informations: [InformationEntity.Present], update: Bool)
+    
 }
 
 class InformationPresenter: InformationPresenterInput {
@@ -26,13 +28,28 @@ class InformationPresenter: InformationPresenterInput {
     
     // MARK: Functions
     
+    func present(informations: [InformationEntity.Present], update: Bool) {
+        let sections: [InformationSection] = []
+        
+        if update {
+            DispatchQueue.main.async {
+                self.viewController?.loadSections(sections: sections)
+            }
+        } else {
+            setup(newSections: sections)
+        }
+    }
+    
     private func setup(newSections: [InformationSection]) {
         let oldData = flatten(sections: sections)
         let newData = flatten(sections: newSections)
         let changes = SeriesChanges.calculate(old: oldData, new: newData)
 
         sections = newSections
-        viewController?.reloadSections(changes: changes, sections: newSections)
+        
+        DispatchQueue.main.async {
+            self.viewController?.reloadSections(changes: changes, sections: newSections)
+        }
     }
 
     private func flatten(sections: [InformationSection]) -> [ReloadableSection<InformationEntity.Display.ItemWrapper>] {

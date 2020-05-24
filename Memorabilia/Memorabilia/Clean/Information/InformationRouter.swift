@@ -12,6 +12,8 @@ protocol InformationRouterInput {
     
     // Navigation
     
+    func routeBack()
+    
 }
 
 protocol InformationRouterOutput {
@@ -31,6 +33,11 @@ class InformationRouter: InformationRouterInput, InformationRouterOutput {
     var interactor: InformationInteractorData?
     
     // MARK: Navigation
+    
+    func routeBack() {
+        // Perform segue
+        viewController?.dismiss(animated: true, completion: nil)
+    }
     
     // MARK: Data passing
     

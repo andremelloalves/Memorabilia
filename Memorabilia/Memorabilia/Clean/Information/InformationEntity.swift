@@ -34,7 +34,7 @@ struct InformationEntity {
     
     struct Present {
         
-//        var names: [Information]
+        var uid: String
         
     }
     

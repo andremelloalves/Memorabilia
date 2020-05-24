@@ -14,9 +14,7 @@ protocol MemoriesPresenterInput {
     
     func presentMemoryPhoto(_ data: Data, with id: String, for index: IndexPath)
     
-    func presentMemories(memories: [MemoriesEntity.Present])
-    
-    func presentMemoriesUpdate(memories: [MemoriesEntity.Present])
+    func present(memories: [MemoriesEntity.Present], update: Bool)
     
 }
 
@@ -38,7 +36,7 @@ class MemoriesPresenter: MemoriesPresenterInput {
         }
     }
     
-    func presentMemories(memories: [MemoriesEntity.Present]) {
+    func present(memories: [MemoriesEntity.Present], update: Bool) {
         var sections: [MemoriesSection] = []
         
         var memoryItems: [MemoriesEntity.Display.MemoryItem] = []
@@ -58,32 +56,13 @@ class MemoriesPresenter: MemoriesPresenterInput {
         let memoriesSection = MemoriesEntity.Display.MemorySection(memories: memoryItems)
         sections.append(memoriesSection)
         
-        DispatchQueue.main.async {
-            self.viewController?.loadSections(sections: [memoriesSection])
+        if update {
+            DispatchQueue.main.async {
+                self.viewController?.loadSections(sections: sections)
+            }
+        } else {
+            setup(newSections: sections)
         }
-    }
-    
-    func presentMemoriesUpdate(memories: [MemoriesEntity.Present]) {
-        var sections: [MemoriesSection] = []
-        
-        var memoryItems: [MemoriesEntity.Display.MemoryItem] = []
-        
-        for memory in memories {
-            let memoryID = memory.uid
-            let name = memory.name
-            let format = DateFormatter()
-            format.locale = .current
-            format.dateFormat = "EEEE, d MMM yy"
-            let date = format.string(from: memory.creationDate)
-            let photoID = memory.uid
-            let memoryItem = MemoriesEntity.Display.MemoryItem(memoryID: memoryID,name: name, date: date, photoID: photoID)
-            memoryItems.append(memoryItem)
-        }
-        
-        let memoriesSection = MemoriesEntity.Display.MemorySection(memories: memoryItems)
-        sections.append(memoriesSection)
-        
-        setup(newSections: sections)
     }
     
     private func setup(newSections: [MemoriesSection]) {

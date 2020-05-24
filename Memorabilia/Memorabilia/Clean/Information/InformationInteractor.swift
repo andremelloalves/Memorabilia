@@ -7,12 +7,15 @@
 //
 
 import Foundation
+import PromiseKit
 
 protocol InformationInteractorInput {
     
     // Create
 
     // Read
+    
+    func readInformations()
 
     // Update
 
@@ -25,6 +28,10 @@ protocol InformationInteractorData {
     // Data
     
     var db: Database? { get set }
+    
+    var informations: [Information]? { get }
+    
+    var type: InformationType? { get set }
     
 }
 
@@ -47,6 +54,10 @@ class InformationInteractor: InformationInteractorInput, InformationInteractorDa
         }
     }
     
+    var informations: [Information]?
+    
+    var type: InformationType?
+    
     // MARK: Initializers
     
     init() {}
@@ -61,6 +72,26 @@ class InformationInteractor: InformationInteractorInput, InformationInteractorDa
     
     // Read
     
+    func readInformations() {
+        readInformations(update: false)
+    }
+    
+    private func readInformations(update: Bool = false) {
+        guard let db = db, let type = type else { return }
+        
+        firstly {
+            db.readInformations(type: type)
+        }.get { informations in
+            self.informations = informations
+        }.map {
+            $0.map { InformationEntity.Present(uid: $0.uid) }
+        }.done(on: .global(qos: .userInitiated)) { informations in
+            self.presenter?.present(informations: informations, update: update)
+        }.catch { error in
+            print(error.localizedDescription)
+        }
+    }
+    
     // Update
     
     // Delete
@@ -71,7 +102,7 @@ class InformationInteractor: InformationInteractorInput, InformationInteractorDa
 extension InformationInteractor: DatabaseObserver {
     
     func notify() {
-
+        readInformations(update: true)
     }
     
 }

@@ -71,6 +71,20 @@ class Database {
     
     // MARK: Read
     
+    func readInformations(type: InformationType) -> Promise<[Information]> {
+        return Promise { seal in
+            do {
+                let predicate = NSPredicate()
+                let sort = NSSortDescriptor(key: "", ascending: true)
+                let results: Results<Information> = try realm.query(with: predicate, sortDescriptors: [sort])
+                let informations: [Information] = Array(results)
+                seal.fulfill(informations)
+            } catch let error {
+                seal.reject(error)
+            }
+        }
+    }
+    
     func readMemories() -> Promise<[Memory]> {
         return Promise { seal in
             do {
