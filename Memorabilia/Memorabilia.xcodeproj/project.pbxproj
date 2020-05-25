@@ -19,6 +19,9 @@
 		B60E242A247AEA380010A363 /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60E2425247AEA380010A363 /* InformationViewController.swift */; };
 		B60E242B247AEA380010A363 /* InformationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60E2426247AEA380010A363 /* InformationPresenter.swift */; };
 		B60E242D247AF3050010A363 /* Information.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60E242C247AF3050010A363 /* Information.swift */; };
+		B60E242F247B50510010A363 /* Information+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60E242E247B50510010A363 /* Information+Collection.swift */; };
+		B60E2431247B52180010A363 /* InformationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60E2430247B52180010A363 /* InformationCollectionViewCell.swift */; };
+		B60E2433247B52500010A363 /* EmptyInformationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60E2432247B52500010A363 /* EmptyInformationCollectionViewCell.swift */; };
 		B6102A26241EC75A0060E962 /* MemoriesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6102A25241EC75A0060E962 /* MemoriesInteractor.swift */; };
 		B6102A28241EC7640060E962 /* MemoriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6102A27241EC7640060E962 /* MemoriesPresenter.swift */; };
 		B6102A2A241EC7730060E962 /* MemoriesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6102A29241EC7730060E962 /* MemoriesRouter.swift */; };
@@ -102,6 +105,9 @@
 		B60E2425247AEA380010A363 /* InformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
 		B60E2426247AEA380010A363 /* InformationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationPresenter.swift; sourceTree = "<group>"; };
 		B60E242C247AF3050010A363 /* Information.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Information.swift; sourceTree = "<group>"; };
+		B60E242E247B50510010A363 /* Information+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Information+Collection.swift"; sourceTree = "<group>"; };
+		B60E2430247B52180010A363 /* InformationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationCollectionViewCell.swift; sourceTree = "<group>"; };
+		B60E2432247B52500010A363 /* EmptyInformationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyInformationCollectionViewCell.swift; sourceTree = "<group>"; };
 		B6102A25241EC75A0060E962 /* MemoriesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesInteractor.swift; sourceTree = "<group>"; };
 		B6102A27241EC7640060E962 /* MemoriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesPresenter.swift; sourceTree = "<group>"; };
 		B6102A29241EC7730060E962 /* MemoriesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesRouter.swift; sourceTree = "<group>"; };
@@ -202,6 +208,7 @@
 				B60E2426247AEA380010A363 /* InformationPresenter.swift */,
 				B60E2423247AEA380010A363 /* InformationEntity.swift */,
 				B60E2424247AEA380010A363 /* InformationRouter.swift */,
+				B60E242E247B50510010A363 /* Information+Collection.swift */,
 			);
 			path = Information;
 			sourceTree = "<group>";
@@ -211,6 +218,8 @@
 			children = (
 				B63663F1239448990008F5BD /* MemoryCollectionViewCell.swift */,
 				B6F9579A24398BB40072EBD8 /* EmptyMemoryCollectionViewCell.swift */,
+				B60E2430247B52180010A363 /* InformationCollectionViewCell.swift */,
+				B60E2432247B52500010A363 /* EmptyInformationCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -618,6 +627,7 @@
 				B6CD6612243C10810026F1EA /* MenuPageType.swift in Sources */,
 				B6CD6610243C0DFA0026F1EA /* MenuController.swift in Sources */,
 				B6102A30241ECA230060E962 /* ExperienceInteractor.swift in Sources */,
+				B60E242F247B50510010A363 /* Information+Collection.swift in Sources */,
 				B60409632431413800C3D627 /* StudioEntity.swift in Sources */,
 				B6423FAE241D93A8004A7B5E /* DatabaseObserver.swift in Sources */,
 				B6102A2A241EC7730060E962 /* MemoriesRouter.swift in Sources */,
@@ -626,6 +636,7 @@
 				B6D033422455E6C400511544 /* Reminder.swift in Sources */,
 				B6654C56243E5D310081CD22 /* SettingsInteractor.swift in Sources */,
 				B6654C5C243E5D640081CD22 /* SettingsRouter.swift in Sources */,
+				B60E2433247B52500010A363 /* EmptyInformationCollectionViewCell.swift in Sources */,
 				B69ADD4C244F98F2001D9625 /* Studio+Media.swift in Sources */,
 				B6996AAF239439EB00F4133D /* InfoView.swift in Sources */,
 				B6E7F6772438C8C1001A5149 /* CGRect.swift in Sources */,
@@ -637,6 +648,7 @@
 				B60E242D247AF3050010A363 /* Information.swift in Sources */,
 				B6D033442456058800511544 /* AVAsset.swift in Sources */,
 				B63663EF239448420008F5BD /* MemoriesViewController.swift in Sources */,
+				B60E2431247B52180010A363 /* InformationCollectionViewCell.swift in Sources */,
 				B6E7F68024394637001A5149 /* Experience+AR.swift in Sources */,
 				B6102A36241ECA4B0060E962 /* ExperienceRouter.swift in Sources */,
 				B60E2428247AEA380010A363 /* InformationEntity.swift in Sources */,

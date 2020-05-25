@@ -27,12 +27,36 @@ class InformationViewController: UIViewController {
     var router: (InformationRouterInput & InformationRouterOutput)?
     
     // MARK: View properties
+    
+    lazy var collection: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 8
+        layout.minimumInteritemSpacing = 8
+        let width = UIScreen.main.bounds.width - 16
+        let height = width
+        layout.itemSize = CGSize(width: width, height: height)
+//        layout.estimatedItemSize = CGSize(width: 343, height: 612)
+        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        let viewInsets = UIEdgeInsets(top: 72, left: 0, bottom: 82, right: 0)
+        view.contentInset = viewInsets
+        view.scrollIndicatorInsets = viewInsets
+        view.backgroundColor = .clear
+        view.isPagingEnabled = true
+        view.dataSource = self
+        view.register(InformationCollectionViewCell.self,forCellWithReuseIdentifier: InformationCollectionViewCell.identifier)
+        view.register(EmptyInformationCollectionViewCell.self, forCellWithReuseIdentifier: EmptyInformationCollectionViewCell.identifier)
+        return view
+    }()
 
     // MARK: Control properties
 
     // MARK: ... properties
     
     // MARK: View model
+    
+    var sections: [InformationSection] = []
     
     // MARK: Initializers
     
@@ -52,8 +76,10 @@ class InformationViewController: UIViewController {
     
     private func setup() {
         // Self
+        view.backgroundColor = .clear
         
-        // ... views
+        // CollectionView
+        view.addSubview(collection)
         
         // Constraints
         setupConstraints()
@@ -63,11 +89,24 @@ class InformationViewController: UIViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            // ... views
+            // Collection
+            collection.topAnchor.constraint(equalTo: view.topAnchor),
+            collection.leftAnchor.constraint(equalTo: view.leftAnchor),
+            collection.rightAnchor.constraint(equalTo: view.rightAnchor),
+            collection.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
     // MARK: View life cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        interactor?.readInformations()
+    }
     
     // MARK: Action
 
@@ -101,11 +140,20 @@ extension InformationViewController: InformationViewInput {
     // Update
     
     func loadSections(sections: [InformationSection]) {
+        self.sections = sections
         
+        collection.reloadData()
     }
     
     func reloadSections(changes: SectionChanges, sections: [InformationSection]) {
+        self.sections = sections
         
+        collection.deleteSections(changes.deletes)
+        collection.insertSections(changes.inserts)
+        
+        collection.reloadItems(at: changes.updates.reloads)
+        collection.insertItems(at: changes.updates.inserts)
+        collection.deleteItems(at: changes.updates.deletes)
     }
     
 }

@@ -43,7 +43,7 @@ struct InformationEntity {
         // MARK: Sections
         
         enum SectionType: String {
-            case names
+            case informations
         }
         
         struct Section: InformationSection {
@@ -53,13 +53,13 @@ struct InformationEntity {
             }
             
             var type: SectionType {
-                .names
+                .informations
             }
             
-            var names: [InformationItem]
+            var informations: [InformationItem]
             
             var items: [ItemWrapper] {
-                names.map({ ItemWrapper(uid: $0.uid, item: $0) })
+                informations.map({ ItemWrapper(uid: $0.uid, item: $0) })
             }
         
         }
@@ -67,7 +67,7 @@ struct InformationEntity {
         // MARK: Items
         
         enum ItemType: String {
-            case name
+            case information
         }
         
         struct ItemWrapper: Equatable {
@@ -90,8 +90,14 @@ struct InformationEntity {
             }
             
             var type: ItemType {
-                .name
+                .information
             }
+            
+            var title: String
+            
+            var message: String
+            
+            var imageName: String
             
         }
         
