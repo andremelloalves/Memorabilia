@@ -1,0 +1,16 @@
+[
+    {
+        "uid": "1",
+        "type": "app",
+        "title": "Memorabilia",
+        "message": "Esse é um app de AR.",
+        "imageName": ""
+    },
+    {
+        "uid": "2",
+        "type": "app",
+        "title": "Memorabilia",
+        "message": "É possível criar sua própria experiência AR.",
+        "imageName": ""
+    }
+]

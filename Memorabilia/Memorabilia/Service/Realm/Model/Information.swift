@@ -7,25 +7,17 @@
 //
 
 import Foundation
-import RealmSwift
 
-class Information: Object {
+struct Information: Decodable {
     
-    // MARK: Properties
+    var uid: String
     
-    @objc dynamic var uid: String = ""
+    var type: InformationType
     
-    // MARK: Initializers
+    var title: String
     
-    convenience init(name: String) {
-        self.init()
-        self.uid = UUID().uuidString
-    }
+    var message: String
     
-    // MARK: Realm
-    
-    override static func primaryKey() -> String? {
-        return "uid"
-    }
+    var imageName: String
     
 }

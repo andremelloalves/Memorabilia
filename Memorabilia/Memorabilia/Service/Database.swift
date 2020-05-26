@@ -74,11 +74,10 @@ class Database {
     func readInformations(type: InformationType) -> Promise<[Information]> {
         return Promise { seal in
             do {
-                let predicate = NSPredicate()
-                let sort = NSSortDescriptor(key: "", ascending: true)
-                let results: Results<Information> = try realm.query(with: predicate, sortDescriptors: [sort])
-                let informations: [Information] = Array(results)
-                seal.fulfill(informations)
+                let url = Bundle.main.url(forResource: "InformationData", withExtension: "jscsrc")!
+                let data = try Data(contentsOf: url)
+                let informations = try JSONDecoder().decode([Information].self, from: data)
+                seal.fulfill(informations.filter({ $0.type == type }))
             } catch let error {
                 seal.reject(error)
             }

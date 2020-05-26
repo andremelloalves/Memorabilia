@@ -24,7 +24,7 @@ class InformationPresenter: InformationPresenterInput {
     
     // MARK: Properties
     
-    private var sections: [InformationSection] = [InformationEntity.Display.Section(names: [])]
+    private var sections: [InformationSection] = [InformationEntity.Display.Section(informations: [])]
     
     // MARK: Functions
     

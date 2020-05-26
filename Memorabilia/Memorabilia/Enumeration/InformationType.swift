@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum InformationType: String {
+enum InformationType: String, Decodable {
     
     // MARK: Cases
     
