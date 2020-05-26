@@ -24,6 +24,7 @@ extension MemoriesViewController: UICollectionViewDataSource {
             else { return EmptyMemoryCollectionViewCell() }
         
         cell.update(memory: memory)
+        
         if let data = photoDataCache.object(forKey: NSString(string: memory.photoID)) {
             cell.updatePhoto(data as Data)
         } else {

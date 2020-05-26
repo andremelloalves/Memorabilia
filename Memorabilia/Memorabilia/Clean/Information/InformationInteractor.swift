@@ -84,7 +84,7 @@ class InformationInteractor: InformationInteractorInput, InformationInteractorDa
         }.get { informations in
             self.informations = informations
         }.map {
-            $0.map { InformationEntity.Present(uid: $0.uid) }
+            $0.map { InformationEntity.Present(uid: $0.uid, title: $0.title, message: $0.message, photoID: $0.photoID) }
         }.done(on: .global(qos: .userInitiated)) { informations in
             self.presenter?.present(informations: informations, update: update)
         }.catch { error in

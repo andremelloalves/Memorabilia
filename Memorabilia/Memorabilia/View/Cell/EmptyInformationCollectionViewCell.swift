@@ -16,7 +16,6 @@ class EmptyInformationCollectionViewCell: UICollectionViewCell {
     
     let messageLabel: UILabel = {
         let label = UILabel()
-        label.text = "Não há informação disponível."
         label.backgroundColor = .clear
         label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         label.adjustsFontForContentSizeCategory = true
@@ -63,6 +62,12 @@ class EmptyInformationCollectionViewCell: UICollectionViewCell {
         
         // Constraints
         setupConstraints()
+    }
+    
+    // MARK: Update
+    
+    public func update(information: InformationEntity.Display.Empty) {
+        messageLabel.text = information.message
     }
     
     // MARK: Constraints

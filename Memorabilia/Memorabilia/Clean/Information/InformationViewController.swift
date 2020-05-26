@@ -58,6 +58,8 @@ class InformationViewController: UIViewController {
     
     var sections: [InformationSection] = []
     
+    let photoDataCache = NSCache<NSString, NSData>()
+    
     // MARK: Initializers
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -76,7 +78,7 @@ class InformationViewController: UIViewController {
     
     private func setup() {
         // Self
-        view.backgroundColor = .clear
+        view.backgroundColor = .systemBackground
         
         // CollectionView
         view.addSubview(collection)

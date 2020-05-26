@@ -36,6 +36,12 @@ struct InformationEntity {
         
         var uid: String
         
+        var title: String
+        
+        var message: String
+        
+        var photoID: String
+        
     }
     
     struct Display {
@@ -68,6 +74,7 @@ struct InformationEntity {
         
         enum ItemType: String {
             case information
+            case empty
         }
         
         struct ItemWrapper: Equatable {
@@ -97,7 +104,21 @@ struct InformationEntity {
             
             var message: String
             
-            var imageName: String
+            var photoID: String
+            
+        }
+        
+        struct Empty: InformationItem {
+            
+            var uid: String {
+                return type.rawValue + message
+            }
+            
+            var type: ItemType {
+                .empty
+            }
+            
+            var message: String
             
         }
         

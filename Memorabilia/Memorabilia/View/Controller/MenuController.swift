@@ -101,7 +101,7 @@ class MenuController: UIViewController {
         // Navigation bar
         view.addSubview(navigation)
 //        navigation.leftButton.addTarget(self, action: #selector(backButtonAction), for: .primaryActionTriggered)
-//        navigation.rightButton.addTarget(self, action: #selector(optionsButtonAction), for: .primaryActionTriggered)
+        navigation.rightButton.addTarget(self, action: #selector(infoButtonAction), for: .primaryActionTriggered)
         
         // Options bar
         view.addSubview(optionsBar)
@@ -150,6 +150,18 @@ class MenuController: UIViewController {
             self.selectedPage = option
         }
         return action
+    }
+    
+    @objc func infoButtonAction() {
+        let informationViewController = InformationViewController()
+        informationViewController.modalTransitionStyle = .coverVertical
+        informationViewController.modalPresentationStyle = .fullScreen
+        
+        var dInteractor = informationViewController.router!.interactor!
+        dInteractor.db = App.session.db
+        dInteractor.type = .app
+        
+        present(informationViewController, animated: true, completion: nil)
     }
     
     // MARK: Navigation

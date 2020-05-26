@@ -18,6 +18,6 @@ struct Information: Decodable {
     
     var message: String
     
-    var imageName: String
+    var photoID: String
     
 }

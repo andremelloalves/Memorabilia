@@ -59,7 +59,7 @@ class MemoriesViewController: UIViewController, MenuPage {
     
     // MARK: View model
     
-    var memoriesSections: [MemoriesSection] = [MemoriesEntity.Display.MemorySection(memories: [])]
+    var memoriesSections: [MemoriesSection] = []
     
     let photoDataCache = NSCache<NSString, NSData>()
     

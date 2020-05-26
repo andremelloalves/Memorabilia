@@ -29,14 +29,34 @@ class InformationPresenter: InformationPresenterInput {
     // MARK: Functions
     
     func present(informations: [InformationEntity.Present], update: Bool) {
-        let sections: [InformationSection] = []
+        var sections: [InformationSection] = []
+        
+        var informationItems: [InformationItem] = []
+        
+        for information in informations {
+//            let informationID = information.uid
+            let title = information.title
+            let message = information.message
+            let imageName = information.photoID
+            let informationItem = InformationEntity.Display.Item(title: title, message: message, photoID: imageName)
+            informationItems.append(informationItem)
+        }
+        
+        if informations.isEmpty {
+            let message = "Não há informações disponíveis"
+            let emptyItem = InformationEntity.Display.Empty(message: message)
+            informationItems.append(emptyItem)
+        }
+        
+        let section = InformationEntity.Display.Section(informations: informationItems)
+        sections.append(section)
         
         if update {
+            setup(newSections: sections)
+        } else {
             DispatchQueue.main.async {
                 self.viewController?.loadSections(sections: sections)
             }
-        } else {
-            setup(newSections: sections)
         }
     }
     

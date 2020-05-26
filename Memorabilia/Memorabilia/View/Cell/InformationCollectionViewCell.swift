@@ -39,7 +39,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let image: UIImageView = {
+    let photo: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = .clear
         view.layer.cornerRadius = 4
@@ -86,7 +86,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
         addSubview(messageLabel)
         
         // Image
-        addSubview(image)
+        addSubview(photo)
         
         // Constraints
         setupConstraints()
@@ -97,7 +97,10 @@ class InformationCollectionViewCell: UICollectionViewCell {
     public func update(information: InformationEntity.Display.Item) {
         titleLabel.text = information.title
         messageLabel.text = information.message
-        image.image = UIImage(named: information.imageName)
+    }
+    
+    public func updatePhoto(_ data: Data) {
+        photo.image = UIImage(data: data)
     }
     
     // MARK: Constraints
@@ -117,10 +120,10 @@ class InformationCollectionViewCell: UICollectionViewCell {
             messageLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
             
             // Image
-            image.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: 16),
-            image.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
-            image.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
-            image.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
+            photo.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: 16),
+            photo.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
+            photo.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
+            photo.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
         ])
     }
 

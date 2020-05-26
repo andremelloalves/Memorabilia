@@ -57,11 +57,11 @@ class MemoriesPresenter: MemoriesPresenterInput {
         sections.append(memoriesSection)
         
         if update {
+            setup(newSections: sections)
+        } else {
             DispatchQueue.main.async {
                 self.viewController?.loadSections(sections: sections)
             }
-        } else {
-            setup(newSections: sections)
         }
     }
     
