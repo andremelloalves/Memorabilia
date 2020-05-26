@@ -12,7 +12,7 @@ protocol InformationPresenterInput {
     
     // Present
     
-    func present(informations: [InformationEntity.Present], update: Bool)
+    func present(informations: [InformationEntity.Present], shouldUpdate: Bool)
     
 }
 
@@ -28,7 +28,7 @@ class InformationPresenter: InformationPresenterInput {
     
     // MARK: Functions
     
-    func present(informations: [InformationEntity.Present], update: Bool) {
+    func present(informations: [InformationEntity.Present], shouldUpdate: Bool) {
         var sections: [InformationSection] = []
         
         var informationItems: [InformationItem] = []
@@ -51,8 +51,8 @@ class InformationPresenter: InformationPresenterInput {
         let section = InformationEntity.Display.Section(informations: informationItems)
         sections.append(section)
         
-        if update {
-            setup(newSections: sections)
+        if shouldUpdate {
+            update(sections)
         } else {
             DispatchQueue.main.async {
                 self.viewController?.loadSections(sections: sections)
@@ -60,7 +60,7 @@ class InformationPresenter: InformationPresenterInput {
         }
     }
     
-    private func setup(newSections: [InformationSection]) {
+    private func update(_ newSections: [InformationSection]) {
         let oldData = flatten(sections: sections)
         let newData = flatten(sections: newSections)
         let changes = SeriesChanges.calculate(old: oldData, new: newData)

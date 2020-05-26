@@ -39,7 +39,7 @@ class InformationViewController: UIViewController {
 //        layout.estimatedItemSize = CGSize(width: 343, height: 612)
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.translatesAutoresizingMaskIntoConstraints = false
-        let viewInsets = UIEdgeInsets(top: 72, left: 0, bottom: 82, right: 0)
+        let viewInsets = UIEdgeInsets(top: 72, left: 0, bottom: 0, right: 0)
         view.contentInset = viewInsets
         view.scrollIndicatorInsets = viewInsets
         view.backgroundColor = .clear
@@ -78,7 +78,7 @@ class InformationViewController: UIViewController {
     
     private func setup() {
         // Self
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor(named: "Memo6")
         
         // CollectionView
         view.addSubview(collection)

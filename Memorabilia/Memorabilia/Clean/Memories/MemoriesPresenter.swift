@@ -14,7 +14,7 @@ protocol MemoriesPresenterInput {
     
     func presentMemoryPhoto(_ data: Data, with id: String, for index: IndexPath)
     
-    func present(memories: [MemoriesEntity.Present], update: Bool)
+    func present(memories: [MemoriesEntity.Present], shouldUpdate: Bool)
     
 }
 
@@ -36,7 +36,7 @@ class MemoriesPresenter: MemoriesPresenterInput {
         }
     }
     
-    func present(memories: [MemoriesEntity.Present], update: Bool) {
+    func present(memories: [MemoriesEntity.Present], shouldUpdate: Bool) {
         var sections: [MemoriesSection] = []
         
         var memoryItems: [MemoriesEntity.Display.MemoryItem] = []
@@ -53,11 +53,11 @@ class MemoriesPresenter: MemoriesPresenterInput {
             memoryItems.append(memoryItem)
         }
         
-        let memoriesSection = MemoriesEntity.Display.MemorySection(memories: memoryItems)
-        sections.append(memoriesSection)
+        let section = MemoriesEntity.Display.MemorySection(memories: memoryItems)
+        sections.append(section)
         
-        if update {
-            setup(newSections: sections)
+        if shouldUpdate {
+            update(sections)
         } else {
             DispatchQueue.main.async {
                 self.viewController?.loadSections(sections: sections)
@@ -65,7 +65,7 @@ class MemoriesPresenter: MemoriesPresenterInput {
         }
     }
     
-    private func setup(newSections: [MemoriesSection]) {
+    private func update(_ newSections: [MemoriesSection]) {
         let oldData = flatten(sections: sections)
         let newData = flatten(sections: newSections)
         let changes = SeriesChanges.calculate(old: oldData, new: newData)

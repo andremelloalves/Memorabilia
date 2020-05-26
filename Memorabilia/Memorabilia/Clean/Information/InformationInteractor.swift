@@ -73,10 +73,10 @@ class InformationInteractor: InformationInteractorInput, InformationInteractorDa
     // Read
     
     func readInformations() {
-        readInformations(update: false)
+        readInformations(shouldUpdate: false)
     }
     
-    private func readInformations(update: Bool = false) {
+    private func readInformations(shouldUpdate: Bool = false) {
         guard let db = db, let type = type else { return }
         
         firstly {
@@ -86,7 +86,7 @@ class InformationInteractor: InformationInteractorInput, InformationInteractorDa
         }.map {
             $0.map { InformationEntity.Present(uid: $0.uid, title: $0.title, message: $0.message, photoID: $0.photoID) }
         }.done(on: .global(qos: .userInitiated)) { informations in
-            self.presenter?.present(informations: informations, update: update)
+            self.presenter?.present(informations: informations, shouldUpdate: shouldUpdate)
         }.catch { error in
             print(error.localizedDescription)
         }
@@ -102,7 +102,7 @@ class InformationInteractor: InformationInteractorInput, InformationInteractorDa
 extension InformationInteractor: DatabaseObserver {
     
     func notify() {
-        readInformations(update: true)
+        readInformations(shouldUpdate: true)
     }
     
 }

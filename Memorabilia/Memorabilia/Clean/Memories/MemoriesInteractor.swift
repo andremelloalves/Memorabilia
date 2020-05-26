@@ -85,10 +85,10 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
     }
     
     func readMemories() {
-        readMemories(update: false)
+        readMemories(shouldUpdate: false)
     }
     
-    private func readMemories(update: Bool = false) {
+    private func readMemories(shouldUpdate: Bool = false) {
         guard let db = db else { return }
         
         firstly {
@@ -98,7 +98,7 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
         }.map {
             $0.map { MemoriesEntity.Present(uid: $0.uid, name: $0.name, creationDate: $0.creationDate) }
         }.done(on: .global(qos: .userInitiated)) { memories in
-            self.presenter?.present(memories: memories, update: update)
+            self.presenter?.present(memories: memories, shouldUpdate: shouldUpdate)
         }.catch { error in
             print(error.localizedDescription)
         }
@@ -126,7 +126,7 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
 extension MemoriesInteractor: DatabaseObserver {
     
     func notify() {
-        readMemories(update: true)
+        readMemories(shouldUpdate: true)
     }
     
 }
