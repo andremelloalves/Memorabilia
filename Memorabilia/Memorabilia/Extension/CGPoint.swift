@@ -18,4 +18,12 @@ extension CGPoint {
         return sqrt(pow(x, 2) + pow(y, 2))
     }
     
+    static func +(left: CGPoint, right: CGPoint) -> CGPoint {
+        return CGPoint(x: left.x + right.x, y: left.y + right.y)
+    }
+    
+    static func -(left: CGPoint, right: CGPoint) -> CGPoint {
+        return CGPoint(x: left.x - right.x, y: left.y - right.y)
+    }
+    
 }

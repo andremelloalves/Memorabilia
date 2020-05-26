@@ -51,3 +51,13 @@ extension InformationViewController: UICollectionViewDataSource {
     }
 
 }
+
+extension InformationViewController: UICollectionViewDelegate {
+    
+//    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//        let inset = CGPoint(x: collection.contentInset.left, y: collection.contentInset.top)
+//        let point = targetContentOffset.pointee + inset
+//        print(point)
+//    }
+    
+}

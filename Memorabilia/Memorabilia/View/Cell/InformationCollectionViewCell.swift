@@ -49,13 +49,6 @@ class InformationCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    let background: UIVisualEffectView = {
-        let blur = UIBlurEffect(style: .regular)
-        let blurView = UIVisualEffectView(effect: blur)
-        blurView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        return blurView
-    }()
-    
     // MARK: Initializers
     
     override init(frame: CGRect) {
@@ -72,12 +65,9 @@ class InformationCollectionViewCell: UICollectionViewCell {
     
     private func setup() {
         // Self
-        backgroundColor = .clear
+        backgroundColor = .systemBackground
         layer.cornerRadius = 20
         clipsToBounds = true
-        
-        // Background
-        addSubview(background)
         
         // Title
         addSubview(titleLabel)
@@ -120,7 +110,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
             messageLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
             
             // Image
-            photo.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: 16),
+            photo.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 16),
             photo.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             photo.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
             photo.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)

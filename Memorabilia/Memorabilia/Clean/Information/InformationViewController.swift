@@ -28,26 +28,40 @@ class InformationViewController: UIViewController {
     
     // MARK: View properties
     
+    let background: UIVisualEffectView = {
+        let blur = UIBlurEffect(style: .systemThinMaterial)
+        let blurView = UIVisualEffectView(effect: blur)
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        return blurView
+    }()
+    
     lazy var collection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 8
         layout.minimumInteritemSpacing = 8
-        let width = UIScreen.main.bounds.width - 16
+        let width = UIScreen.main.bounds.width - 32
         let height = width
         layout.itemSize = CGSize(width: width, height: height)
 //        layout.estimatedItemSize = CGSize(width: 343, height: 612)
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.translatesAutoresizingMaskIntoConstraints = false
-        let viewInsets = UIEdgeInsets(top: 72, left: 0, bottom: 0, right: 0)
-        view.contentInset = viewInsets
-        view.scrollIndicatorInsets = viewInsets
+        view.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
+//        view.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 64, bottom: 0, right: 64)
         view.backgroundColor = .clear
-        view.isPagingEnabled = true
+        view.isPagingEnabled = false
         view.dataSource = self
+        view.delegate = self
         view.register(InformationCollectionViewCell.self,forCellWithReuseIdentifier: InformationCollectionViewCell.identifier)
         view.register(EmptyInformationCollectionViewCell.self, forCellWithReuseIdentifier: EmptyInformationCollectionViewCell.identifier)
         return view
+    }()
+    
+    let exitButton: CircleButton = {
+        let button = CircleButton()
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.addTarget(self, action: #selector(exitButtonAction), for: .primaryActionTriggered)
+        return button
     }()
 
     // MARK: Control properties
@@ -78,10 +92,16 @@ class InformationViewController: UIViewController {
     
     private func setup() {
         // Self
-        view.backgroundColor = UIColor(named: "Memo6")
+        view.backgroundColor = .clear
+        
+        // Background
+        view.addSubview(background)
         
         // CollectionView
         view.addSubview(collection)
+        
+        // Exit button
+        view.addSubview(exitButton)
         
         // Constraints
         setupConstraints()
@@ -91,11 +111,21 @@ class InformationViewController: UIViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
+            // Background
+            background.topAnchor.constraint(equalTo: view.topAnchor),
+            background.leftAnchor.constraint(equalTo: view.leftAnchor),
+            background.rightAnchor.constraint(equalTo: view.rightAnchor),
+            background.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
             // Collection
-            collection.topAnchor.constraint(equalTo: view.topAnchor),
-            collection.leftAnchor.constraint(equalTo: view.leftAnchor),
-            collection.rightAnchor.constraint(equalTo: view.rightAnchor),
-            collection.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collection.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collection.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            collection.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            collection.bottomAnchor.constraint(equalTo: exitButton.topAnchor, constant: -16),
+            
+            // Exit button
+            exitButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            exitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
     
@@ -111,10 +141,18 @@ class InformationViewController: UIViewController {
     }
     
     // MARK: Action
+    
+    @objc func exitButtonAction() {
+        routeBack()
+    }
 
     // MARK: Animation
     
     // MARK: Navigation
+    
+    func routeBack() {
+        router?.routeBack()
+    }
     
 }
 

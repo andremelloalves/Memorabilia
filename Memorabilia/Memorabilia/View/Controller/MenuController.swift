@@ -154,8 +154,8 @@ class MenuController: UIViewController {
     
     @objc func infoButtonAction() {
         let informationViewController = InformationViewController()
-        informationViewController.modalTransitionStyle = .coverVertical
-        informationViewController.modalPresentationStyle = .fullScreen
+        informationViewController.modalTransitionStyle = .crossDissolve
+        informationViewController.modalPresentationStyle = .overCurrentContext
         
         var dInteractor = informationViewController.router!.interactor!
         dInteractor.db = App.session.db

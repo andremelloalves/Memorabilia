@@ -12,5 +12,12 @@
         "title": "Memorabilia",
         "message": "É possível criar sua própria experiência AR.",
         "photoID": ""
+    },
+    {
+        "uid": "3",
+        "type": "create",
+        "title": "Criação",
+        "message": "Escolha um nome e selecione Criar em AR para ir para o estúdio de criação.",
+        "photoID": ""
     }
 ]
