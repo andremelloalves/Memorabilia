@@ -27,13 +27,6 @@ class EmptyInformationCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let background: UIVisualEffectView = {
-        let blur = UIBlurEffect(style: .regular)
-        let blurView = UIVisualEffectView(effect: blur)
-        blurView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        return blurView
-    }()
-    
     // MARK: Initializers
     
     override init(frame: CGRect) {
@@ -53,9 +46,6 @@ class EmptyInformationCollectionViewCell: UICollectionViewCell {
         backgroundColor = .clear
         layer.cornerRadius = 20
         clipsToBounds = true
-        
-        // Background
-        addSubview(background)
         
         // Message
         addSubview(messageLabel)

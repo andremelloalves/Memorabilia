@@ -69,6 +69,8 @@ class MenuController: UIViewController {
     
     var selectedPage: MenuPageType = .memories
     
+    var selectedInfo: InformationType = .memories
+    
     // MARK: View model
     
     // MARK: Initializers
@@ -148,20 +150,13 @@ class MenuController: UIViewController {
             self.changePage(from: self.selectedPage.rawValue, to: option.rawValue)
             self.navigation.titleButton.setTitle(option.name, for: .normal)
             self.selectedPage = option
+            self.selectedInfo = InformationType(rawValue: self.selectedPage.stringValue) ?? .app
         }
         return action
     }
     
     @objc func infoButtonAction() {
-        let informationViewController = InformationViewController()
-        informationViewController.modalTransitionStyle = .crossDissolve
-        informationViewController.modalPresentationStyle = .overCurrentContext
-        
-        var dInteractor = informationViewController.router!.interactor!
-        dInteractor.db = App.session.db
-        dInteractor.type = .app
-        
-        present(informationViewController, animated: true, completion: nil)
+        routeToInformation()
     }
     
     // MARK: Navigation
@@ -172,6 +167,18 @@ class MenuController: UIViewController {
         } else if from < to {
             page.setViewControllers([pages[to]], direction: .forward, animated: true, completion: nil)
         }
+    }
+    
+    func routeToInformation() {
+        let informationViewController = InformationViewController()
+        informationViewController.modalTransitionStyle = .crossDissolve
+        informationViewController.modalPresentationStyle = .overCurrentContext
+        
+        var dInteractor = informationViewController.router!.interactor!
+        dInteractor.db = App.session.db
+        dInteractor.type = selectedInfo
+        
+        present(informationViewController, animated: true, completion: nil)
     }
     
     // MARK: Pages

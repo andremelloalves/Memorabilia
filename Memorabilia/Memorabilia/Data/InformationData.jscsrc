@@ -19,5 +19,19 @@
         "title": "Criação",
         "message": "Escolha um nome e selecione Criar em AR para ir para o estúdio de criação.",
         "photoID": ""
+    },
+    {
+        "uid": "4",
+        "type": "memories",
+        "title": "Memória",
+        "message": "Todas as suas memórias estão guardadas aqui.",
+        "photoID": ""
+    },
+    {
+        "uid": "5",
+        "type": "memories",
+        "title": "Memória",
+        "message": "Toque e segure uma memória para ter opção de apagar.",
+        "photoID": ""
     }
 ]

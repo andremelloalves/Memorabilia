@@ -18,6 +18,17 @@ enum MenuPageType: Int {
     
     // MARK: Properties
     
+    var stringValue: String {
+        switch self {
+        case .create:
+            return "create"
+        case .memories:
+            return "memories"
+        case .settings:
+            return "settings"
+        }
+    }
+    
     var symbol: String {
         switch self {
         case .create:
