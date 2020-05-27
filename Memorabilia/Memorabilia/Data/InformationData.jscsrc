@@ -33,5 +33,26 @@
         "title": "Memória",
         "message": "Toque e segure uma memória para ter opção de apagar.",
         "photoID": ""
+    },
+    {
+        "uid": "6",
+        "type": "studioCreation",
+        "title": "Criação",
+        "message": "Texto temporário.",
+        "photoID": ""
+    },
+    {
+        "uid": "7",
+        "type": "studioEdition",
+        "title": "Edição",
+        "message": "Texto temporário.",
+        "photoID": ""
+    },
+    {
+        "uid": "8",
+        "type": "studioPosition",
+        "title": "Posicionamento",
+        "message": "Texto temporário.",
+        "photoID": ""
     }
 ]

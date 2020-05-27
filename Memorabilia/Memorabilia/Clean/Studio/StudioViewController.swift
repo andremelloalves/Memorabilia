@@ -171,6 +171,8 @@ class StudioViewController: UIViewController {
     
     // MARK: Control properties
     
+    var selectedInfo: InformationType = .studioCreation
+    
     var selectedOption: ReminderType = .text
     
     var selectedReminder: ReminderAnchor?
@@ -390,6 +392,7 @@ class StudioViewController: UIViewController {
     // MARK: View
     
     func showCreating() {
+        selectedInfo = .studioCreation
         selectedReminder = nil
         isTakingSnapshot = false
         isEditingReminder = false
@@ -397,12 +400,14 @@ class StudioViewController: UIViewController {
     }
     
     func showEditing() {
+        selectedInfo = .studioEdition
         isTakingSnapshot = false
         isEditingReminder = true
         updateLayout()
     }
     
     func showSaving() {
+        selectedInfo = .studioPosition
         isTakingSnapshot = true
         isEditingReminder = false
         updateLayout()
@@ -532,7 +537,7 @@ class StudioViewController: UIViewController {
     }
     
     @objc func infoButtonAction() {
-        infoView.info = "Esse texto informativo pode ocupar mais de uma linha se preciso."
+        routeToInformation()
     }
     
     @objc func exitButtonAction() {
@@ -625,6 +630,10 @@ class StudioViewController: UIViewController {
     
     func routeBack() {
         router?.routeBack()
+    }
+    
+    func routeToInformation() {
+        router?.routeToInformation(type: selectedInfo)
     }
     
     func routeToPicker(_ picker: UIViewController) {
