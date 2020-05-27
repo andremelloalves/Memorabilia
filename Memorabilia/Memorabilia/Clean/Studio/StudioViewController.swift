@@ -325,6 +325,7 @@ class StudioViewController: UIViewController {
             
             // Finish button
             finishButton.bottomAnchor.constraint(equalTo: optionsBar.topAnchor, constant: -16),
+            finishButton.heightAnchor.constraint(equalToConstant: 40),
             finishButton.widthAnchor.constraint(equalToConstant: 120),
             finishButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             

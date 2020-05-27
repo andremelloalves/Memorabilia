@@ -38,18 +38,11 @@ class InformationViewController: UIViewController {
     lazy var collection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 8
-        layout.minimumInteritemSpacing = 8
-        let width = UIScreen.main.bounds.width - 32
-        let height = width
-        layout.itemSize = CGSize(width: width, height: height)
-//        layout.estimatedItemSize = CGSize(width: 343, height: 612)
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
-//        view.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 64, bottom: 0, right: 64)
+        view.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        view.scrollIndicatorInsets = UIEdgeInsets(top: 4, left: 32, bottom: 4, right: 32)
         view.backgroundColor = .clear
-        view.isPagingEnabled = false
         view.dataSource = self
         view.delegate = self
         view.register(InformationCollectionViewCell.self,forCellWithReuseIdentifier: InformationCollectionViewCell.identifier)
@@ -57,9 +50,9 @@ class InformationViewController: UIViewController {
         return view
     }()
     
-    let exitButton: CircleButton = {
-        let button = CircleButton()
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+    let exitButton: PillButton = {
+        let button = PillButton()
+        button.setTitle("Entendi", for: .normal)
         button.addTarget(self, action: #selector(exitButtonAction), for: .primaryActionTriggered)
         return button
     }()
@@ -121,9 +114,11 @@ class InformationViewController: UIViewController {
             collection.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collection.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             collection.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            collection.bottomAnchor.constraint(equalTo: exitButton.topAnchor, constant: -16),
+            collection.bottomAnchor.constraint(equalTo: exitButton.topAnchor),
             
             // Exit button
+            exitButton.heightAnchor.constraint(equalToConstant: 50),
+            exitButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -32),
             exitButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             exitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])

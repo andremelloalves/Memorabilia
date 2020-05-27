@@ -75,6 +75,7 @@ class CreateViewController: UIViewController, MenuPage {
             // Self
             
             // Create button
+            createButton.heightAnchor.constraint(equalToConstant: 40),
             createButton.widthAnchor.constraint(equalToConstant: 120),
             createButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             createButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)

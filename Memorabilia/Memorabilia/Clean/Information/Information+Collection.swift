@@ -38,11 +38,11 @@ extension InformationViewController: UICollectionViewDataSource {
         if let data = photoDataCache.object(forKey: NSString(string: information.photoID)) {
             cell.updatePhoto(data as Data)
         } else {
+            guard !information.photoID.isEmpty else { return }
             let image = UIImage(named: information.photoID)
-            if let data = image?.pngData() {
-                cell.updatePhoto(data)
-                photoDataCache.setObject(data as NSData, forKey: NSString(string: information.photoID))
-            }
+            guard let data = image?.pngData() else { return }
+            cell.updatePhoto(data)
+            photoDataCache.setObject(data as NSData, forKey: NSString(string: information.photoID))
         }
     }
     
@@ -51,6 +51,17 @@ extension InformationViewController: UICollectionViewDataSource {
     }
 
 }
+
+extension InformationViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.frame.width - collectionView.contentInset.left - collectionView.contentInset.right
+        let height = collectionView.frame.height - collectionView.contentInset.top - collectionView.contentInset.bottom
+        return CGSize(width: width, height: height)
+    }
+    
+}
+
 
 extension InformationViewController: UICollectionViewDelegate {
     

@@ -56,7 +56,7 @@ class PillButton: UIButton {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             // Self
-            heightAnchor.constraint(equalToConstant: 40)
+            
         ])
     }
     
