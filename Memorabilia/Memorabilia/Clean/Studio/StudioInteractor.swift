@@ -41,6 +41,8 @@ protocol StudioInteractorData {
     
     var reminders: [Reminder] { get set }
     
+    var name: String? { get set }
+    
 }
 
 class StudioInteractor: StudioInteractorInput, StudioInteractorData {
@@ -64,6 +66,8 @@ class StudioInteractor: StudioInteractorInput, StudioInteractorData {
     
     var reminders: [Reminder] = []
     
+    var name: String?
+    
     // MARK: Initializers
     
     init() {}
@@ -77,10 +81,10 @@ class StudioInteractor: StudioInteractorInput, StudioInteractorData {
     // Create
     
     func createMemory(with worldData: Data, photo: Data) {
-        guard let db = db else { return }
+        guard let db = db, let name = name else { return }
         
         firstly {
-            db.createMemory(with: worldData, photo: photo)
+            db.createMemory(name: name, with: worldData, photo: photo)
         }.done { _ in
             print("Memory saved successfully!")
         }.catch { error in

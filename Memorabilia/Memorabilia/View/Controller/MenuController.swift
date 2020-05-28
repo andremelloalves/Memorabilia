@@ -12,6 +12,10 @@ protocol MenuPage: UIViewController {
     
     var menu: MenuController? { get set }
     
+    var type: MenuPageType { get set }
+    
+    func pageWillDisapear()
+    
 }
 
 class MenuController: UIViewController {
@@ -156,6 +160,7 @@ class MenuController: UIViewController {
     }
     
     @objc func infoButtonAction() {
+        getPage()?.pageWillDisapear()
         routeToInformation()
     }
     
@@ -208,6 +213,10 @@ class MenuController: UIViewController {
         controller.menu = self
         pages.append(controller)
         page.addChild(controller)
+    }
+    
+    private func getPage() -> MenuPage? {
+        return pages.first(where: { $0.type == selectedPage })
     }
     
     public func getPage(type: AnyClass) -> MenuPage? {

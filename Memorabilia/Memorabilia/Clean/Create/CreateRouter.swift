@@ -12,7 +12,7 @@ protocol CreateRouterInput {
     
     // Navigation
     
-    func routeToStudioViewController()
+    func routeToStudioViewController(name: String)
     
 }
 
@@ -34,7 +34,7 @@ class CreateRouter: CreateRouterInput, CreateRouterOutput {
     
     // MARK: Navigation
     
-    func routeToStudioViewController() {
+    func routeToStudioViewController(name: String) {
         // Perform segue
         let studioViewController = StudioViewController()
         studioViewController.modalTransitionStyle = .coverVertical
@@ -42,15 +42,16 @@ class CreateRouter: CreateRouterInput, CreateRouterOutput {
         
         var dInteractor = studioViewController.router!.interactor!
         
-        passDataStudioViewController(source: interactor!, destination: &dInteractor)
+        passDataStudioViewController(source: interactor!, destination: &dInteractor, name: name)
         viewController?.menu?.present(studioViewController, animated: true, completion: nil)
     }
     
     // MARK: Data passing
     
-    private func passDataStudioViewController(source: CreateInteractorData, destination: inout StudioInteractorData) {
+    private func passDataStudioViewController(source: CreateInteractorData, destination: inout StudioInteractorData, name: String) {
         // Pass data
         destination.db = source.db
+        destination.name = name
     }
 
 }

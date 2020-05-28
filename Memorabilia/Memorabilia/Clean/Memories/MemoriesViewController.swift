@@ -26,6 +26,8 @@ class MemoriesViewController: UIViewController, MenuPage {
     
     var menu: MenuController?
     
+    var type: MenuPageType = .memories
+    
     // MARK: Clean Properties
     
     var interactor: MemoriesInteractorInput?
@@ -116,6 +118,10 @@ class MemoriesViewController: UIViewController, MenuPage {
     // MARK: Actions
     
     // MARK: Navigation
+    
+    func pageWillDisapear() {
+        
+    }
     
     let transition = SnapshotTransition()
     

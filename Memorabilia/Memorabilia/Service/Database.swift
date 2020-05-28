@@ -55,8 +55,8 @@ class Database {
     
     // MARK: Create
     
-    func createMemory(with worldMap: Data, photo: Data) -> Promise<Void> {
-        let memory = Memory(name: "Memória")
+    func createMemory(name: String, with worldMap: Data, photo: Data) -> Promise<Void> {
+        let memory = Memory(name: name)
         return Promise { seal in
             do {
                 try realm.createUpdate(object: memory)

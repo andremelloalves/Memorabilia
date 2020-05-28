@@ -22,6 +22,8 @@ class SettingsViewController: UIViewController, MenuPage {
 
     var menu: MenuController?
     
+    var type: MenuPageType = .settings
+    
     // MARK: Clean Properties
     
     var interactor: SettingsInteractorInput?
@@ -77,6 +79,10 @@ class SettingsViewController: UIViewController, MenuPage {
     // MARK: Animation
     
     // MARK: Navigation
+    
+    func pageWillDisapear() {
+        
+    }
     
 }
 
