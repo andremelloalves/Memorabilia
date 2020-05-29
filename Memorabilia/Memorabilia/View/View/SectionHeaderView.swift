@@ -8,12 +8,15 @@
 
 import UIKit
 
-class SectionHeaderView: UIView {
+class SectionHeaderView: UITableViewHeaderFooterView {
     
     // MARK: Properties
     
+    static let identifier = "Header"
+    
     let titleLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.backgroundColor = .clear
         label.font = UIFont.systemFont(ofSize: 23, weight: .semibold)
         label.adjustsFontForContentSizeCategory = true
@@ -26,8 +29,8 @@ class SectionHeaderView: UIView {
     
     // MARK: Initializers
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         setup()
     }
     
@@ -40,7 +43,9 @@ class SectionHeaderView: UIView {
     
     private func setup() {
         // Self
-        backgroundColor = .clear
+        let view = UIView()
+        view.backgroundColor = .clear
+        backgroundView = view
         
         // Title
         addSubview(titleLabel)

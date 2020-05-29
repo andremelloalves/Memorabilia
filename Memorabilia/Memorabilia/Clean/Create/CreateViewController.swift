@@ -47,6 +47,7 @@ class CreateViewController: UIViewController, MenuPage {
         view.scrollIndicatorInsets = insets
         view.separatorStyle = .none
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.register(SectionHeaderView.self, forHeaderFooterViewReuseIdentifier: SectionHeaderView.identifier)
         view.register(TextInputTableViewCell.self, forCellReuseIdentifier: TextInputTableViewCell.identifier)
         view.register(ImageInputTableViewCell.self, forCellReuseIdentifier: ImageInputTableViewCell.identifier)
         view.register(SpacingTableViewCell.self, forCellReuseIdentifier: SpacingTableViewCell.identifier)
@@ -131,13 +132,6 @@ class CreateViewController: UIViewController, MenuPage {
         interactor?.read()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        nameInput?.text = nil
-        coverInput?.updateInput(title: "Escolha uma foto de capa aqui", image: nil)
-    }
-    
     // MARK: Action
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
@@ -149,8 +143,10 @@ class CreateViewController: UIViewController, MenuPage {
     }
     
     @objc func studioButtonAction() {
-        if let name = nameInput?.text, let cover = selectedCover?.pngData() {
+        if let name = nameInput?.text, let cover = selectedCover?.pngData(), !name.isEmpty {
             routeToStudio(name: name, cover: cover)
+            nameInput?.text = nil
+            coverInput?.updateInput(title: "Escolha uma foto de capa aqui", image: nil)
         } else {
             // Alert
         }
