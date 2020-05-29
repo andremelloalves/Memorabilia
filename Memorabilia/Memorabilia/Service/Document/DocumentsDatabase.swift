@@ -74,12 +74,15 @@ class DocumentsDatabase {
     enum Folder {
         
         case experiences
+        case snapshots
         case photos
         
         var name: String {
             switch self {
             case .experiences:
                 return "Experiences"
+            case .snapshots:
+                return "Snapshots"
             case .photos:
                 return "Photos"
             }
@@ -88,6 +91,8 @@ class DocumentsDatabase {
         var fileExtension: String {
             switch self {
             case .experiences:
+                return ""
+            case .snapshots:
                 return ""
             case .photos:
                 return ""

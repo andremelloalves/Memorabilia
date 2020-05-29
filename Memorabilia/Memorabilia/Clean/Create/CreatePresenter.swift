@@ -12,6 +12,8 @@ protocol CreatePresenterInput {
     
     // Present
     
+    func present()
+    
 }
 
 class CreatePresenter: CreatePresenterInput {
@@ -23,6 +25,24 @@ class CreatePresenter: CreatePresenterInput {
     // MARK: Properties
     
     // MARK: Functions
+    
+    func present() {
+        var sections: [CreateSection] = []
+        
+        let spacingItem = CreateEntity.Display.SpacingItem()
+        let studioItem = CreateEntity.Display.StudioItem()
+        
+        let nameItem = CreateEntity.Display.NameItem()
+        let nameSection = CreateEntity.Display.NameSection(title: "Nome", names: [nameItem, spacingItem])
+        sections.append(nameSection)
+        
+        let coverItem = CreateEntity.Display.CoverItem()
+        let coverSection = CreateEntity.Display.CoverSection(title: "Foto de capa", covers: [coverItem, spacingItem,
+                                                                                             studioItem, spacingItem])
+        sections.append(coverSection)
+        
+        viewController?.loadSections(sections: sections)
+    }
     
 }
 

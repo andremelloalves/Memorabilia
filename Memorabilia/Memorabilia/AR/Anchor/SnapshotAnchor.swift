@@ -13,7 +13,7 @@ class SnapshotAnchor: ARAnchor {
     
     // MARK: Properties
     
-    let photo: Data
+    let snapshot: Data
     
     // MARK: Initializers
     
@@ -33,14 +33,14 @@ class SnapshotAnchor: ARAnchor {
     }
     
     init(photo: Data, transform: float4x4) {
-        self.photo = photo
+        self.snapshot = photo
         super.init(name: "snapshot", transform: transform)
     }
     
     required init(anchor: ARAnchor) {
         let snapshot = anchor as! SnapshotAnchor
         
-        self.photo = snapshot.photo
+        self.snapshot = snapshot.snapshot
         
         super.init(anchor: anchor)
     }
@@ -48,14 +48,14 @@ class SnapshotAnchor: ARAnchor {
     required init?(coder aDecoder: NSCoder) {
         guard let snapshot = aDecoder.decodeObject(forKey: "snapshot") as? Data else { return nil }
         
-        self.photo = snapshot
+        self.snapshot = snapshot
         
         super.init(coder: aDecoder)
     }
     
     override func encode(with aCoder: NSCoder) {
         super.encode(with: aCoder)
-        aCoder.encode(photo, forKey: "snapshot")
+        aCoder.encode(snapshot, forKey: "snapshot")
     }
     
     override class var supportsSecureCoding: Bool {

@@ -45,9 +45,17 @@ class PillButton: UIButton {
         
         // Background
         addSubview(background)
+        bringSubviewToFront(imageView!)
         bringSubviewToFront(titleLabel!)
         
         setupConstraints()
+    }
+    
+    // MARK: Update
+    
+    public func updateInput(title: String?, image: UIImage?) {
+        setTitle(title, for: .normal)
+        setImage(image, for: .normal)
     }
     
     // MARK: Constraints

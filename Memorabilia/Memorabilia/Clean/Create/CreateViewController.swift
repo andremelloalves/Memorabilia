@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import Photos
+import MobileCoreServices
 
 protocol CreateViewInput: class {
 
     // Update
+    
+    func loadSections(sections: [CreateSection])
     
 }
 
@@ -30,70 +34,51 @@ class CreateViewController: UIViewController, MenuPage {
     
     // MARK: View properties
     
-    let infoLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Aqui vai uma explicação rápida de como criar uma experiência."
-        label.backgroundColor = .clear
-        label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        label.adjustsFontForContentSizeCategory = true
-        label.adjustsFontSizeToFitWidth = false
-        label.baselineAdjustment = .alignCenters
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var background: UIVisualEffectView = {
-        // Blur
-        let blur = UIBlurEffect(style: .regular)
-        let blurView = UIVisualEffectView(effect: blur)
-        blurView.layer.cornerRadius = 20
-        blurView.clipsToBounds = true
-        blurView.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Vibrancy
-        let vibrancy = UIVibrancyEffect(blurEffect: blur, style: .label)
-        let vibrancyView = UIVisualEffectView(effect: vibrancy)
-        vibrancyView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        
-        vibrancyView.contentView.addSubview(infoLabel)
-        blurView.contentView.addSubview(vibrancyView)
-        return blurView
-    }()
-    
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Nome"
-//        label.textColor = .white
-        label.backgroundColor = .clear
-        label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
-        label.adjustsFontForContentSizeCategory = true
-        label.adjustsFontSizeToFitWidth = false
-        label.baselineAdjustment = .alignCenters
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var nameInput: InputTextView = {
-        let view = InputTextView()
+    lazy var table: UITableView = {
+        let view = UITableView(frame: .zero)
+        view.backgroundColor = .clear
+        view.allowsSelection = false
+        view.dataSource = self
         view.delegate = self
+        view.estimatedRowHeight = 40
+        view.estimatedSectionHeaderHeight = 60
+        let insets = UIEdgeInsets(top: 72, left: 0, bottom: 72, right: 0)
+        view.contentInset = insets
+        view.scrollIndicatorInsets = insets
+        view.separatorStyle = .none
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.register(TextInputTableViewCell.self, forCellReuseIdentifier: TextInputTableViewCell.identifier)
+        view.register(ImageInputTableViewCell.self, forCellReuseIdentifier: ImageInputTableViewCell.identifier)
+        view.register(SpacingTableViewCell.self, forCellReuseIdentifier: SpacingTableViewCell.identifier)
+        view.register(ButtonTableViewCell.self, forCellReuseIdentifier: ButtonTableViewCell.identifier)
         return view
     }()
     
-    let createButton: PillButton = {
-        let button = PillButton()
-        button.setTitle("Criar em AR", for: .normal)
-        button.addTarget(self, action: #selector(createButtonAction), for: .primaryActionTriggered)
-        return button
-    }()
+    var nameInput: InputTextView?
+    
+    var coverInput: PillButton?
+    
+    var studioButton: PillButton?
 
     // MARK: Control properties
+    
+    var selectedCover: UIImage?
 
-    // MARK: ... properties
+    // MARK: Media properties
+    
+    lazy var photoPicker: UIImagePickerController = {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        picker.imageExportPreset = .compatible
+        picker.mediaTypes = [kUTTypeImage as String]
+        picker.sourceType = .photoLibrary
+        return picker
+    }()
     
     // MARK: View model
+    
+    var sections: [CreateSection] = []
     
     // MARK: Initializers
     
@@ -117,17 +102,8 @@ class CreateViewController: UIViewController, MenuPage {
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tap)
         
-        // Background
-        view.addSubview(background)
-        
-        // Name
-        view.addSubview(nameLabel)
-        
-        // Input
-        view.addSubview(nameInput)
-        
-        // Create button
-        view.addSubview(createButton)
+        // Table
+        view.addSubview(table)
         
         // Constraints
         setupConstraints()
@@ -139,48 +115,42 @@ class CreateViewController: UIViewController, MenuPage {
         NSLayoutConstraint.activate([
             // Self
             
-            // Info
-            infoLabel.topAnchor.constraint(equalTo: background.topAnchor, constant: 16),
-            infoLabel.leftAnchor.constraint(equalTo: background.leftAnchor, constant: 16),
-            infoLabel.rightAnchor.constraint(equalTo: background.rightAnchor, constant: -16),
-            infoLabel.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -16),
-            
-            // Background
-            background.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 72),
-            background.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
-            background.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
-            
-            // Name
-            nameLabel.heightAnchor.constraint(equalToConstant: 29),
-            nameLabel.topAnchor.constraint(equalTo: background.bottomAnchor, constant: 16),
-            nameLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
-            nameLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
-            
-            // Input
-            nameInput.heightAnchor.constraint(equalToConstant: 40),
-            nameInput.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
-            nameInput.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
-            nameInput.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
-            
-            // Create button
-            createButton.heightAnchor.constraint(equalToConstant: 40),
-            createButton.widthAnchor.constraint(equalToConstant: 120),
-            createButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            createButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -82)
+            // Table
+            table.topAnchor.constraint(equalTo: view.topAnchor),
+            table.leftAnchor.constraint(equalTo: view.leftAnchor),
+            table.rightAnchor.constraint(equalTo: view.rightAnchor),
+            table.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
     // MARK: View life cycle
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        interactor?.read()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        nameInput?.text = nil
+        coverInput?.updateInput(title: "Escolha uma foto de capa aqui", image: nil)
+    }
+    
     // MARK: Action
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        nameInput.resignFirstResponder()
+        nameInput?.resignFirstResponder()
     }
     
-    @objc func createButtonAction() {
-        if let name = nameInput.text {
-            routeToStudio(name: name)
+    @objc func coverInputButtonAction() {
+        routeToPicker()
+    }
+    
+    @objc func studioButtonAction() {
+        if let name = nameInput?.text, let cover = selectedCover?.pngData() {
+            routeToStudio(name: name, cover: cover)
         } else {
             // Alert
         }
@@ -191,11 +161,25 @@ class CreateViewController: UIViewController, MenuPage {
     // MARK: Navigation
     
     func pageWillDisapear() {
-        nameInput.resignFirstResponder()
+        nameInput?.resignFirstResponder()
     }
     
-    private func routeToStudio(name: String) {
-        router?.routeToStudioViewController(name: name)
+    private func routeToPicker() {
+        PHPhotoLibrary.requestAuthorization { status in
+            switch status {
+            case .authorized:
+                DispatchQueue.main.async {
+                    self.present(self.photoPicker, animated: true, completion: nil)
+                }
+            default:
+//                self.showActionView()
+                break
+            }
+        }
+    }
+    
+    private func routeToStudio(name: String, cover: Data) {
+        router?.routeToStudioViewController(name: name, cover: cover)
     }
     
 }
@@ -223,14 +207,10 @@ extension CreateViewController: CreateViewInput {
     
     // Update
     
-}
-
-extension CreateViewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+    func loadSections(sections: [CreateSection]) {
+        self.sections = sections
         
-        return false
+        table.reloadData()
     }
     
 }

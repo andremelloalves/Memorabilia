@@ -79,6 +79,13 @@
 		B6D033442456058800511544 /* AVAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D033432456058800511544 /* AVAsset.swift */; };
 		B6D033462456630A00511544 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D033452456630A00511544 /* UIImage.swift */; };
 		B6DBE81F247F4F07003D83B0 /* BrazilTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE81E247F4F07003D83B0 /* BrazilTableViewCell.swift */; };
+		B6DBE82124801B97003D83B0 /* Create+Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82024801B97003D83B0 /* Create+Media.swift */; };
+		B6DBE82324806329003D83B0 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82224806329003D83B0 /* SectionHeaderView.swift */; };
+		B6DBE82524806489003D83B0 /* TextInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82424806489003D83B0 /* TextInputTableViewCell.swift */; };
+		B6DBE82724806645003D83B0 /* SpacingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82624806645003D83B0 /* SpacingTableViewCell.swift */; };
+		B6DBE82924806975003D83B0 /* ImageInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82824806975003D83B0 /* ImageInputTableViewCell.swift */; };
+		B6DBE82B24806BE6003D83B0 /* Create+Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82A24806BE6003D83B0 /* Create+Table.swift */; };
+		B6DBE82D248086E2003D83B0 /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82C248086E2003D83B0 /* ButtonTableViewCell.swift */; };
 		B6DD3E9E247C9CA200245792 /* InformationData.jscsrc in Resources */ = {isa = PBXBuildFile; fileRef = B6DD3E9D247C9CA200245792 /* InformationData.jscsrc */; };
 		B6E3E88D243E771100656B21 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E3E88C243E771100656B21 /* Array.swift */; };
 		B6E7F67324379EC3001A5149 /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7F67224379EC3001A5149 /* ActionView.swift */; };
@@ -169,6 +176,13 @@
 		B6D033432456058800511544 /* AVAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAsset.swift; sourceTree = "<group>"; };
 		B6D033452456630A00511544 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		B6DBE81E247F4F07003D83B0 /* BrazilTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrazilTableViewCell.swift; sourceTree = "<group>"; };
+		B6DBE82024801B97003D83B0 /* Create+Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Create+Media.swift"; sourceTree = "<group>"; };
+		B6DBE82224806329003D83B0 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
+		B6DBE82424806489003D83B0 /* TextInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputTableViewCell.swift; sourceTree = "<group>"; };
+		B6DBE82624806645003D83B0 /* SpacingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacingTableViewCell.swift; sourceTree = "<group>"; };
+		B6DBE82824806975003D83B0 /* ImageInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInputTableViewCell.swift; sourceTree = "<group>"; };
+		B6DBE82A24806BE6003D83B0 /* Create+Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Create+Table.swift"; sourceTree = "<group>"; };
+		B6DBE82C248086E2003D83B0 /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		B6DD3E9D247C9CA200245792 /* InformationData.jscsrc */ = {isa = PBXFileReference; explicitFileType = text.json; fileEncoding = 4; path = InformationData.jscsrc; sourceTree = "<group>"; usesTabs = 0; };
 		B6E3E88C243E771100656B21 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		B6E7F67224379EC3001A5149 /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
@@ -225,6 +239,10 @@
 				B60E2430247B52180010A363 /* InformationCollectionViewCell.swift */,
 				B60E2432247B52500010A363 /* EmptyInformationCollectionViewCell.swift */,
 				B6DBE81E247F4F07003D83B0 /* BrazilTableViewCell.swift */,
+				B6DBE82424806489003D83B0 /* TextInputTableViewCell.swift */,
+				B6DBE82624806645003D83B0 /* SpacingTableViewCell.swift */,
+				B6DBE82824806975003D83B0 /* ImageInputTableViewCell.swift */,
+				B6DBE82C248086E2003D83B0 /* ButtonTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -303,6 +321,8 @@
 				B6654C4D243E5CF60081CD22 /* CreatePresenter.swift */,
 				B6654C4F243E5D010081CD22 /* CreateEntity.swift */,
 				B6654C51243E5D0D0081CD22 /* CreateRouter.swift */,
+				B6DBE82A24806BE6003D83B0 /* Create+Table.swift */,
+				B6DBE82024801B97003D83B0 /* Create+Media.swift */,
 			);
 			path = Create;
 			sourceTree = "<group>";
@@ -340,6 +360,7 @@
 				B6E7F67224379EC3001A5149 /* ActionView.swift */,
 				B6F2AD32243AB174009273CC /* SnapshotView.swift */,
 				B67F2FFE2453C42900C42324 /* InputTextView.swift */,
+				B6DBE82224806329003D83B0 /* SectionHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -640,6 +661,7 @@
 				B63E3C3824522CA400F41EEB /* ReminderAnchor.swift in Sources */,
 				B604095F2431412000C3D627 /* StudioInteractor.swift in Sources */,
 				B6CD6612243C10810026F1EA /* MenuPageType.swift in Sources */,
+				B6DBE82124801B97003D83B0 /* Create+Media.swift in Sources */,
 				B6CD6610243C0DFA0026F1EA /* MenuController.swift in Sources */,
 				B6102A30241ECA230060E962 /* ExperienceInteractor.swift in Sources */,
 				B60E242F247B50510010A363 /* Information+Collection.swift in Sources */,
@@ -656,15 +678,18 @@
 				B6996AAF239439EB00F4133D /* InfoView.swift in Sources */,
 				B6E7F6772438C8C1001A5149 /* CGRect.swift in Sources */,
 				B6102A3A241ED1DC0060E962 /* Memories+Collection.swift in Sources */,
+				B6DBE82724806645003D83B0 /* SpacingTableViewCell.swift in Sources */,
 				B6E7F67324379EC3001A5149 /* ActionView.swift in Sources */,
 				B6654C58243E5D410081CD22 /* SettingsPresenter.swift in Sources */,
 				B6F236B724379069002457DF /* PillButton.swift in Sources */,
 				B6303373245CBF7B00DFDA0D /* Collection.swift in Sources */,
 				B60E242D247AF3050010A363 /* Information.swift in Sources */,
 				B6D033442456058800511544 /* AVAsset.swift in Sources */,
+				B6DBE82324806329003D83B0 /* SectionHeaderView.swift in Sources */,
 				B63663EF239448420008F5BD /* MemoriesViewController.swift in Sources */,
 				B6DBE81F247F4F07003D83B0 /* BrazilTableViewCell.swift in Sources */,
 				B60E2431247B52180010A363 /* InformationCollectionViewCell.swift in Sources */,
+				B6DBE82524806489003D83B0 /* TextInputTableViewCell.swift in Sources */,
 				B6E7F68024394637001A5149 /* Experience+AR.swift in Sources */,
 				B6102A36241ECA4B0060E962 /* ExperienceRouter.swift in Sources */,
 				B60E2428247AEA380010A363 /* InformationEntity.swift in Sources */,
@@ -686,6 +711,7 @@
 				B6F2AD33243AB174009273CC /* SnapshotView.swift in Sources */,
 				B6412CE5238EF8D400BED236 /* SnapshotAnchor.swift in Sources */,
 				B6423FB5241D9A6C004A7B5E /* App.swift in Sources */,
+				B6DBE82924806975003D83B0 /* ImageInputTableViewCell.swift in Sources */,
 				B6102A34241ECA3F0060E962 /* ExperienceEntity.swift in Sources */,
 				B6E3E88D243E771100656B21 /* Array.swift in Sources */,
 				B6E7F67B2438CE4A001A5149 /* OptionsBarButton.swift in Sources */,
@@ -698,6 +724,7 @@
 				B6412CDD238EE49300BED236 /* DocumentsDatabase.swift in Sources */,
 				B60409652431414200C3D627 /* StudioRouter.swift in Sources */,
 				B6C1898D245F7D5D002B6FEA /* CGSize.swift in Sources */,
+				B6DBE82D248086E2003D83B0 /* ButtonTableViewCell.swift in Sources */,
 				B6412CE7238EF9A500BED236 /* ARUtilities.swift in Sources */,
 				B60E242B247AEA380010A363 /* InformationPresenter.swift in Sources */,
 				B6654C4C243E5CE40081CD22 /* CreateInteractor.swift in Sources */,
@@ -711,6 +738,7 @@
 				B6D033462456630A00511544 /* UIImage.swift in Sources */,
 				B60E2420247AE6CA0010A363 /* InformationType.swift in Sources */,
 				B60409672431415C00C3D627 /* Studio+AR.swift in Sources */,
+				B6DBE82B24806BE6003D83B0 /* Create+Table.swift in Sources */,
 				B6654C4E243E5CF60081CD22 /* CreatePresenter.swift in Sources */,
 				B6102A3E241ED4320060E962 /* ActionBarButton.swift in Sources */,
 				B6102A38241ED0250060E962 /* NavigationBarView.swift in Sources */,

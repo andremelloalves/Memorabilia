@@ -13,6 +13,8 @@ protocol CreateInteractorInput {
     // Create
 
     // Read
+    
+    func read()
 
     // Update
 
@@ -58,6 +60,10 @@ class CreateInteractor: CreateInteractorInput, CreateInteractorData {
     // MARK: Functions
     
     // Create
+    
+    func read() {
+        presenter?.present()
+    }
     
     // Read
     

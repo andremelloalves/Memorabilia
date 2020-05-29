@@ -67,14 +67,14 @@ extension StudioViewController: ARSessionDelegate {
             guard let snapshotAnchor = SnapshotAnchor(from: self.arView) else { return }
             worldMap.anchors.append(snapshotAnchor)
             
-            self.saveMemory(worldMap: worldMap, photo: snapshotAnchor.photo)
+            self.saveMemory(worldMap: worldMap, snapshot: snapshotAnchor.snapshot)
         }
     }
     
-    func saveMemory(worldMap: ARWorldMap, photo: Data) {
+    func saveMemory(worldMap: ARWorldMap, snapshot: Data) {
         do {
-            let worldData = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
-            self.interactor?.createMemory(with: worldData, photo: photo)
+            let world = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
+            self.interactor?.createMemory(world: world, snapshot: snapshot)
             self.routeBack()
         } catch let error {
             print(error)

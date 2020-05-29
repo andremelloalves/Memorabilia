@@ -55,6 +55,13 @@ class InputTextView: UITextField {
         translatesAutoresizingMaskIntoConstraints = false
     }
     
+    // MARK: Update
+    
+    public func updateInput(delegate: UITextFieldDelegate, placeholder: String) {
+        self.delegate = delegate
+        self.placeholder = placeholder
+    }
+    
     // MARK: Functions
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {

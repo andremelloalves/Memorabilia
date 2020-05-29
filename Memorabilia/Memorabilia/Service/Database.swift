@@ -55,13 +55,14 @@ class Database {
     
     // MARK: Create
     
-    func createMemory(name: String, with worldMap: Data, photo: Data) -> Promise<Void> {
+    func createMemory(name: String, world: Data, snapshot: Data, cover: Data) -> Promise<Void> {
         let memory = Memory(name: name)
         return Promise { seal in
             do {
                 try realm.createUpdate(object: memory)
-                try documents.create(file: memory.uid, folder: .experiences, data: worldMap)
-                try documents.create(file: memory.uid, folder: .photos, data: photo)
+                try documents.create(file: memory.uid, folder: .experiences, data: world)
+                try documents.create(file: memory.uid, folder: .snapshots, data: snapshot)
+                try documents.create(file: memory.uid, folder: .photos, data: cover)
                 seal.fulfill(())
             } catch let error {
                 seal.reject(error)
@@ -139,6 +140,7 @@ class Database {
             do {
                 try realm.delete(type: Memory.self, with: id)
                 try documents.delete(file: id, folder: .experiences)
+                try documents.delete(file: id, folder: .snapshots)
                 try documents.delete(file: id, folder: .photos)
                 seal.fulfill(())
             } catch let error {
