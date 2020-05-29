@@ -86,6 +86,7 @@
 		B6DBE82924806975003D83B0 /* ImageInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82824806975003D83B0 /* ImageInputTableViewCell.swift */; };
 		B6DBE82B24806BE6003D83B0 /* Create+Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82A24806BE6003D83B0 /* Create+Table.swift */; };
 		B6DBE82D248086E2003D83B0 /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82C248086E2003D83B0 /* ButtonTableViewCell.swift */; };
+		B6DBE82F2480A20C003D83B0 /* MemoryContextMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82E2480A20C003D83B0 /* MemoryContextMenuViewController.swift */; };
 		B6DD3E9E247C9CA200245792 /* InformationData.jscsrc in Resources */ = {isa = PBXBuildFile; fileRef = B6DD3E9D247C9CA200245792 /* InformationData.jscsrc */; };
 		B6E3E88D243E771100656B21 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E3E88C243E771100656B21 /* Array.swift */; };
 		B6E7F67324379EC3001A5149 /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7F67224379EC3001A5149 /* ActionView.swift */; };
@@ -183,6 +184,7 @@
 		B6DBE82824806975003D83B0 /* ImageInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInputTableViewCell.swift; sourceTree = "<group>"; };
 		B6DBE82A24806BE6003D83B0 /* Create+Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Create+Table.swift"; sourceTree = "<group>"; };
 		B6DBE82C248086E2003D83B0 /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
+		B6DBE82E2480A20C003D83B0 /* MemoryContextMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryContextMenuViewController.swift; sourceTree = "<group>"; };
 		B6DD3E9D247C9CA200245792 /* InformationData.jscsrc */ = {isa = PBXFileReference; explicitFileType = text.json; fileEncoding = 4; path = InformationData.jscsrc; sourceTree = "<group>"; usesTabs = 0; };
 		B6E3E88C243E771100656B21 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		B6E7F67224379EC3001A5149 /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 		B6CD660E243C0DD40026F1EA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B6DBE82E2480A20C003D83B0 /* MemoryContextMenuViewController.swift */,
 				B6CD660F243C0DFA0026F1EA /* MenuController.swift */,
 				B63663EC239444420008F5BD /* NavigationController.swift */,
 			);
@@ -681,6 +684,7 @@
 				B6DBE82724806645003D83B0 /* SpacingTableViewCell.swift in Sources */,
 				B6E7F67324379EC3001A5149 /* ActionView.swift in Sources */,
 				B6654C58243E5D410081CD22 /* SettingsPresenter.swift in Sources */,
+				B6DBE82F2480A20C003D83B0 /* MemoryContextMenuViewController.swift in Sources */,
 				B6F236B724379069002457DF /* PillButton.swift in Sources */,
 				B6303373245CBF7B00DFDA0D /* Collection.swift in Sources */,
 				B60E242D247AF3050010A363 /* Information.swift in Sources */,

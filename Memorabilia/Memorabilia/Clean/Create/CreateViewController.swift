@@ -165,7 +165,7 @@ class CreateViewController: UIViewController, MenuPage {
             switch status {
             case .authorized:
                 DispatchQueue.main.async {
-                    self.present(self.photoPicker, animated: true, completion: nil)
+                    self.menu?.present(self.photoPicker, animated: true, completion: nil)
                 }
             default:
 //                self.showActionView()

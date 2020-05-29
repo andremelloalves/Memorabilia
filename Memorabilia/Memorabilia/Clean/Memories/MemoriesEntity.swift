@@ -90,7 +90,7 @@ struct MemoriesEntity {
         struct MemoryItem: MemoriesItem {
             
             var uid: String {
-                return type.rawValue + name + date
+                return type.rawValue + memoryID
             }
             
             var type: ItemType {

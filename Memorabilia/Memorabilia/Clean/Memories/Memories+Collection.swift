@@ -45,12 +45,14 @@ extension MemoriesViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         guard let memory = memoriesSections[indexPath.section].items[indexPath.item].item as? MemoriesEntity.Display.MemoryItem else { return nil }
+        selectedMemory = memory
         
         let delete = UIAction(title: "Exluir memória", image: UIImage(systemName: "trash.fill"), attributes: .destructive) { _ in
             self.interactor?.deleteMemory(id: memory.memoryID)
+            self.selectedMemory = nil
         }
         let menu = UIMenu(title: "", image: nil, children: [delete])
-        let configuration = UIContextMenuConfiguration(identifier: NSString(string: memory.memoryID), previewProvider: previewController) { _ in return menu }
+        let configuration = UIContextMenuConfiguration(identifier: NSString(string: memory.memoryID), previewProvider: previewProvider) { _ in return menu }
         
         return configuration
     }
@@ -63,21 +65,15 @@ extension MemoriesViewController: UICollectionViewDelegate {
         }
     }
     
-    func previewController() -> UIViewController {
-      let viewController = UIViewController()
-      
-      // 1
-      let imageView = UIImageView(image: UIImage(systemName: "paperplane.fill"))
-      viewController.view = imageView
-      
-      // 2
-      imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-      imageView.translatesAutoresizingMaskIntoConstraints = false
-      
-      // 3
-      viewController.preferredContentSize = imageView.frame.size
-      
-      return viewController
+    func previewProvider() -> UIViewController {
+        guard let memory = selectedMemory, let data = photoDataCache.object(forKey: NSString(string: memory.photoID))
+             else { return UIViewController() }
+        
+        let viewController = MemoryContextMenuViewController()
+        viewController.cover.image = UIImage(data: data as Data)
+        viewController.date.text = memory.date
+        viewController.name.text = memory.name
+        return viewController
     }
     
 }

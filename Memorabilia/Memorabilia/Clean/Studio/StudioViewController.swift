@@ -385,6 +385,9 @@ class StudioViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        // Screen dimming
+        UIApplication.shared.isIdleTimerDisabled = false
+        
         // Pause AR Session
         arView.session.pause()
     }

@@ -59,6 +59,10 @@ class MemoriesViewController: UIViewController, MenuPage {
         return view
     }()
     
+    // MARK: Control properties
+    
+    var selectedMemory: MemoriesEntity.Display.MemoryItem?
+    
     // MARK: View model
     
     var memoriesSections: [MemoriesSection] = []
