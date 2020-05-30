@@ -33,7 +33,7 @@ class CreatePresenter: CreatePresenterInput {
         let studioItem = CreateEntity.Display.StudioItem()
         
         let nameItem = CreateEntity.Display.NameItem()
-        let nameSection = CreateEntity.Display.NameSection(title: "Nome", names: [nameItem, spacingItem])
+        let nameSection = CreateEntity.Display.NameSection(title: "Nome", names: [nameItem])
         sections.append(nameSection)
         
         let coverItem = CreateEntity.Display.CoverItem()

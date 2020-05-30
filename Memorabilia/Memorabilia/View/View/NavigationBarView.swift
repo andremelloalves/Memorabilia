@@ -57,11 +57,8 @@ class NavigationBarView: UIView {
     // MARK: Setup
     
     private func setup() {
-        if UIAccessibility.isReduceTransparencyEnabled {
-            backgroundColor = .secondarySystemBackground
-        } else {
-            backgroundColor = .clear
-        }
+        // Self
+        backgroundColor = .clear
         
         // Background
 //        addSubview(background)
@@ -99,5 +96,16 @@ class NavigationBarView: UIView {
             rightButton.bottomAnchor.constraint(equalTo: leftButton.bottomAnchor)
         ])
     }
-
+    
+    // MARK: View life cycle
+    
+    override func layoutSubviews() {
+        let gradient = CAGradientLayer()
+        gradient.frame = bounds
+        gradient.colors = [UIColor(white: 0, alpha: 0.25).cgColor, UIColor(white: 0, alpha: 0).cgColor]
+        gradient.startPoint = .init(x: 0.5, y: 0)
+        gradient.endPoint = .init(x: 0.5, y: 1)
+        layer.insertSublayer(gradient, at: 0)
+    }
+    
 }

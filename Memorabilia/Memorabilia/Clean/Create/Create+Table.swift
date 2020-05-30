@@ -69,19 +69,19 @@ extension CreateViewController: UITableViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        for section in 0..<sections.count {
-            let header = table.headerView(forSection: section) as? TableViewHeaderView
-            let frame = table.rectForHeader(inSection: section)
-            
-            let offset = frame.origin.y - scrollView.contentOffset.y - table.contentInset.top - view.safeAreaInsets.top
-            if offset < -8 {
-                header?.titleLabel.alpha = 0
-            } else if offset < 0 {
-                header?.titleLabel.alpha = 1 / -offset
-            } else {
-                header?.titleLabel.alpha = 1
-            }
-        }
+//        for section in 0..<sections.count {
+//            let header = table.headerView(forSection: section) as? TableViewHeaderView
+//            let frame = table.rectForHeader(inSection: section)
+//            
+//            let offset = frame.origin.y - scrollView.contentOffset.y - table.contentInset.top - view.safeAreaInsets.top
+//            if offset < -8 {
+//                header?.titleLabel.alpha = 0
+//            } else if offset < 0 {
+//                header?.titleLabel.alpha = 1 / -offset
+//            } else {
+//                header?.titleLabel.alpha = 1
+//            }
+//        }
     }
     
 }

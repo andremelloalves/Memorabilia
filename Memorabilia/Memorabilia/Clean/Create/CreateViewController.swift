@@ -35,7 +35,7 @@ class CreateViewController: UIViewController, MenuPage {
     // MARK: View properties
     
     lazy var table: UITableView = {
-        let view = UITableView(frame: .zero)
+        let view = UITableView(frame: .zero, style: .grouped)
         view.backgroundColor = .clear
         view.allowsSelection = false
         view.dataSource = self
