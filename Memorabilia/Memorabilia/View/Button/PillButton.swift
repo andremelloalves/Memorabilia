@@ -41,7 +41,10 @@ class PillButton: UIButton {
         layer.cornerRadius = 20
         clipsToBounds = true
         setTitleColor(.white, for: .normal)
+        tintColor = .white
         titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        let configuration = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular, scale: .medium)
+        setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         
         // Background
         addSubview(background)
@@ -53,7 +56,7 @@ class PillButton: UIButton {
     
     // MARK: Update
     
-    public func updateInput(title: String?, image: UIImage?) {
+    public func update(title: String?, image: UIImage?) {
         setTitle(title, for: .normal)
         setImage(image, for: .normal)
     }

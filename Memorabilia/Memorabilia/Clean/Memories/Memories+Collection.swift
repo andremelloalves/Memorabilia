@@ -19,17 +19,22 @@ extension MemoriesViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoryCollectionViewCell.identifier,for: indexPath) as? MemoryCollectionViewCell,
-            let memory = sections[indexPath.section].items[indexPath.row].item as? MemoriesEntity.Display.MemoryItem
-            else { return EmptyMemoryCollectionViewCell() }
-        
-        if let data = photoDataCache.object(forKey: NSString(string: memory.photoID)) {
-            cell.updateCover(data as Data)
-        } else {
-            interactor?.readMemoryPhoto(id: memory.photoID, index: indexPath)
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EmptyMemoryCollectionViewCell.identifier, for: indexPath) as? EmptyMemoryCollectionViewCell,
+            let empty = sections[indexPath.section].items[indexPath.item].item as? MemoriesEntity.Display.EmptyItem {
+            cell.button.update(title: empty.message, image: UIImage(systemName: "plus"))
+            cell.button.addTarget(self, action: #selector(createButtonAction), for: .primaryActionTriggered)
+            return cell
+        } else if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoryCollectionViewCell.identifier, for: indexPath) as? MemoryCollectionViewCell,
+            let memory = sections[indexPath.section].items[indexPath.row].item as? MemoriesEntity.Display.MemoryItem {
+            if let data = snapshotDataCache.object(forKey: NSString(string: memory.snapshotID)) {
+                cell.updateCover(data as Data)
+            } else {
+                interactor?.readMemorySnapshot(id: memory.snapshotID, index: indexPath)
+            }
+            return cell
         }
         
-        return cell
+        return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -46,18 +51,18 @@ extension MemoriesViewController: UICollectionViewDataSource {
 extension MemoriesViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width / 2
+        let width = (collectionView.frame.width - 48) / 2
         let size = CGSize(width: width, height: width)
         
         return size
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        0
+        16
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        0
+        16
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -100,13 +105,11 @@ extension MemoriesViewController: UICollectionViewDelegate {
     }
     
     func previewProvider() -> UIViewController {
-        guard let memory = selectedMemory, let data = photoDataCache.object(forKey: NSString(string: memory.photoID))
-             else { return UIViewController() }
+        guard let memory = selectedMemory else { return UIViewController() }
         
         let viewController = MemoryContextMenuViewController()
-        viewController.cover.image = UIImage(data: data as Data)
-        viewController.date.text = memory.date
-        viewController.name.text = memory.name
+        viewController.update(memory: memory)
+        
         return viewController
     }
     

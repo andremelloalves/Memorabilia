@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PromiseKit
 
 class MemoryContextMenuViewController: UIViewController {
 
@@ -77,6 +78,21 @@ class MemoryContextMenuViewController: UIViewController {
         
         // Constraints
         setupConstraints()
+    }
+    
+    // MARK: Update
+    
+    public func update(memory: MemoriesEntity.Display.MemoryItem) {
+        date.text = memory.date
+        name.text = memory.name
+        
+        firstly {
+            App.session.db.readMemoryPhoto(id: memory.photoID)
+        }.done { photo in
+            self.cover.image = UIImage(data: photo)
+        }.catch { error in
+            print(error.localizedDescription)
+        }
     }
     
     // MARK: Constraints

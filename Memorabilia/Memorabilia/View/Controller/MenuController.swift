@@ -41,21 +41,21 @@ class MenuController: UIViewController {
     
     lazy var createButton: OptionsBarButton = {
         let button = OptionsBarButton()
-        button.addAction(optionButtonAction(option: .create))
+        button.addAction(optionButtonAction(type: .create))
         button.setImage(UIImage(systemName: MenuPageType.create.symbol), for: .normal)
         return button
     }()
     
     lazy var memoriesButton: OptionsBarButton = {
         let button = OptionsBarButton()
-        button.addAction(optionButtonAction(option: .memories))
+        button.addAction(optionButtonAction(type: .memories))
         button.setImage(UIImage(systemName: MenuPageType.memories.symbol), for: .normal)
         return button
     }()
     
     lazy var settingsButton: OptionsBarButton = {
         let button = OptionsBarButton()
-        button.addAction(optionButtonAction(option: .settings))
+        button.addAction(optionButtonAction(type: .settings))
         button.setImage(UIImage(systemName: MenuPageType.settings.symbol), for: .normal)
         return button
     }()
@@ -148,12 +148,12 @@ class MenuController: UIViewController {
     
     // MARK: Actions
     
-    func optionButtonAction(option: MenuPageType) -> () -> () {
+    func optionButtonAction(type: MenuPageType) -> () -> () {
         let action = { [weak self] in
             guard let self = self else { return }
-            self.changePage(from: self.selectedPage.rawValue, to: option.rawValue)
-            self.navigation.titleButton.setTitle(option.name, for: .normal)
-            self.selectedPage = option
+            self.changePage(from: self.selectedPage.rawValue, to: type.rawValue)
+            self.navigation.titleButton.setTitle(type.name, for: .normal)
+            self.selectedPage = type
             self.selectedInfo = InformationType(rawValue: self.selectedPage.stringValue) ?? .app
         }
         return action
@@ -221,6 +221,17 @@ class MenuController: UIViewController {
     
     public func getPage(type: AnyClass) -> MenuPage? {
         return pages.first(where: { $0.classForCoder == type })
+    }
+    
+    public func setPage(type: MenuPageType) {
+        switch type {
+        case .create:
+            createButton.sendActions(for: .primaryActionTriggered)
+        case .memories:
+            memoriesButton.sendActions(for: .primaryActionTriggered)
+        case .settings:
+            settingsButton.sendActions(for: .primaryActionTriggered)
+        }
     }
     
 }

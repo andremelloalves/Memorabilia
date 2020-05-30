@@ -66,8 +66,8 @@ class CollectionViewHeaderView: UICollectionReusableView {
             
             // Title
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
-            titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
+            titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 0),
+            titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: 0),
             titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
         ])
     }

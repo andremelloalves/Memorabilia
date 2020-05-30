@@ -21,7 +21,7 @@ extension CreateViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[.editedImage] as? UIImage
         
-        coverInput?.updateInput(title: nil, image: image)
+        coverInput?.update(title: nil, image: image)
         selectedCover = image
         
         picker.dismiss(animated: true, completion: nil)

@@ -50,6 +50,7 @@ struct MemoriesEntity {
         
         enum SectionType: String {
             case memories
+            case empty
         }
         
         struct MemorySection: MemoriesSection {
@@ -72,10 +73,31 @@ struct MemoriesEntity {
         
         }
         
+        struct EmptySection: MemoriesSection {
+            
+            var uid: String {
+                type.rawValue + (title ?? "?")
+            }
+            
+            var type: SectionType {
+                .empty
+            }
+            
+            var title: String?
+            
+            var empty: [EmptyItem]
+            
+            var items: [ItemWrapper] {
+                empty.map({ ItemWrapper(uid: $0.uid, item: $0) })
+            }
+        
+        }
+        
         // MARK: Items
         
         enum ItemType: String {
             case memory
+            case empty
         }
         
         struct ItemWrapper: Equatable {
@@ -107,7 +129,27 @@ struct MemoriesEntity {
             
             var date: String
             
-            var photoID: String
+            var photoID: String {
+                memoryID
+            }
+            
+            var snapshotID: String {
+                memoryID
+            }
+            
+        }
+        
+        struct EmptyItem: MemoriesItem {
+            
+            var uid: String{
+                return type.rawValue + (message ?? "?")
+            }
+            
+            var type: ItemType {
+                .empty
+            }
+            
+            var message: String?
             
         }
         

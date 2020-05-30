@@ -147,7 +147,7 @@ class CreateViewController: UIViewController, MenuPage {
         if let name = nameInput?.text, let cover = selectedCover?.pngData(), !name.isEmpty {
             routeToStudio(name: name, cover: cover)
             nameInput?.text = nil
-            coverInput?.updateInput(title: "Escolha uma foto de capa aqui", image: nil)
+            coverInput?.update(title: "Escolha uma foto de capa aqui", image: nil)
         } else {
             // Alert
         }

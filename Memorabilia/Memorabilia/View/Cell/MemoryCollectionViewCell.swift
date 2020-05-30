@@ -40,6 +40,8 @@ class MemoryCollectionViewCell: UICollectionViewCell {
     private func setup() {
         // Self
         backgroundColor = .clear
+        layer.cornerRadius = 20
+        clipsToBounds = true
         
         // Photo
         addSubview(cover)

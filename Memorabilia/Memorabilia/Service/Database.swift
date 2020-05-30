@@ -98,6 +98,17 @@ class Database {
         }
     }
     
+    func readMemorySnapshot(id: String) -> Promise<Data> {
+        return Promise { seal in
+            do {
+                let snapshot = try documents.read(file: id, folder: .snapshots)
+                seal.fulfill(snapshot)
+            } catch let error {
+                seal.reject(error)
+            }
+        }
+    }
+    
     func readMemoryPhoto(id: String) -> Promise<Data> {
         return Promise { seal in
             do {

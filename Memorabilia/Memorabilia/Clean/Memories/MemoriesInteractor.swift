@@ -15,7 +15,7 @@ protocol MemoriesInteractorInput {
 
     // Read
     
-    func readMemoryPhoto(id: String, index: IndexPath)
+    func readMemorySnapshot(id: String, index: IndexPath)
 
     func readMemories()
 
@@ -72,13 +72,13 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
     
     // Read
     
-    func readMemoryPhoto(id: String, index: IndexPath) {
+    func readMemorySnapshot(id: String, index: IndexPath) {
         guard let db = db else { return }
         
         firstly {
-            db.readMemoryPhoto(id: id)
+            db.readMemorySnapshot(id: id)
         }.done(on: .global(qos: .userInitiated)) { photo in
-            self.presenter?.presentMemoryPhoto(photo, with: id, for: index)
+            self.presenter?.presentMemorySnapshot(photo, with: id, for: index)
         }.catch { error in
             print(error)
         }

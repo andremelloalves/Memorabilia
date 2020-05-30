@@ -12,7 +12,7 @@ protocol MemoriesViewInput: class {
 
     // Update
     
-    func loadPhoto(_ photo: Data, with id: String, for index: IndexPath)
+    func loadSnapshot(_ photo: Data, with id: String, for index: IndexPath)
     
     func loadSections(sections: [MemoriesSection])
     
@@ -41,7 +41,7 @@ class MemoriesViewController: UIViewController, MenuPage {
         layout.scrollDirection = .vertical
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.translatesAutoresizingMaskIntoConstraints = false
-        let viewInsets = UIEdgeInsets(top: 72, left: 0, bottom: 82, right: 0)
+        let viewInsets = UIEdgeInsets(top: 72, left: 16, bottom: 82, right: 16)
         view.contentInset = viewInsets
         view.scrollIndicatorInsets = viewInsets
         view.backgroundColor = .clear
@@ -61,7 +61,7 @@ class MemoriesViewController: UIViewController, MenuPage {
     
     var sections: [MemoriesSection] = []
     
-    let photoDataCache = NSCache<NSString, NSData>()
+    let snapshotDataCache = NSCache<NSString, NSData>()
     
     // MARK: Initializers
     
@@ -116,10 +116,18 @@ class MemoriesViewController: UIViewController, MenuPage {
     
     // MARK: Actions
     
+    @objc func createButtonAction() {
+        routeToCreate()
+    }
+    
     // MARK: Navigation
     
     func pageWillDisapear() {
         
+    }
+    
+    func routeToCreate() {
+        menu?.setPage(type: .create)
     }
     
     let transition = SnapshotTransition()
@@ -149,8 +157,8 @@ extension MemoriesViewController: MemoriesViewInput {
     
     // Update
     
-    func loadPhoto(_ photo: Data, with id: String, for index: IndexPath) {
-        photoDataCache.setObject(photo as NSData, forKey: NSString(string: id))
+    func loadSnapshot(_ photo: Data, with id: String, for index: IndexPath) {
+        snapshotDataCache.setObject(photo as NSData, forKey: NSString(string: id))
         
         collection.reloadItems(at: [index])
     }

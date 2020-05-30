@@ -31,7 +31,7 @@ extension CreateViewController: UITableViewDataSource {
         case .cover:
             let imageInputCell = tableView.dequeueReusableCell(withIdentifier: ImageInputTableViewCell.identifier, for: indexPath) as? ImageInputTableViewCell
             coverInput = imageInputCell?.input
-            coverInput?.updateInput(title: "Escolha uma foto de capa aqui", image: nil)
+            coverInput?.update(title: "Escolha uma foto de capa aqui", image: nil)
             coverInput?.addTarget(self, action: #selector(coverInputButtonAction), for: .primaryActionTriggered)
             cell = imageInputCell
         case .spacing:
@@ -41,7 +41,7 @@ extension CreateViewController: UITableViewDataSource {
         case .studio:
             let studioCell = tableView.dequeueReusableCell(withIdentifier: ButtonTableViewCell.identifier, for: indexPath) as? ButtonTableViewCell
             studioButton = studioCell?.button
-            studioButton?.updateInput(title: "Criar em AR", image: nil)
+            studioButton?.update(title: "Criar em AR", image: nil)
             studioButton?.addTarget(self, action: #selector(studioButtonAction), for: .primaryActionTriggered)
             cell = studioCell
         }

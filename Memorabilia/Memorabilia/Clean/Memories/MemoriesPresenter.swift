@@ -12,7 +12,7 @@ protocol MemoriesPresenterInput {
     
     // Present
     
-    func presentMemoryPhoto(_ data: Data, with id: String, for index: IndexPath)
+    func presentMemorySnapshot(_ data: Data, with id: String, for index: IndexPath)
     
     func present(memories: [MemoriesEntity.Present], shouldUpdate: Bool)
     
@@ -30,9 +30,9 @@ class MemoriesPresenter: MemoriesPresenterInput {
     
     // MARK: Functions
     
-    func presentMemoryPhoto(_ data: Data, with id: String, for index: IndexPath) {
+    func presentMemorySnapshot(_ data: Data, with id: String, for index: IndexPath) {
         DispatchQueue.main.async {
-            self.viewController?.loadPhoto(data, with: id, for: index)
+            self.viewController?.loadSnapshot(data, with: id, for: index)
         }
     }
     
@@ -40,8 +40,8 @@ class MemoriesPresenter: MemoriesPresenterInput {
         var sections: [MemoriesSection] = []
         
         let formatter = DateFormatter()
-        formatter.locale = .current
-        formatter.dateFormat = "d MMMM yyyy"
+        formatter.locale = Locale(identifier: "pt_BR")
+        formatter.dateFormat = "MMMM yyyy"
         
         let groupedMemories = Dictionary(grouping: memories) { formatter.string(from: $0.creationDate) }
             .sorted(by: { $0.value[0].creationDate > $1.value[0].creationDate })
@@ -55,12 +55,17 @@ class MemoriesPresenter: MemoriesPresenterInput {
                 let memoryID = memory.uid
                 let name = memory.name
                 let date = formatter.string(from: memory.creationDate)
-                let photoID = memory.uid
-                let memoryItem = MemoriesEntity.Display.MemoryItem(memoryID: memoryID,name: name, date: date, photoID: photoID)
+                let memoryItem = MemoriesEntity.Display.MemoryItem(memoryID: memoryID,name: name, date: date)
                 memoryItems.append(memoryItem)
             }
             
             let section = MemoriesEntity.Display.MemorySection(title: title, memories: memoryItems)
+            sections.append(section)
+        }
+        
+        if groupedMemories.isEmpty {
+            let emptyItem = MemoriesEntity.Display.EmptyItem()
+            let section = MemoriesEntity.Display.EmptySection(title: "Sua biblioteca está vazia", empty: [emptyItem])
             sections.append(section)
         }
         
