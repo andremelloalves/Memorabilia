@@ -16,7 +16,7 @@ class MemoryCollectionViewCell: UICollectionViewCell {
     
     let cover: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = .systemPurple
+        view.backgroundColor = .systemBackground
         view.clipsToBounds = true
         view.contentMode = .scaleAspectFill
         view.translatesAutoresizingMaskIntoConstraints = false

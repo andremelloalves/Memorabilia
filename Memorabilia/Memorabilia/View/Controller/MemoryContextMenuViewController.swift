@@ -47,6 +47,23 @@ class MemoryContextMenuViewController: UIViewController {
         return label
     }()
     
+    lazy var background: UIVisualEffectView = {
+        // Blur
+        let blur = UIBlurEffect(style: .regular)
+        let blurView = UIVisualEffectView(effect: blur)
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Vibrancy
+        let vibrancy = UIVibrancyEffect(blurEffect: blur, style: .label)
+        let vibrancyView = UIVisualEffectView(effect: vibrancy)
+        vibrancyView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        vibrancyView.contentView.addSubview(date)
+        vibrancyView.contentView.addSubview(name)
+        blurView.contentView.addSubview(vibrancyView)
+        return blurView
+    }()
+    
     // MARK: Initializers
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -70,11 +87,8 @@ class MemoryContextMenuViewController: UIViewController {
         // Cover
         view.addSubview(cover)
         
-        // Date
-        view.addSubview(date)
-        
-        // Name
-        view.addSubview(name)
+        // Background
+        view.addSubview(background)
         
         // Constraints
         setupConstraints()
@@ -104,6 +118,12 @@ class MemoryContextMenuViewController: UIViewController {
             cover.leftAnchor.constraint(equalTo: view.leftAnchor),
             cover.rightAnchor.constraint(equalTo: view.rightAnchor),
             cover.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            // Background
+            background.topAnchor.constraint(equalTo: date.topAnchor, constant: -16),
+            background.leftAnchor.constraint(equalTo: view.leftAnchor),
+            background.rightAnchor.constraint(equalTo: view.rightAnchor),
+            background.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             // Date
             date.heightAnchor.constraint(equalToConstant: 41),

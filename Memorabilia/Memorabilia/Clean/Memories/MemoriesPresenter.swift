@@ -45,7 +45,7 @@ class MemoriesPresenter: MemoriesPresenterInput {
         
         let groupedMemories = Dictionary(grouping: memories) { formatter.string(from: $0.creationDate) }
             .sorted(by: { $0.value[0].creationDate > $1.value[0].creationDate })
-        formatter.dateFormat = "EEEE, d MMM yy"
+        formatter.dateFormat = "dd/MM/yyyy"
         
         for group in groupedMemories {
             let title = group.key

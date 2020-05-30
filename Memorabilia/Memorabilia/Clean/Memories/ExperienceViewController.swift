@@ -16,7 +16,7 @@ protocol ExperienceViewInput: class {
     
     // Update
     
-    func loadPhoto(_ photo: Data)
+    func loadSnapshot(_ photo: Data)
     
     func loadARWorld(_ world: Data)
     
@@ -188,7 +188,7 @@ class ExperienceViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        interactor?.readMemoryPhoto()
+        interactor?.readSnapshot()
         interactor?.readARWorld()
     }
     
@@ -300,7 +300,7 @@ extension ExperienceViewController: ExperienceViewInput {
     
     // Update
     
-    func loadPhoto(_ photo: Data) {
+    func loadSnapshot(_ photo: Data) {
         snapshotView.image = UIImage(data: photo)
     }
     

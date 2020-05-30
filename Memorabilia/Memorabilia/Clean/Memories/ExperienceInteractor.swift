@@ -18,7 +18,7 @@ protocol ExperienceInteractorInput {
 
     // Read
     
-    func readMemoryPhoto()
+    func readSnapshot()
     
     func readARWorld()
     
@@ -104,13 +104,13 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
     
     // Read
     
-    func readMemoryPhoto() {
+    func readSnapshot() {
         guard let db = db, let memory = memory else { return }
         
         firstly {
-            db.readMemoryPhoto(id: memory.uid)
+            db.readMemorySnapshot(id: memory.uid)
         }.done { photo in
-            self.presenter?.presentMemoryPhoto(photo)
+            self.presenter?.presentSnapshot(photo)
         }.catch { error in
             print(error.localizedDescription)
         }
