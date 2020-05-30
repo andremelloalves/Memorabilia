@@ -26,7 +26,7 @@ class MemoriesPresenter: MemoriesPresenterInput {
     
     // MARK: Properties
     
-    private var sections: [MemoriesSection] = [MemoriesEntity.Display.MemorySection(memories: [])]
+    private var sections: [MemoriesSection] = []
     
     // MARK: Functions
     
@@ -39,26 +39,36 @@ class MemoriesPresenter: MemoriesPresenterInput {
     func present(memories: [MemoriesEntity.Present], shouldUpdate: Bool) {
         var sections: [MemoriesSection] = []
         
-        var memoryItems: [MemoriesEntity.Display.MemoryItem] = []
+        let formatter = DateFormatter()
+        formatter.locale = .current
+        formatter.dateFormat = "d MMMM yyyy"
         
-        for memory in memories {
-            let memoryID = memory.uid
-            let name = memory.name
-            let format = DateFormatter()
-            format.locale = .current
-            format.dateFormat = "EEEE, d MMM yy"
-            let date = format.string(from: memory.creationDate)
-            let photoID = memory.uid
-            let memoryItem = MemoriesEntity.Display.MemoryItem(memoryID: memoryID,name: name, date: date, photoID: photoID)
-            memoryItems.append(memoryItem)
+        let groupedMemories = Dictionary(grouping: memories) { formatter.string(from: $0.creationDate) }
+            .sorted(by: { $0.value[0].creationDate > $1.value[0].creationDate })
+        formatter.dateFormat = "EEEE, d MMM yy"
+        
+        for group in groupedMemories {
+            let title = group.key
+            var memoryItems: [MemoriesEntity.Display.MemoryItem] = []
+            
+            for memory in group.value.sorted(by: { $0.creationDate > $1.creationDate }) {
+                let memoryID = memory.uid
+                let name = memory.name
+                let date = formatter.string(from: memory.creationDate)
+                let photoID = memory.uid
+                let memoryItem = MemoriesEntity.Display.MemoryItem(memoryID: memoryID,name: name, date: date, photoID: photoID)
+                memoryItems.append(memoryItem)
+            }
+            
+            let section = MemoriesEntity.Display.MemorySection(title: title, memories: memoryItems)
+            sections.append(section)
         }
-        
-        let section = MemoriesEntity.Display.MemorySection(memories: memoryItems)
-        sections.append(section)
         
         if shouldUpdate {
             update(sections)
         } else {
+            self.sections = sections
+            
             DispatchQueue.main.async {
                 self.viewController?.loadSections(sections: sections)
             }

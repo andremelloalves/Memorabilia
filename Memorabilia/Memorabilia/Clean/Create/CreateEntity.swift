@@ -50,7 +50,7 @@ struct CreateEntity {
         struct NameSection: CreateSection {
             
             var uid: String {
-                type.rawValue
+                type.rawValue + (title ?? "?")
             }
             
             var type: SectionType {

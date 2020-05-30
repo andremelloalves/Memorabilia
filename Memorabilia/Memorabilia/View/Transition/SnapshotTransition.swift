@@ -62,7 +62,7 @@ extension SnapshotTransition: UIViewControllerAnimatedTransitioning {
         self.snapshotFrame = to.snapshotView.frame
         
         imageView.frame = cellFrame
-        imageView.image = cell.photo.image
+        imageView.image = cell.cover.image
         
         let container = transitionContext.containerView
         container.addSubview(imageView)

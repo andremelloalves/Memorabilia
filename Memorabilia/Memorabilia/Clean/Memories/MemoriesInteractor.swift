@@ -113,8 +113,6 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
         
         firstly {
             db.deleteMemory(id: id)
-        }.done { _ in
-            self.readMemories()
         }.catch { error in
             print(error.localizedDescription)
         }

@@ -183,12 +183,14 @@ extension InformationViewController: InformationViewInput {
     func reloadSections(changes: SectionChanges, sections: [InformationSection]) {
         self.sections = sections
         
-        collection.deleteSections(changes.deletes)
-        collection.insertSections(changes.inserts)
-        
-        collection.reloadItems(at: changes.updates.reloads)
-        collection.insertItems(at: changes.updates.inserts)
-        collection.deleteItems(at: changes.updates.deletes)
+        collection.performBatchUpdates({
+            collection.deleteSections(changes.deletes)
+            collection.insertSections(changes.inserts)
+            
+            collection.reloadItems(at: changes.updates.reloads)
+            collection.insertItems(at: changes.updates.inserts)
+            collection.deleteItems(at: changes.updates.deletes)
+        }, completion: nil)
     }
     
 }

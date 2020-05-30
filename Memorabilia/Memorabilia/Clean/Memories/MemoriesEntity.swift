@@ -14,6 +14,8 @@ protocol MemoriesSection {
     
     var type: MemoriesEntity.Display.SectionType { get }
     
+    var title: String? { get }
+    
     var items: [MemoriesEntity.Display.ItemWrapper] { get }
     
 }
@@ -53,12 +55,14 @@ struct MemoriesEntity {
         struct MemorySection: MemoriesSection {
             
             var uid: String {
-                type.rawValue
+                type.rawValue + (title ?? "?")
             }
             
             var type: SectionType {
                 .memories
             }
+            
+            var title: String?
             
             var memories: [MemoryItem]
             

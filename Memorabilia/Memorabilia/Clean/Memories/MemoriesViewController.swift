@@ -39,21 +39,15 @@ class MemoriesViewController: UIViewController, MenuPage {
     lazy var collection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 8
-        layout.minimumInteritemSpacing = 8
-        let width = UIScreen.main.bounds.width - 16
-        let height = width
-        layout.itemSize = CGSize(width: width, height: height)
-//        layout.estimatedItemSize = CGSize(width: 343, height: 612)
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.translatesAutoresizingMaskIntoConstraints = false
         let viewInsets = UIEdgeInsets(top: 72, left: 0, bottom: 82, right: 0)
         view.contentInset = viewInsets
         view.scrollIndicatorInsets = viewInsets
         view.backgroundColor = .clear
-        view.isPagingEnabled = false
         view.delegate = self
         view.dataSource = self
+        view.register(CollectionViewHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionViewHeaderView.identifier)
         view.register(MemoryCollectionViewCell.self,forCellWithReuseIdentifier: MemoryCollectionViewCell.identifier)
         view.register(EmptyMemoryCollectionViewCell.self, forCellWithReuseIdentifier: EmptyMemoryCollectionViewCell.identifier)
         return view
@@ -65,7 +59,7 @@ class MemoriesViewController: UIViewController, MenuPage {
     
     // MARK: View model
     
-    var memoriesSections: [MemoriesSection] = []
+    var sections: [MemoriesSection] = []
     
     let photoDataCache = NSCache<NSString, NSData>()
     
@@ -116,6 +110,7 @@ class MemoriesViewController: UIViewController, MenuPage {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         interactor?.readMemories()
     }
     
@@ -161,20 +156,22 @@ extension MemoriesViewController: MemoriesViewInput {
     }
     
     func loadSections(sections: [MemoriesSection]) {
-        memoriesSections = sections
+        self.sections = sections
         
         collection.reloadData()
     }
     
     func reloadSections(changes: SectionChanges, sections: [MemoriesSection]) {
-        memoriesSections = sections
+        self.sections = sections
         
-        collection.deleteSections(changes.deletes)
-        collection.insertSections(changes.inserts)
-        
-        collection.reloadItems(at: changes.updates.reloads)
-        collection.insertItems(at: changes.updates.inserts)
-        collection.deleteItems(at: changes.updates.deletes)
+        collection.performBatchUpdates({
+            collection.deleteSections(changes.deletes)
+            collection.insertSections(changes.inserts)
+            
+            collection.reloadItems(at: changes.updates.reloads)
+            collection.insertItems(at: changes.updates.inserts)
+            collection.deleteItems(at: changes.updates.deletes)
+        }, completion: nil)
     }
     
 }

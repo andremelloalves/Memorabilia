@@ -62,7 +62,7 @@ extension CreateViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let title = sections[section].title else { return nil }
         
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionHeaderView.identifier) as? SectionHeaderView
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableViewHeaderView.identifier) as? TableViewHeaderView
         header?.updateTitle(title: title)
         
         return header
@@ -70,7 +70,7 @@ extension CreateViewController: UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         for section in 0..<sections.count {
-            let header = table.headerView(forSection: section) as? SectionHeaderView
+            let header = table.headerView(forSection: section) as? TableViewHeaderView
             let frame = table.rectForHeader(inSection: section)
             
             let offset = frame.origin.y - scrollView.contentOffset.y - table.contentInset.top - view.safeAreaInsets.top

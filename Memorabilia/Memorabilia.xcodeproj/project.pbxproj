@@ -64,6 +64,7 @@
 		B6654C5A243E5D4E0081CD22 /* SettingsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C59243E5D4E0081CD22 /* SettingsEntity.swift */; };
 		B6654C5C243E5D640081CD22 /* SettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C5B243E5D640081CD22 /* SettingsRouter.swift */; };
 		B67F2FFF2453C42900C42324 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67F2FFE2453C42900C42324 /* InputTextView.swift */; };
+		B6907C742481F19500B7252B /* CollectionViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6907C732481F19500B7252B /* CollectionViewHeaderView.swift */; };
 		B6996AAD2394372D00F4133D /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6996AAC2394372D00F4133D /* CircleButton.swift */; };
 		B6996AAF239439EB00F4133D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6996AAE239439EB00F4133D /* InfoView.swift */; };
 		B69ADD4C244F98F2001D9625 /* Studio+Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69ADD4B244F98F2001D9625 /* Studio+Media.swift */; };
@@ -80,7 +81,7 @@
 		B6D033462456630A00511544 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D033452456630A00511544 /* UIImage.swift */; };
 		B6DBE81F247F4F07003D83B0 /* BrazilTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE81E247F4F07003D83B0 /* BrazilTableViewCell.swift */; };
 		B6DBE82124801B97003D83B0 /* Create+Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82024801B97003D83B0 /* Create+Media.swift */; };
-		B6DBE82324806329003D83B0 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82224806329003D83B0 /* SectionHeaderView.swift */; };
+		B6DBE82324806329003D83B0 /* TableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82224806329003D83B0 /* TableViewHeaderView.swift */; };
 		B6DBE82524806489003D83B0 /* TextInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82424806489003D83B0 /* TextInputTableViewCell.swift */; };
 		B6DBE82724806645003D83B0 /* SpacingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82624806645003D83B0 /* SpacingTableViewCell.swift */; };
 		B6DBE82924806975003D83B0 /* ImageInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82824806975003D83B0 /* ImageInputTableViewCell.swift */; };
@@ -160,6 +161,7 @@
 		B6654C59243E5D4E0081CD22 /* SettingsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEntity.swift; sourceTree = "<group>"; };
 		B6654C5B243E5D640081CD22 /* SettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRouter.swift; sourceTree = "<group>"; };
 		B67F2FFE2453C42900C42324 /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
+		B6907C732481F19500B7252B /* CollectionViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeaderView.swift; sourceTree = "<group>"; };
 		B6996AAC2394372D00F4133D /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		B6996AAE239439EB00F4133D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		B69ADD4B244F98F2001D9625 /* Studio+Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Studio+Media.swift"; sourceTree = "<group>"; };
@@ -178,7 +180,7 @@
 		B6D033452456630A00511544 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		B6DBE81E247F4F07003D83B0 /* BrazilTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrazilTableViewCell.swift; sourceTree = "<group>"; };
 		B6DBE82024801B97003D83B0 /* Create+Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Create+Media.swift"; sourceTree = "<group>"; };
-		B6DBE82224806329003D83B0 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
+		B6DBE82224806329003D83B0 /* TableViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewHeaderView.swift; sourceTree = "<group>"; };
 		B6DBE82424806489003D83B0 /* TextInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputTableViewCell.swift; sourceTree = "<group>"; };
 		B6DBE82624806645003D83B0 /* SpacingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacingTableViewCell.swift; sourceTree = "<group>"; };
 		B6DBE82824806975003D83B0 /* ImageInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInputTableViewCell.swift; sourceTree = "<group>"; };
@@ -362,7 +364,8 @@
 				B6E7F67224379EC3001A5149 /* ActionView.swift */,
 				B6F2AD32243AB174009273CC /* SnapshotView.swift */,
 				B67F2FFE2453C42900C42324 /* InputTextView.swift */,
-				B6DBE82224806329003D83B0 /* SectionHeaderView.swift */,
+				B6DBE82224806329003D83B0 /* TableViewHeaderView.swift */,
+				B6907C732481F19500B7252B /* CollectionViewHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -689,7 +692,7 @@
 				B6303373245CBF7B00DFDA0D /* Collection.swift in Sources */,
 				B60E242D247AF3050010A363 /* Information.swift in Sources */,
 				B6D033442456058800511544 /* AVAsset.swift in Sources */,
-				B6DBE82324806329003D83B0 /* SectionHeaderView.swift in Sources */,
+				B6DBE82324806329003D83B0 /* TableViewHeaderView.swift in Sources */,
 				B63663EF239448420008F5BD /* MemoriesViewController.swift in Sources */,
 				B6DBE81F247F4F07003D83B0 /* BrazilTableViewCell.swift in Sources */,
 				B60E2431247B52180010A363 /* InformationCollectionViewCell.swift in Sources */,
@@ -728,6 +731,7 @@
 				B6412CDD238EE49300BED236 /* DocumentsDatabase.swift in Sources */,
 				B60409652431414200C3D627 /* StudioRouter.swift in Sources */,
 				B6C1898D245F7D5D002B6FEA /* CGSize.swift in Sources */,
+				B6907C742481F19500B7252B /* CollectionViewHeaderView.swift in Sources */,
 				B6DBE82D248086E2003D83B0 /* ButtonTableViewCell.swift in Sources */,
 				B6412CE7238EF9A500BED236 /* ARUtilities.swift in Sources */,
 				B60E242B247AEA380010A363 /* InformationPresenter.swift in Sources */,

@@ -24,7 +24,7 @@ class InformationPresenter: InformationPresenterInput {
     
     // MARK: Properties
     
-    private var sections: [InformationSection] = [InformationEntity.Display.Section(informations: [])]
+    private var sections: [InformationSection] = []
     
     // MARK: Functions
     
@@ -54,6 +54,8 @@ class InformationPresenter: InformationPresenterInput {
         if shouldUpdate {
             update(sections)
         } else {
+            self.sections = sections
+            
             DispatchQueue.main.async {
                 self.viewController?.loadSections(sections: sections)
             }

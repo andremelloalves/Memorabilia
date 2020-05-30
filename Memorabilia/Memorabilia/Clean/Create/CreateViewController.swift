@@ -47,7 +47,7 @@ class CreateViewController: UIViewController, MenuPage {
         view.scrollIndicatorInsets = insets
         view.separatorStyle = .none
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.register(SectionHeaderView.self, forHeaderFooterViewReuseIdentifier: SectionHeaderView.identifier)
+        view.register(TableViewHeaderView.self, forHeaderFooterViewReuseIdentifier: TableViewHeaderView.identifier)
         view.register(TextInputTableViewCell.self, forCellReuseIdentifier: TextInputTableViewCell.identifier)
         view.register(ImageInputTableViewCell.self, forCellReuseIdentifier: ImageInputTableViewCell.identifier)
         view.register(SpacingTableViewCell.self, forCellReuseIdentifier: SpacingTableViewCell.identifier)
@@ -139,6 +139,7 @@ class CreateViewController: UIViewController, MenuPage {
     }
     
     @objc func coverInputButtonAction() {
+        nameInput?.resignFirstResponder()
         routeToPicker()
     }
     

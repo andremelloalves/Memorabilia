@@ -1,5 +1,5 @@
 //
-//  SectionHeaderView.swift
+//  TableViewHeaderView.swift
 //  Memorabilia
 //
 //  Created by André Mello Alves on 28/05/20.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class SectionHeaderView: UITableViewHeaderFooterView {
+class TableViewHeaderView: UITableViewHeaderFooterView {
     
     // MARK: Properties
     
-    static let identifier = "Header"
+    static let identifier = "TableHeader"
     
     let titleLabel: UILabel = {
         let label = UILabel()
