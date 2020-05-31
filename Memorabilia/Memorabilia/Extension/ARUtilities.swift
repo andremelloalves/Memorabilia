@@ -21,7 +21,7 @@ extension ARFrame.WorldMappingStatus: CustomStringConvertible {
         case .mapped:
             return "Mapped"
         default:
-            return "Default"
+            return ""
         }
     }
     
@@ -44,7 +44,7 @@ extension ARCamera.TrackingState: CustomStringConvertible {
         case .limited(.relocalizing):
             return "Relocalizando"
         default:
-            return "Personalizando"
+            return ""
         }
     }
     
@@ -63,7 +63,7 @@ extension ARCamera.TrackingState: CustomStringConvertible {
         case .limited(.relocalizing):
             return "Mova o dispositivo para a perspectiva da imagem."
         default:
-            return "Mapeie o ambiente e adicione lembretes AR."
+            return ""
         }
     }
     

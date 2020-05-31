@@ -14,7 +14,16 @@ extension StudioViewController: ARSessionDelegate {
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         let state = camera.trackingState
+        let status = session.currentFrame?.worldMappingStatus
+        
         infoView.update(title: state.description, info: state.feedback)
+        
+        switch (state, status) {
+        case (.notAvailable, _), (.limited, _), (_, .notAvailable), (_, .limited):
+            updateState(isLimited: true)
+        default:
+            updateState(isLimited: false)
+        }
     }
     
     func sessionWasInterrupted(_ session: ARSession) {

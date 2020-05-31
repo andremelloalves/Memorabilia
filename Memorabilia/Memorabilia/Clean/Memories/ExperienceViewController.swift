@@ -241,10 +241,10 @@ class ExperienceViewController: UIViewController {
         }
     }
     
-    func showSnapshot(_ bool: Bool) {
-        isRelocalizingMap = bool
-        snapshotView.isHidden = !bool
-        if bool {
+    func updateState(isLimited: Bool) {
+        isRelocalizingMap = isLimited
+        snapshotView.isHidden = !isLimited
+        if isLimited {
             arView.debugOptions = [.showFeaturePoints]
         } else {
             arView.debugOptions = []

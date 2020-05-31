@@ -456,6 +456,10 @@ class StudioViewController: UIViewController {
         }
     }
     
+    func updateState(isLimited: Bool) {
+        isRelocalizingMap = isLimited
+    }
+    
     // MARK: Action
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {

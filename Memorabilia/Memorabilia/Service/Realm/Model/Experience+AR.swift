@@ -25,9 +25,9 @@ extension ExperienceViewController: ARSessionDelegate {
         
         switch (state, status) {
         case (.notAvailable, _), (.limited(.relocalizing), _), (.limited(.initializing), _), (_, .notAvailable):
-            showSnapshot(true)
+            updateState(isLimited: true)
         default:
-            showSnapshot(false)
+            updateState(isLimited: false)
         }
     }
     
