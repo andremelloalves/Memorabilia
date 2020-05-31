@@ -37,8 +37,7 @@ class CreatePresenter: CreatePresenterInput {
         sections.append(nameSection)
         
         let coverItem = CreateEntity.Display.CoverItem()
-        let coverSection = CreateEntity.Display.CoverSection(title: "Foto de capa", covers: [coverItem, spacingItem,
-                                                                                             studioItem, spacingItem])
+        let coverSection = CreateEntity.Display.CoverSection(title: "Foto de capa", covers: [coverItem, spacingItem, studioItem])
         sections.append(coverSection)
         
         viewController?.loadSections(sections: sections)

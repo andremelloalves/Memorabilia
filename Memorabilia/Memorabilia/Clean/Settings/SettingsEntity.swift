@@ -14,6 +14,8 @@ protocol SettingsSection {
     
     var type: SettingsEntity.Display.SectionType { get }
     
+    var title: String? { get }
+    
     var items: [SettingsEntity.Display.ItemWrapper] { get }
     
 }
@@ -34,8 +36,6 @@ struct SettingsEntity {
     
     struct Present {
         
-//        var settings: [Setting]
-        
     }
     
     struct Display {
@@ -43,20 +43,23 @@ struct SettingsEntity {
         // MARK: Sections
         
         enum SectionType: String {
-            case settings
+            case about
+            case flag
         }
         
-        struct SettingSection: SettingsSection {
+        struct AboutSection: SettingsSection {
             
             var uid: String {
                 type.rawValue
             }
             
             var type: SectionType {
-                .settings
+                .about
             }
             
-            var settings: [SettingItem]
+            var title: String?
+            
+            var settings: [MessageItem]
             
             var items: [ItemWrapper] {
                 settings.map({ ItemWrapper(uid: $0.uid, item: $0) })
@@ -64,10 +67,31 @@ struct SettingsEntity {
         
         }
         
+        struct FlagSection: SettingsSection {
+            
+            var uid: String {
+                type.rawValue
+            }
+            
+            var type: SectionType {
+                .flag
+            }
+            
+            var title: String?
+            
+            var flags: [FlagItem]
+            
+            var items: [ItemWrapper] {
+                flags.map({ ItemWrapper(uid: $0.uid, item: $0) })
+            }
+        
+        }
+        
         // MARK: Items
         
         enum ItemType: String {
-            case setting
+            case message
+            case flag
         }
         
         struct ItemWrapper: Equatable {
@@ -83,15 +107,31 @@ struct SettingsEntity {
             
         }
         
-        struct SettingItem: SettingsItem {
+        struct MessageItem: SettingsItem {
             
             var uid: String {
-                return type.rawValue
+                return type.rawValue + message
             }
             
             var type: ItemType {
-                .setting
+                .message
             }
+            
+            var message: String
+            
+        }
+        
+        struct FlagItem: SettingsItem {
+            
+            var uid: String {
+                return type.rawValue + flag
+            }
+            
+            var type: ItemType {
+                .flag
+            }
+            
+            var flag: String
             
         }
         

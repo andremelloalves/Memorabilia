@@ -13,6 +13,8 @@ protocol SettingsInteractorInput {
     // Create
 
     // Read
+    
+    func read()
 
     // Update
 
@@ -60,6 +62,10 @@ class SettingsInteractor: SettingsInteractorInput, SettingsInteractorData {
     // Create
     
     // Read
+    
+    func read() {
+        presenter?.present(memories: [], shouldUpdate: false)
+    }
     
     // Update
     

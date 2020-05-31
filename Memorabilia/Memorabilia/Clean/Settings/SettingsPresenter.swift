@@ -12,6 +12,8 @@ protocol SettingsPresenterInput {
     
     // Present
     
+    func present(memories: [SettingsEntity.Present], shouldUpdate: Bool)
+    
 }
 
 class SettingsPresenter: SettingsPresenterInput {
@@ -22,17 +24,42 @@ class SettingsPresenter: SettingsPresenterInput {
     
     // MARK: Properties
     
-    private var sections: [SettingsSection] = [SettingsEntity.Display.SettingSection(settings: [])]
+    private var sections: [SettingsSection] = []
     
     // MARK: Functions
     
-    private func setup(newSections: [SettingsSection]) {
+    func present(memories: [SettingsEntity.Present], shouldUpdate: Bool) {
+        var sections: [SettingsSection] = []
+        
+        let messageItem = SettingsEntity.Display.MessageItem(message: "Essa é uma breve explicação do aplicativo.")
+        let messageSection = SettingsEntity.Display.AboutSection(title: "Sobre", settings: [messageItem])
+        sections.append(messageSection)
+        
+        let flagItem = SettingsEntity.Display.FlagItem(flag: "bandeira-nacional-brasil")
+        let flagSection = SettingsEntity.Display.FlagSection(title: nil, flags: [flagItem])
+        sections.append(flagSection)
+        
+        if shouldUpdate {
+            update(sections)
+        } else {
+            self.sections = sections
+            
+            DispatchQueue.main.async {
+                self.viewController?.loadSections(sections: sections)
+            }
+        }
+    }
+    
+    private func update(_ newSections: [SettingsSection]) {
         let oldData = flatten(sections: sections)
         let newData = flatten(sections: newSections)
         let changes = SeriesChanges.calculate(old: oldData, new: newData)
 
         sections = newSections
-        viewController?.reloadSections(changes: changes, sections: newSections)
+        
+        DispatchQueue.main.async {
+            self.viewController?.reloadSections(changes: changes, sections: newSections)
+        }
     }
 
     private func flatten(sections: [SettingsSection]) -> [ReloadableSection<SettingsEntity.Display.ItemWrapper>] {

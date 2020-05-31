@@ -1,5 +1,5 @@
 //
-//  BrazilTableViewCell.swift
+//  FlagTableViewCell.swift
 //  Memorabilia
 //
 //  Created by André Mello Alves on 27/05/20.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class BrazilTableViewCell: UITableViewCell {
+class FlagTableViewCell: UITableViewCell {
     
     // MARK: Properties
     
-    static let identifier = "Brazil"
+    static let identifier = "Flag"
     
     let flag: UIImageView = {
         let view = UIImageView()
@@ -51,8 +51,8 @@ class BrazilTableViewCell: UITableViewCell {
     
     // MARK: Update
     
-    public func updatePhoto(_ data: Data) {
-        flag.image = UIImage(data: data)
+    public func updatePhoto(name: String) {
+        flag.image = UIImage(named: name)
     }
     
     // MARK: Constraints
@@ -63,8 +63,8 @@ class BrazilTableViewCell: UITableViewCell {
             heightAnchor.constraint(equalToConstant: 48),
             
             // Flag
-            flag.widthAnchor.constraint(equalToConstant: 16),
-            flag.heightAnchor.constraint(equalToConstant: 16),
+            flag.widthAnchor.constraint(equalToConstant: 25.4),
+            flag.heightAnchor.constraint(equalToConstant: 18),
             flag.centerXAnchor.constraint(equalTo: centerXAnchor),
             flag.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])

@@ -64,6 +64,8 @@
 		B6654C5A243E5D4E0081CD22 /* SettingsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C59243E5D4E0081CD22 /* SettingsEntity.swift */; };
 		B6654C5C243E5D640081CD22 /* SettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C5B243E5D640081CD22 /* SettingsRouter.swift */; };
 		B67F2FFF2453C42900C42324 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67F2FFE2453C42900C42324 /* InputTextView.swift */; };
+		B68D44982483363800F5A44A /* Settings+Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68D44972483363800F5A44A /* Settings+Table.swift */; };
+		B68D449A248338DF00F5A44A /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68D4499248338DF00F5A44A /* MessageTableViewCell.swift */; };
 		B6907C742481F19500B7252B /* CollectionViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6907C732481F19500B7252B /* CollectionViewHeaderView.swift */; };
 		B6996AAD2394372D00F4133D /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6996AAC2394372D00F4133D /* CircleButton.swift */; };
 		B6996AAF239439EB00F4133D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6996AAE239439EB00F4133D /* InfoView.swift */; };
@@ -79,7 +81,7 @@
 		B6D033422455E6C400511544 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D033412455E6C400511544 /* Reminder.swift */; };
 		B6D033442456058800511544 /* AVAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D033432456058800511544 /* AVAsset.swift */; };
 		B6D033462456630A00511544 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D033452456630A00511544 /* UIImage.swift */; };
-		B6DBE81F247F4F07003D83B0 /* BrazilTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE81E247F4F07003D83B0 /* BrazilTableViewCell.swift */; };
+		B6DBE81F247F4F07003D83B0 /* FlagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE81E247F4F07003D83B0 /* FlagTableViewCell.swift */; };
 		B6DBE82124801B97003D83B0 /* Create+Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82024801B97003D83B0 /* Create+Media.swift */; };
 		B6DBE82324806329003D83B0 /* TableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82224806329003D83B0 /* TableViewHeaderView.swift */; };
 		B6DBE82524806489003D83B0 /* TextInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DBE82424806489003D83B0 /* TextInputTableViewCell.swift */; };
@@ -161,6 +163,8 @@
 		B6654C59243E5D4E0081CD22 /* SettingsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEntity.swift; sourceTree = "<group>"; };
 		B6654C5B243E5D640081CD22 /* SettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRouter.swift; sourceTree = "<group>"; };
 		B67F2FFE2453C42900C42324 /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
+		B68D44972483363800F5A44A /* Settings+Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Table.swift"; sourceTree = "<group>"; };
+		B68D4499248338DF00F5A44A /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		B6907C732481F19500B7252B /* CollectionViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeaderView.swift; sourceTree = "<group>"; };
 		B6996AAC2394372D00F4133D /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		B6996AAE239439EB00F4133D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
@@ -178,7 +182,7 @@
 		B6D033412455E6C400511544 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		B6D033432456058800511544 /* AVAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAsset.swift; sourceTree = "<group>"; };
 		B6D033452456630A00511544 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
-		B6DBE81E247F4F07003D83B0 /* BrazilTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrazilTableViewCell.swift; sourceTree = "<group>"; };
+		B6DBE81E247F4F07003D83B0 /* FlagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagTableViewCell.swift; sourceTree = "<group>"; };
 		B6DBE82024801B97003D83B0 /* Create+Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Create+Media.swift"; sourceTree = "<group>"; };
 		B6DBE82224806329003D83B0 /* TableViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewHeaderView.swift; sourceTree = "<group>"; };
 		B6DBE82424806489003D83B0 /* TextInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputTableViewCell.swift; sourceTree = "<group>"; };
@@ -242,11 +246,12 @@
 				B6F9579A24398BB40072EBD8 /* EmptyMemoryCollectionViewCell.swift */,
 				B60E2430247B52180010A363 /* InformationCollectionViewCell.swift */,
 				B60E2432247B52500010A363 /* EmptyInformationCollectionViewCell.swift */,
-				B6DBE81E247F4F07003D83B0 /* BrazilTableViewCell.swift */,
+				B6DBE81E247F4F07003D83B0 /* FlagTableViewCell.swift */,
 				B6DBE82424806489003D83B0 /* TextInputTableViewCell.swift */,
 				B6DBE82624806645003D83B0 /* SpacingTableViewCell.swift */,
 				B6DBE82824806975003D83B0 /* ImageInputTableViewCell.swift */,
 				B6DBE82C248086E2003D83B0 /* ButtonTableViewCell.swift */,
+				B68D4499248338DF00F5A44A /* MessageTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -339,6 +344,7 @@
 				B6654C57243E5D410081CD22 /* SettingsPresenter.swift */,
 				B6654C59243E5D4E0081CD22 /* SettingsEntity.swift */,
 				B6654C5B243E5D640081CD22 /* SettingsRouter.swift */,
+				B68D44972483363800F5A44A /* Settings+Table.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -690,11 +696,12 @@
 				B6DBE82F2480A20C003D83B0 /* MemoryContextMenuViewController.swift in Sources */,
 				B6F236B724379069002457DF /* PillButton.swift in Sources */,
 				B6303373245CBF7B00DFDA0D /* Collection.swift in Sources */,
+				B68D44982483363800F5A44A /* Settings+Table.swift in Sources */,
 				B60E242D247AF3050010A363 /* Information.swift in Sources */,
 				B6D033442456058800511544 /* AVAsset.swift in Sources */,
 				B6DBE82324806329003D83B0 /* TableViewHeaderView.swift in Sources */,
 				B63663EF239448420008F5BD /* MemoriesViewController.swift in Sources */,
-				B6DBE81F247F4F07003D83B0 /* BrazilTableViewCell.swift in Sources */,
+				B6DBE81F247F4F07003D83B0 /* FlagTableViewCell.swift in Sources */,
 				B60E2431247B52180010A363 /* InformationCollectionViewCell.swift in Sources */,
 				B6DBE82524806489003D83B0 /* TextInputTableViewCell.swift in Sources */,
 				B6E7F68024394637001A5149 /* Experience+AR.swift in Sources */,
@@ -727,6 +734,7 @@
 				B6102A2E241EC9AB0060E962 /* ExperienceViewController.swift in Sources */,
 				B6C1898B245F5C07002B6FEA /* SnapshotTransition.swift in Sources */,
 				B63663ED239444420008F5BD /* NavigationController.swift in Sources */,
+				B68D449A248338DF00F5A44A /* MessageTableViewCell.swift in Sources */,
 				B6102A2C241EC7900060E962 /* MemoriesEntity.swift in Sources */,
 				B6412CDD238EE49300BED236 /* DocumentsDatabase.swift in Sources */,
 				B60409652431414200C3D627 /* StudioRouter.swift in Sources */,
