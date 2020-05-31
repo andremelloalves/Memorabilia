@@ -32,49 +32,38 @@ extension ARCamera.TrackingState: CustomStringConvertible {
     public var description: String {
         switch self {
         case .normal:
-            return "Normal"
+            return "Personalizando"
         case .notAvailable:
-            return "Not Available"
+            return "Indisponível"
         case .limited(.initializing):
-            return "Initializing"
-        case .limited(.excessiveMotion):
-            return "Excessive Motion"
+            return "Inicializando"
         case .limited(.insufficientFeatures):
-            return "Insufficient Features"
+            return "Poucos detalhes"
+        case .limited(.excessiveMotion):
+            return "Movimento demais"
         case .limited(.relocalizing):
-            return "Relocalizing"
+            return "Relocalizando"
         default:
-            return "Default"
+            return "Personalizando"
         }
     }
     
-}
-
-extension ARCamera.TrackingState {
-    
-    var localizedFeedback: String {
+    var feedback: String {
         switch self {
         case .normal:
-            // No planes detected; provide instructions for this app's AR interactions.
-            return "Move around to map the environment."
-            
+            return "Mapeie o ambiente e adicione lembretes AR."
         case .notAvailable:
-            return "Tracking unavailable."
-            
-        case .limited(.excessiveMotion):
-            return "Move the device more slowly."
-            
-        case .limited(.insufficientFeatures):
-            return "Point the device at an area with visible surface detail, or improve lighting conditions."
-            
-        case .limited(.relocalizing):
-            return "Resuming session — move to where you were when the session was interrupted."
-            
+            return "Mapeamento indisponível."
         case .limited(.initializing):
-            return "Initializing AR session."
-            
+            return "Sessão AR está sendo inicializada."
+        case .limited(.insufficientFeatures):
+            return "Aponte o dispositivo para uma área com detalhes na superfícies, ou melhore as condições de iluminação."
+        case .limited(.excessiveMotion):
+            return "Mova o dispositivo mais lentamente."
+        case .limited(.relocalizing):
+            return "Mova o dispositivo para a perspectiva da imagem."
         default:
-            return "Default"
+            return "Mapeie o ambiente e adicione lembretes AR."
         }
     }
     

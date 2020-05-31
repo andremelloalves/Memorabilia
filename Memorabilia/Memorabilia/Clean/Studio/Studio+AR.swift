@@ -13,19 +13,24 @@ import SceneKit
 extension StudioViewController: ARSessionDelegate {
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        infoView.info = camera.trackingState.description
+        let state = camera.trackingState
+        infoView.update(title: state.description, info: state.feedback)
     }
     
     func sessionWasInterrupted(_ session: ARSession) {
-        infoView.info = "Session interrupted"
+        infoView.update(title: "Sessão AR", info: "A sessão AR foi interrompida.")
     }
     
     func sessionInterruptionEnded(_ session: ARSession) {
-        infoView.info = "Session continued"
+        infoView.update(title: "Sessão AR", info: "A sessão AR foi resumida.")
+    }
+    
+    func sessionShouldAttemptRelocalization(_ session: ARSession) -> Bool {
+        true
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
-        infoView.info = error.localizedDescription
+//        infoView.info = error.localizedDescription
         
         guard error is ARError else { return }
         
@@ -44,40 +49,10 @@ extension StudioViewController: ARSessionDelegate {
             let alertController = UIAlertController(title: "The AR session failed.", message: errorMessage, preferredStyle: .alert)
             let restartAction = UIAlertAction(title: "Restart Session", style: .default) { _ in
                 alertController.dismiss(animated: true, completion: nil)
-                self.resetTracking()
+                self.startStudio()
             }
             alertController.addAction(restartAction)
             self.present(alertController, animated: true, completion: nil)
-        }
-    }
-    
-    func sessionShouldAttemptRelocalization(_ session: ARSession) -> Bool {
-        true
-    }
-    
-    private func resetTracking() {
-        isRelocalizingMap = false
-        arView.session.run(worldTrackingConfiguration, options: [.resetTracking, .removeExistingAnchors])
-    }
-    
-    func saveARWorld() {
-        arView.session.getCurrentWorldMap { arWorld, error in
-            guard let worldMap = arWorld else { return }
-            
-            guard let snapshotAnchor = SnapshotAnchor(from: self.arView) else { return }
-            worldMap.anchors.append(snapshotAnchor)
-            
-            self.saveMemory(worldMap: worldMap, snapshot: snapshotAnchor.snapshot)
-        }
-    }
-    
-    func saveMemory(worldMap: ARWorldMap, snapshot: Data) {
-        do {
-            let world = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
-            self.interactor?.createMemory(world: world, snapshot: snapshot)
-            self.routeBack()
-        } catch let error {
-            print(error)
         }
     }
     

@@ -525,7 +525,6 @@
 			isa = PBXGroup;
 			children = (
 				B6E7F68224396D84001A5149 /* Anchor */,
-				B6F95797243987000072EBD8 /* Node */,
 			);
 			path = AR;
 			sourceTree = "<group>";
@@ -537,13 +536,6 @@
 				B63E3C3724522CA400F41EEB /* ReminderAnchor.swift */,
 			);
 			path = Anchor;
-			sourceTree = "<group>";
-		};
-		B6F95797243987000072EBD8 /* Node */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Node;
 			sourceTree = "<group>";
 		};
 		DFF667CFDBF5E5C345165B00 /* Pods */ = {

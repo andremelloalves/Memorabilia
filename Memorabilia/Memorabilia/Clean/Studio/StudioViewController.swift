@@ -43,7 +43,8 @@ class StudioViewController: UIViewController {
     
     let infoView: InfoView = {
         let view = InfoView()
-        view.infoLabel.text = "Aqui aparecem mensagens de status do AR para auxiliar o usuário no momento de mapeamento."
+        let state = ARCamera.TrackingState.limited(.initializing)
+        view.update(title: state.description, info: state.feedback)
         return view
     }()
     
@@ -194,7 +195,7 @@ class StudioViewController: UIViewController {
         view.delegate = self
         view.session.delegate = self
         view.autoenablesDefaultLighting = true
-//        view.debugOptions = [.showFeaturePoints, .showWorldOrigin]
+        view.debugOptions = [.showFeaturePoints]
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tap)
         let press = UILongPressGestureRecognizer(target: self, action: #selector(handlePress))
@@ -379,7 +380,7 @@ class StudioViewController: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = true
 
         // Start AR Session
-        arView.session.run(worldTrackingConfiguration)
+        startStudio()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -654,6 +655,10 @@ class StudioViewController: UIViewController {
     
     // MARK: AR
     
+    func startStudio() {
+        arView.session.run(worldTrackingConfiguration, options: [.resetTracking, .removeExistingAnchors])
+    }
+    
     func addReminderAnchor(with raycast: ARRaycastResult) {
         let anchor = ReminderAnchor(type: selectedOption, transform: raycast.worldTransform)
         
@@ -685,6 +690,27 @@ class StudioViewController: UIViewController {
         arView.session.remove(anchor: anchor)
         
         showCreating()
+    }
+    
+    func saveARWorld() {
+        arView.session.getCurrentWorldMap { arWorld, error in
+            guard let worldMap = arWorld else { return }
+            
+            guard let snapshotAnchor = SnapshotAnchor(from: self.arView) else { return }
+            worldMap.anchors.append(snapshotAnchor)
+            
+            self.saveMemory(worldMap: worldMap, snapshot: snapshotAnchor.snapshot)
+        }
+    }
+    
+    func saveMemory(worldMap: ARWorldMap, snapshot: Data) {
+        do {
+            let world = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
+            self.interactor?.createMemory(world: world, snapshot: snapshot)
+            self.routeBack()
+        } catch let error {
+            print(error)
+        }
     }
     
 }

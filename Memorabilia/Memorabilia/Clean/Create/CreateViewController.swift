@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ARKit
 import Photos
 import MobileCoreServices
 
@@ -176,7 +177,11 @@ class CreateViewController: UIViewController, MenuPage {
     }
     
     private func routeToStudio(name: String, cover: Data) {
-        router?.routeToStudioViewController(name: name, cover: cover)
+        if ARWorldTrackingConfiguration.isSupported {
+            router?.routeToStudioViewController(name: name, cover: cover)
+        } else {
+//            self.showActionView()
+        }
     }
     
 }

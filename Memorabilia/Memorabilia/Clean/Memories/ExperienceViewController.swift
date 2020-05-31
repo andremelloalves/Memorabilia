@@ -43,7 +43,8 @@ class ExperienceViewController: UIViewController {
     
     let infoView: InfoView = {
         let view = InfoView()
-        view.infoLabel.text = "Aqui aparecem mensagens de status do AR para auxiliar o usuário no momento de mapeamento."
+        let state = ARCamera.TrackingState.limited(.initializing)
+        view.update(title: state.description, info: state.feedback)
         return view
     }()
     
@@ -76,6 +77,8 @@ class ExperienceViewController: UIViewController {
     
     // MARK: Control properties
     
+    var selectedInfo: InformationType = .experienceLocation
+    
     var selectedReminder: ReminderAnchor?
     
     var isRelocalizingMap: Bool = false
@@ -89,7 +92,7 @@ class ExperienceViewController: UIViewController {
         view.delegate = self
         view.session.delegate = self
         view.autoenablesDefaultLighting = true
-//        view.debugOptions = [.showFeaturePoints, .showWorldOrigin]
+        view.debugOptions = [.showFeaturePoints]
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tap)
         return view
@@ -188,6 +191,8 @@ class ExperienceViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         interactor?.readSnapshot()
         interactor?.readARWorld()
     }
@@ -236,6 +241,16 @@ class ExperienceViewController: UIViewController {
         }
     }
     
+    func showSnapshot(_ bool: Bool) {
+        isRelocalizingMap = bool
+        snapshotView.isHidden = !bool
+        if bool {
+            arView.debugOptions = [.showFeaturePoints]
+        } else {
+            arView.debugOptions = []
+        }
+    }
+    
     // MARK: Action
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
@@ -256,7 +271,7 @@ class ExperienceViewController: UIViewController {
     }
     
     @objc func infoButtonAction() {
-        infoView.info = "Esse texto informativo pode ocupar mais de uma linha se preciso."
+        routeToInformation()
     }
     
     @objc func exitButtonAction() {
@@ -264,7 +279,7 @@ class ExperienceViewController: UIViewController {
     }
     
     @objc func restartButtonAction() {
-        infoView.info = "O mundo AR será reiniciado."
+        startExperience()
     }
     
     // MARK: Navigation
@@ -273,7 +288,15 @@ class ExperienceViewController: UIViewController {
         router?.routeBack()
     }
     
+    func routeToInformation() {
+        router?.routeToInformation(type: selectedInfo)
+    }
+    
     // MARK: AR
+    
+    func startExperience() {
+        arView.session.run(worldTrackingConfiguration, options: [.resetTracking, .removeExistingAnchors])
+    }
 
 }
 
@@ -319,7 +342,7 @@ extension ExperienceViewController: ExperienceViewInput {
             interactor?.createReminders(reminders)
             interactor?.readVisualReminders()
             
-            arView.session.run(worldTrackingConfiguration, options: [.resetTracking, .removeExistingAnchors])
+            startExperience()
         } catch let error {
             fatalError("Can't unarchive ARWorldMap from file data: \(error)")
         }

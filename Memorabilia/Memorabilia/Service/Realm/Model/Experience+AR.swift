@@ -13,19 +13,38 @@ import SceneKit
 extension ExperienceViewController: ARSessionDelegate {
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        infoView.info = camera.trackingState.description
+        let state = camera.trackingState
+        let status = session.currentFrame?.worldMappingStatus
+        
+        switch state {
+        case .normal:
+            infoView.update(title: "Explorando", info: "Mapeie o ambiente e interaja com os lembretes AR.")
+        default:
+            infoView.update(title: state.description, info: state.feedback)
+        }
+        
+        switch (state, status) {
+        case (.notAvailable, _), (.limited(.relocalizing), _), (.limited(.initializing), _), (_, .notAvailable):
+            showSnapshot(true)
+        default:
+            showSnapshot(false)
+        }
     }
     
     func sessionWasInterrupted(_ session: ARSession) {
-        infoView.info = "Session interrupted"
+        infoView.update(title: "Sessão AR", info: "A sessão AR foi interrompida.")
     }
     
     func sessionInterruptionEnded(_ session: ARSession) {
-        infoView.info = "Session continued"
+        infoView.update(title: "Sessão AR", info: "A sessão AR foi resumida.")
+    }
+    
+    func sessionShouldAttemptRelocalization(_ session: ARSession) -> Bool {
+        true
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
-        infoView.info = error.localizedDescription
+//        infoView.info = error.localizedDescription
         
         guard error is ARError else { return }
         
@@ -44,55 +63,11 @@ extension ExperienceViewController: ARSessionDelegate {
             let alertController = UIAlertController(title: "The AR session failed.", message: errorMessage, preferredStyle: .alert)
             let restartAction = UIAlertAction(title: "Restart Session", style: .default) { _ in
                 alertController.dismiss(animated: true, completion: nil)
-                self.resetTracking()
+                self.startExperience()
             }
             alertController.addAction(restartAction)
             self.present(alertController, animated: true, completion: nil)
         }
-    }
-    
-    func sessionShouldAttemptRelocalization(_ session: ARSession) -> Bool {
-        true
-    }
-    
-    private func resetTracking() {
-        isRelocalizingMap = false
-        arView.session.run(worldTrackingConfiguration, options: [.resetTracking, .removeExistingAnchors])
-    }
-    
-    func session(_ session: ARSession, didUpdate frame: ARFrame) {
-        updateSessionInfoLabel(for: frame, trackingState: frame.camera.trackingState)
-    }
-    
-    private func updateSessionInfoLabel(for frame: ARFrame, trackingState: ARCamera.TrackingState) {
-        // Update the UI to provide feedback on the state of the AR experience.
-        let message: String
-        
-        snapshotView.isHidden = true
-        switch (trackingState, frame.worldMappingStatus) {
-        case (.normal, .mapped),
-             (.normal, .extending):
-            message = "Mapa encontrado."
-            
-//        case (.normal, _) where mapDataFromFile != nil:
-//            message = "Move around to map the environment or tap 'Load Experience' to load a saved experience."
-//
-//        case (.normal, _) where mapDataFromFile == nil:
-//            message = "Move around to map the environment."
-            
-        case (.limited(.relocalizing), _):
-            message = "Move your device to the location shown in the image."
-            snapshotView.isHidden = false
-            
-        default:
-            message = trackingState.localizedFeedback
-        }
-        
-        infoView.infoLabel.text = message
-    }
-    
-    func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
-        
     }
     
 }

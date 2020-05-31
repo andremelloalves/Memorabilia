@@ -14,6 +14,8 @@ protocol ExperienceRouterInput {
     
     func routeBack()
     
+    func routeToInformation(type: InformationType)
+    
 }
 
 protocol ExperienceRouterOutput {
@@ -39,7 +41,25 @@ class ExperienceRouter: ExperienceRouterInput, ExperienceRouterOutput {
         viewController?.dismiss(animated: true, completion: nil)
     }
     
+    func routeToInformation(type: InformationType) {
+        let informationViewController = InformationViewController()
+        informationViewController.modalTransitionStyle = .crossDissolve
+        informationViewController.modalPresentationStyle = .overCurrentContext
+        
+        var dInteractor = informationViewController.router!.interactor!
+        
+        passDataInformationViewController(source: interactor!, destination: &dInteractor, type: type)
+        viewController?.present(informationViewController, animated: true, completion: nil)
+    }
+    
     // MARK: Data passing
+    
+    private func passDataInformationViewController(source: ExperienceInteractorData,
+                                                   destination: inout InformationInteractorData,
+                                                   type: InformationType) {
+        destination.db = source.db
+        destination.type = type
+    }
     
 }
 

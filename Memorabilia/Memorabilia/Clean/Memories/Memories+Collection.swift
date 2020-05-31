@@ -79,7 +79,8 @@ extension MemoriesViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let memory = sections[indexPath.section].items[indexPath.item].item as? MemoriesEntity.Display.MemoryItem else { return }
-        router?.routeToExperienceViewController(memoryID: memory.memoryID)
+        
+        routeToExperience(memoryID: memory.memoryID)
     }
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {

@@ -12,24 +12,12 @@ class InfoView: UIView {
     
     // MARK: Properties
     
-    var title: String = "" {
-        didSet {
-            titleLabel.text = title
-        }
-    }
-    
-    var info: String = ""{
-        didSet {
-            infoLabel.text = info
-        }
-    }
-    
     let titleLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 23, weight: .semibold)
         label.adjustsFontForContentSizeCategory = true
-        label.adjustsFontSizeToFitWidth = false
+        label.adjustsFontSizeToFitWidth = true
         label.baselineAdjustment = .alignCenters
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -91,6 +79,13 @@ class InfoView: UIView {
         
         // Constraints
         setupConstraints()
+    }
+    
+    // MARK: Update
+    
+    func update(title: String?, info: String?) {
+        titleLabel.text = title
+        infoLabel.text = info
     }
     
     // MARK: Constraints

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ARKit
 
 protocol MemoriesViewInput: class {
 
@@ -128,6 +129,14 @@ class MemoriesViewController: UIViewController, MenuPage {
     
     func routeToCreate() {
         menu?.setPage(type: .create)
+    }
+    
+    func routeToExperience(memoryID: String) {
+        if ARWorldTrackingConfiguration.isSupported {
+            router?.routeToExperienceViewController(memoryID: memoryID)
+        } else {
+//            self.showActionView()
+        }
     }
     
     let transition = SnapshotTransition()
