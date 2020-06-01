@@ -33,7 +33,7 @@ class MenuController: UIViewController {
     
     let navigation: NavigationBarView = {
         let view = NavigationBarView()
-        view.leftButton.setImage(UIImage(systemName: "person.fill"), for: .normal)
+//        view.leftButton.setImage(UIImage(systemName: "person.fill"), for: .normal)
         view.titleButton.setTitle(MenuPageType.memories.name, for: .normal)
         view.rightButton.setImage(UIImage(systemName: "info"), for: .normal)
         return view
@@ -136,7 +136,7 @@ class MenuController: UIViewController {
             page.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             // Navigation bar
-            navigation.leftButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            navigation.rightButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             navigation.topAnchor.constraint(equalTo: view.topAnchor),
             navigation.leftAnchor.constraint(equalTo: view.leftAnchor),
             navigation.rightAnchor.constraint(equalTo: view.rightAnchor),

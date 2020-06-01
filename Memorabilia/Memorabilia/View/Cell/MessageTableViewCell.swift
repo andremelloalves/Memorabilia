@@ -90,10 +90,10 @@ class MessageTableViewCell: UITableViewCell {
             background.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             // Input
-            messageLabel.topAnchor.constraint(equalTo: background.topAnchor, constant: 9),
+            messageLabel.topAnchor.constraint(equalTo: background.topAnchor, constant: 16),
             messageLabel.leftAnchor.constraint(equalTo: background.leftAnchor, constant: 16),
             messageLabel.rightAnchor.constraint(equalTo: background.rightAnchor, constant: -16),
-            messageLabel.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -9),
+            messageLabel.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -16),
         ])
     }
 

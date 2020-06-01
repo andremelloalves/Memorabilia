@@ -12,10 +12,10 @@ class NavigationBarView: UIView {
     
     // MARK: Properties
     
-    let leftButton: CircleButton = {
-        let button = CircleButton()
-        return button
-    }()
+//    let leftButton: CircleButton = {
+//        let button = CircleButton()
+//        return button
+//    }()
     
     let titleButton: UIButton = {
         let button = UIButton()
@@ -64,7 +64,7 @@ class NavigationBarView: UIView {
 //        addSubview(background)
         
         // Left button
-        addSubview(leftButton)
+//        addSubview(leftButton)
         
         // Title button
         addSubview(titleButton)
@@ -82,18 +82,18 @@ class NavigationBarView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             // Left button
-            leftButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
-            leftButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+//            leftButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
+//            leftButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             
             // Title button
-            titleButton.heightAnchor.constraint(equalTo: leftButton.heightAnchor),
-            titleButton.leftAnchor.constraint(equalTo: leftButton.rightAnchor, constant: 16),
-            titleButton.centerYAnchor.constraint(equalTo: leftButton.centerYAnchor),
+            titleButton.heightAnchor.constraint(equalTo: rightButton.heightAnchor),
+            titleButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
+            titleButton.centerYAnchor.constraint(equalTo: rightButton.centerYAnchor),
             titleButton.rightAnchor.constraint(equalTo: rightButton.leftAnchor, constant: -16),
             
             // Right button
             rightButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
-            rightButton.bottomAnchor.constraint(equalTo: leftButton.bottomAnchor)
+            rightButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
         ])
     }
     
