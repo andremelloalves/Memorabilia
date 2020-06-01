@@ -69,6 +69,12 @@ class MenuController: UIViewController {
         return view
     }()
     
+    let actionView: ActionView = {
+        let view = ActionView()
+        view.alpha = 0
+        return view
+    }()
+    
     // MARK: Control properties
     
     var selectedPage: MenuPageType = .memories
@@ -112,6 +118,9 @@ class MenuController: UIViewController {
         // Options bar
         view.addSubview(optionsBar)
         
+        // Action view
+        view.addSubview(actionView)
+        
         // Constraints
         setupConstraints()
     }
@@ -135,7 +144,11 @@ class MenuController: UIViewController {
             // Options bar
             optionsBar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
             optionsBar.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
-            optionsBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
+            optionsBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            
+            // Action view
+            actionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            actionView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
     }
     
@@ -162,6 +175,21 @@ class MenuController: UIViewController {
     @objc func infoButtonAction() {
         getPage()?.pageWillDisapear()
         routeToInformation()
+    }
+    
+    // MARK: Animation
+    
+    func showActionView(symbol: String, text: String, duration: TimeInterval) {
+        actionView.update(symbol: symbol, text: text)
+        
+        let fadeIn = { [unowned self] in self.actionView.alpha = 1 }
+        let fadeOut = { [unowned self] in self.actionView.alpha = 0 }
+        
+        let fadeInAnimator = UIViewPropertyAnimator(duration: duration / 4, curve: .easeInOut, animations: fadeIn)
+        let fadeOutAnimator = UIViewPropertyAnimator(duration: duration / 4, curve: .easeInOut, animations: fadeOut)
+
+        fadeInAnimator.startAnimation()
+        fadeInAnimator.addCompletion { _ in fadeOutAnimator.startAnimation(afterDelay: duration / 2) }
     }
     
     // MARK: Navigation

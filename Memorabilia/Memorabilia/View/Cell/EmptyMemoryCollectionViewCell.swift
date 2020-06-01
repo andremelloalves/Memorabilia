@@ -16,6 +16,8 @@ class EmptyMemoryCollectionViewCell: UICollectionViewCell {
     
     lazy var button: PillButton = {
         let button = PillButton()
+        let configuration = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular, scale: .large)
+        button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         return button
     }()
     

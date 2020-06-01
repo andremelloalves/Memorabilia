@@ -8,6 +8,7 @@
 
 import UIKit
 import ARKit
+import Photos
 
 protocol MemoriesViewInput: class {
 
@@ -132,10 +133,22 @@ class MemoriesViewController: UIViewController, MenuPage {
     }
     
     func routeToExperience(memoryID: String) {
-        if ARWorldTrackingConfiguration.isSupported {
-            router?.routeToExperienceViewController(memoryID: memoryID)
-        } else {
-//            self.showActionView()
+        guard ARWorldTrackingConfiguration.isSupported else {
+            menu?.showActionView(symbol: "exclamationmark.triangle.fill", text: "AR indisponível", duration: 2)
+            return
+        }
+        
+        PHPhotoLibrary.requestAuthorization { status in
+            switch status {
+            case .authorized:
+                DispatchQueue.main.async {
+                    self.router?.routeToExperienceViewController(memoryID: memoryID)
+                }
+            default:
+                DispatchQueue.main.async {
+                    self.menu?.showActionView(symbol: "exclamationmark.triangle.fill", text: "Sem acesso a fotos", duration: 2)
+                }
+            }
         }
     }
     

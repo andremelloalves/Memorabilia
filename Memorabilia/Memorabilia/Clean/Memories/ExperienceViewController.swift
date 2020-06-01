@@ -69,8 +69,6 @@ class ExperienceViewController: UIViewController {
     
     let actionView: ActionView = {
         let view = ActionView()
-        view.symbol = "rectangle.3.offgrid.fill"
-        view.text = "Retorno visual"
         view.alpha = 0
         return view
     }()
@@ -81,7 +79,7 @@ class ExperienceViewController: UIViewController {
     
     var selectedReminder: ReminderAnchor?
     
-    var isRelocalizingMap: Bool = false
+    var isLimited: Bool = true
     
     // MARK: AR properties
     
@@ -100,9 +98,8 @@ class ExperienceViewController: UIViewController {
     
     lazy var worldTrackingConfiguration: ARWorldTrackingConfiguration = {
         let configuration = ARWorldTrackingConfiguration()
-        configuration.environmentTexturing = .automatic
-        configuration.initialWorldMap = world
         configuration.planeDetection = .vertical
+        configuration.initialWorldMap = world
         return configuration
     }()
     
@@ -180,7 +177,7 @@ class ExperienceViewController: UIViewController {
             
             // Action view
             actionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            actionView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            actionView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
     }
     
@@ -194,20 +191,19 @@ class ExperienceViewController: UIViewController {
         super.viewWillAppear(animated)
         
         interactor?.readSnapshot()
-        interactor?.readARWorld()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         // AR support
-        guard ARWorldTrackingConfiguration.isSupported else { fatalError("ARKit is not available on this device.") }
+        guard ARWorldTrackingConfiguration.isSupported else { routeBack(); return }
 
         // Screen dimming
         UIApplication.shared.isIdleTimerDisabled = true
         
         // Start AR Session
-//        arView.session.run(worldTrackingConfiguration)
+        requestStart()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -242,7 +238,7 @@ class ExperienceViewController: UIViewController {
     }
     
     func updateState(isLimited: Bool) {
-        isRelocalizingMap = isLimited
+        self.isLimited = isLimited
         snapshotView.isHidden = !isLimited
         if isLimited {
             arView.debugOptions = [.showFeaturePoints]
@@ -254,7 +250,7 @@ class ExperienceViewController: UIViewController {
     // MARK: Action
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        guard !isRelocalizingMap else { return }
+        guard !isLimited else { return }
         
         let point = sender.location(in: arView)
         
@@ -282,6 +278,21 @@ class ExperienceViewController: UIViewController {
         startExperience()
     }
     
+    // MARK: Animation
+    
+    func showActionView(symbol: String, text: String, duration: TimeInterval) {
+        actionView.update(symbol: symbol, text: text)
+        
+        let fadeIn = { [unowned self] in self.actionView.alpha = 1 }
+        let fadeOut = { [unowned self] in self.actionView.alpha = 0 }
+        
+        let fadeInAnimator = UIViewPropertyAnimator(duration: duration / 4, curve: .easeInOut, animations: fadeIn)
+        let fadeOutAnimator = UIViewPropertyAnimator(duration: duration / 4, curve: .easeInOut, animations: fadeOut)
+
+        fadeInAnimator.startAnimation()
+        fadeInAnimator.addCompletion { _ in fadeOutAnimator.startAnimation(afterDelay: duration / 2) }
+    }
+    
     // MARK: Navigation
     
     func routeBack() {
@@ -290,6 +301,31 @@ class ExperienceViewController: UIViewController {
     
     func routeToInformation() {
         router?.routeToInformation(type: selectedInfo)
+    }
+    
+    // MARK: Request
+    
+    func requestStart() {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            interactor?.readARWorld()
+        case .denied:
+            showActionView(symbol: "exclamationmark.triangle.fill", text: "Sem acesso à camera", duration: 2)
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                if granted {
+                    DispatchQueue.main.async {
+                        self.interactor?.readARWorld()
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.showActionView(symbol: "exclamationmark.triangle.fill", text: "Sem acesso à camera", duration: 2)
+                    }
+                }
+            }
+        default:
+            routeBack()
+        }
     }
     
     // MARK: AR
@@ -329,8 +365,10 @@ extension ExperienceViewController: ExperienceViewInput {
     
     func loadARWorld(_ world: Data) {
         do {
-            guard let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: world)
-                else { fatalError("No ARWorldMap in archive.") }
+            guard let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: world) else {
+                routeBack()
+                return
+            }
             
             var anchors = worldMap.anchors
             anchors.removeAll(where: { $0 is SnapshotAnchor })
@@ -344,12 +382,13 @@ extension ExperienceViewController: ExperienceViewInput {
             
             startExperience()
         } catch let error {
-            fatalError("Can't unarchive ARWorldMap from file data: \(error)")
+            print(error.localizedDescription)
+            routeBack()
         }
     }
     
     func reloadReminder(identifier: String) {
-        guard let anchor = world?.anchors.first(where: { $0.identifier.uuidString == identifier }) else { return }
+        guard !isLimited, let anchor = world?.anchors.first(where: { $0.identifier.uuidString == identifier }) else { return }
         
         arView.session.remove(anchor: anchor)
         arView.session.add(anchor: anchor)

@@ -133,8 +133,6 @@ class StudioViewController: UIViewController {
     
     let actionView: ActionView = {
         let view = ActionView()
-        view.symbol = "rectangle.3.offgrid.fill"
-        view.text = "Retorno visual"
         view.alpha = 0
         return view
     }()
@@ -186,7 +184,7 @@ class StudioViewController: UIViewController {
     
     var isEditingReminder: Bool = false
     
-    var isRelocalizingMap: Bool = false
+    var isLimited: Bool = true
     
     // MARK: AR properties
     
@@ -211,18 +209,7 @@ class StudioViewController: UIViewController {
     
     lazy var worldTrackingConfiguration: ARWorldTrackingConfiguration = {
         let configuration = ARWorldTrackingConfiguration()
-//        configuration.automaticImageScaleEstimationEnabled = false
-//        configuration.detectionImages
-//        configuration.detectionObjects
-        configuration.environmentTexturing = .automatic
-//        configuration.initialWorldMap = .none
-//        configuration.isAutoFocusEnabled = true
-//        configuration.isCollaborationEnabled = false
-//        configuration.maximumNumberOfTrackedImages = 0
         configuration.planeDetection = .vertical
-//        configuration.sceneReconstruction = .mesh
-//        configuration.userFaceTrackingEnabled = false
-//        configuration.wantsHDREnvironmentTextures = false
         return configuration
     }()
     
@@ -374,13 +361,13 @@ class StudioViewController: UIViewController {
         super.viewDidAppear(animated)
         
         // AR support
-        guard ARWorldTrackingConfiguration.isSupported else { fatalError("ARKit is not available on this device.") }
+        guard ARWorldTrackingConfiguration.isSupported else { routeBack(); return }
 
         // Screen dimming
         UIApplication.shared.isIdleTimerDisabled = true
 
         // Start AR Session
-        startStudio()
+        requestStart()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -457,14 +444,14 @@ class StudioViewController: UIViewController {
     }
     
     func updateState(isLimited: Bool) {
-        isRelocalizingMap = isLimited
+        self.isLimited = isLimited
     }
     
     // MARK: Action
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         guard !isTakingSnapshot else { return }
-        guard !isRelocalizingMap else { return }
+        guard !isLimited else { return }
         
         let point = sender.location(in: arView)
         
@@ -594,9 +581,7 @@ class StudioViewController: UIViewController {
     func optionButtonAction(option: ReminderType) -> () -> () {
         let action = { [weak self] in
             self?.selectedOption = option
-            self?.actionView.text = option.name
-            self?.actionView.symbol = option.symbol
-            self?.showActionView()
+            self?.showActionView(symbol: option.symbol, text: option.name, duration: 1)
         }
         return action
     }
@@ -623,15 +608,17 @@ class StudioViewController: UIViewController {
     
     // MARK: Animation
     
-    func showActionView() {
+    func showActionView(symbol: String, text: String, duration: TimeInterval) {
+        actionView.update(symbol: symbol, text: text)
+        
         let fadeIn = { [unowned self] in self.actionView.alpha = 1 }
         let fadeOut = { [unowned self] in self.actionView.alpha = 0 }
         
-        let fadeInAnimator = UIViewPropertyAnimator(duration: 0.25, curve: .easeInOut, animations: fadeIn)
-        let fadeOutAnimator = UIViewPropertyAnimator(duration: 0.25, curve: .easeInOut, animations: fadeOut)
+        let fadeInAnimator = UIViewPropertyAnimator(duration: duration / 4, curve: .easeInOut, animations: fadeIn)
+        let fadeOutAnimator = UIViewPropertyAnimator(duration: duration / 4, curve: .easeInOut, animations: fadeOut)
 
         fadeInAnimator.startAnimation()
-        fadeInAnimator.addCompletion { _ in fadeOutAnimator.startAnimation(afterDelay: 0.5) }
+        fadeInAnimator.addCompletion { _ in fadeOutAnimator.startAnimation(afterDelay: duration / 2) }
     }
     
     // MARK: Navigation
@@ -652,8 +639,35 @@ class StudioViewController: UIViewController {
                     self.present(picker, animated: true, completion: nil)
                 }
             default:
-                self.showActionView()
+                DispatchQueue.main.async {
+                    self.showActionView(symbol: "exclamationmark.triangle.fill", text: "Sem acesso a fotos", duration: 2)
+                }
             }
+        }
+    }
+    
+    // MARK: Request
+    
+    func requestStart() {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            startStudio()
+        case .denied:
+            showActionView(symbol: "exclamationmark.triangle.fill", text: "Sem acesso à camera", duration: 2)
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                if granted {
+                    DispatchQueue.main.async {
+                        self.startStudio()
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.showActionView(symbol: "exclamationmark.triangle.fill", text: "Sem acesso à camera", duration: 2)
+                    }
+                }
+            }
+        default:
+            routeBack()
         }
     }
     

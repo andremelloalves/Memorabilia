@@ -19,7 +19,7 @@ extension StudioViewController: ARSessionDelegate {
         infoView.update(title: state.description, info: state.feedback)
         
         switch (state, status) {
-        case (.notAvailable, _), (.limited, _), (_, .notAvailable), (_, .limited):
+        case (.notAvailable, _), (.limited, _):
             updateState(isLimited: true)
         default:
             updateState(isLimited: false)

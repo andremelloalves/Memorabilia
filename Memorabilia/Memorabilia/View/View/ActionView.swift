@@ -12,18 +12,6 @@ class ActionView: UIView {
     
     // MARK: Properties
     
-    var symbol: String = "" {
-        didSet {
-            imageView.image = UIImage(systemName: symbol)
-        }
-    }
-    
-    var text: String = ""{
-        didSet {
-            textLabel.text = text
-        }
-    }
-    
     let imageView: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = .clear
@@ -91,19 +79,26 @@ class ActionView: UIView {
         setupConstraints()
     }
     
+    // MARK: Update
+    
+    func update(symbol: String, text: String) {
+        imageView.image = UIImage(systemName: symbol)
+        textLabel.text = text
+    }
+    
     // MARK: Constraints
     
     private func setupConstraints() {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             // Self
-            heightAnchor.constraint(equalToConstant: 200),
-            widthAnchor.constraint(equalToConstant: 200),
+            heightAnchor.constraint(equalToConstant: 250),
+            widthAnchor.constraint(equalToConstant: 250),
             
             // Title
-            imageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            imageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
-            imageView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
+            imageView.topAnchor.constraint(equalTo: topAnchor, constant: 48),
+            imageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 48),
+            imageView.rightAnchor.constraint(equalTo: rightAnchor, constant: -48),
             
             // Info
             textLabel.heightAnchor.constraint(equalToConstant: 22),

@@ -150,7 +150,7 @@ class CreateViewController: UIViewController, MenuPage {
             nameInput?.text = nil
             coverInput?.update(title: "Escolha uma foto de capa aqui", image: nil)
         } else {
-            // Alert
+            menu?.showActionView(symbol: "text.badge.xmark", text: "Complete as informações", duration: 1.5)
         }
     }
 
@@ -170,18 +170,20 @@ class CreateViewController: UIViewController, MenuPage {
                     self.menu?.present(self.photoPicker, animated: true, completion: nil)
                 }
             default:
-//                self.showActionView()
-                break
+                DispatchQueue.main.async {
+                    self.menu?.showActionView(symbol: "exclamationmark.triangle.fill", text: "Sem acesso a fotos", duration: 2)
+                }
             }
         }
     }
     
     private func routeToStudio(name: String, cover: Data) {
-        if ARWorldTrackingConfiguration.isSupported {
-            router?.routeToStudioViewController(name: name, cover: cover)
-        } else {
-//            self.showActionView()
+        guard ARWorldTrackingConfiguration.isSupported else {
+            menu?.showActionView(symbol: "exclamationmark.triangle.fill", text: "AR indisponível", duration: 2)
+            return
         }
+        
+        router?.routeToStudioViewController(name: name, cover: cover)
     }
     
 }
