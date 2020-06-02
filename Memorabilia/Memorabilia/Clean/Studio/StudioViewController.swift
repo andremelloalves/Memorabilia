@@ -445,6 +445,11 @@ class StudioViewController: UIViewController {
     
     func updateState(isLimited: Bool) {
         self.isLimited = isLimited
+        if isLimited {
+            arView.debugOptions = [.showFeaturePoints]
+        } else {
+            arView.debugOptions = []
+        }
     }
     
     // MARK: Action
@@ -651,14 +656,14 @@ class StudioViewController: UIViewController {
     func requestStart() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
-            startStudio()
+            startSession()
         case .denied:
             showActionView(symbol: "exclamationmark.triangle.fill", text: "Sem acesso à camera", duration: 2)
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { granted in
                 if granted {
                     DispatchQueue.main.async {
-                        self.startStudio()
+                        self.startSession()
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -673,8 +678,12 @@ class StudioViewController: UIViewController {
     
     // MARK: AR
     
-    func startStudio() {
-        arView.session.run(worldTrackingConfiguration, options: [.resetTracking, .removeExistingAnchors])
+    func startSession(shouldRestart: Bool = false) {
+        var options: ARSession.RunOptions = []
+        if shouldRestart {
+            options.insert([.resetTracking, .removeExistingAnchors])
+        }
+        arView.session.run(worldTrackingConfiguration, options: options)
     }
     
     func addReminderAnchor(with raycast: ARRaycastResult) {

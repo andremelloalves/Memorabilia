@@ -58,7 +58,7 @@ extension StudioViewController: ARSessionDelegate {
             let alertController = UIAlertController(title: "The AR session failed.", message: errorMessage, preferredStyle: .alert)
             let restartAction = UIAlertAction(title: "Restart Session", style: .default) { _ in
                 alertController.dismiss(animated: true, completion: nil)
-                self.startStudio()
+                self.startSession(shouldRestart: true)
             }
             alertController.addAction(restartAction)
             self.present(alertController, animated: true, completion: nil)

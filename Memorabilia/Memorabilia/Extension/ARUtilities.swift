@@ -61,7 +61,7 @@ extension ARCamera.TrackingState: CustomStringConvertible {
         case .limited(.excessiveMotion):
             return "Mova o dispositivo mais lentamente."
         case .limited(.relocalizing):
-            return "Mova o dispositivo para a perspectiva da imagem."
+            return "Mova o dispositivo para uma área já mapeada."
         default:
             return ""
         }

@@ -19,6 +19,8 @@ extension ExperienceViewController: ARSessionDelegate {
         switch state {
         case .normal:
             infoView.update(title: "Explorando", info: "Mapeie o ambiente e interaja com os lembretes AR.")
+        case .limited(.relocalizing):
+            infoView.update(title: "Localizando", info: "Mova o dispositivo para a perspectiva da imagem.")
         default:
             infoView.update(title: state.description, info: state.feedback)
         }
@@ -63,7 +65,7 @@ extension ExperienceViewController: ARSessionDelegate {
             let alertController = UIAlertController(title: "The AR session failed.", message: errorMessage, preferredStyle: .alert)
             let restartAction = UIAlertAction(title: "Restart Session", style: .default) { _ in
                 alertController.dismiss(animated: true, completion: nil)
-                self.startExperience()
+                self.startSession(shouldRestart: true)
             }
             alertController.addAction(restartAction)
             self.present(alertController, animated: true, completion: nil)

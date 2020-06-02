@@ -275,7 +275,7 @@ class ExperienceViewController: UIViewController {
     }
     
     @objc func restartButtonAction() {
-        startExperience()
+        startSession(shouldRestart: true)
     }
     
     // MARK: Animation
@@ -330,8 +330,12 @@ class ExperienceViewController: UIViewController {
     
     // MARK: AR
     
-    func startExperience() {
-        arView.session.run(worldTrackingConfiguration, options: [.resetTracking, .removeExistingAnchors])
+    func startSession(shouldRestart: Bool = false) {
+        var options: ARSession.RunOptions = []
+        if shouldRestart {
+            options.insert([.resetTracking, .removeExistingAnchors])
+        }
+        arView.session.run(worldTrackingConfiguration, options: options)
     }
 
 }
@@ -380,7 +384,7 @@ extension ExperienceViewController: ExperienceViewInput {
             interactor?.createReminders(reminders)
             interactor?.readVisualReminders()
             
-            startExperience()
+            startSession(shouldRestart: true)
         } catch let error {
             print(error.localizedDescription)
             routeBack()
