@@ -112,9 +112,9 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
         guard let db = db else { return }
         
         firstly {
-            db.deleteMemoryTransforms(id: id)
-        }.then {
             db.deleteMemory(id: id)
+        }.done {
+            self.readMemories(shouldUpdate: true)
         }.catch { error in
             print(error.localizedDescription)
         }
@@ -126,7 +126,7 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
 extension MemoriesInteractor: DatabaseObserver {
     
     func notify() {
-        readMemories(shouldUpdate: true)
+        
     }
     
 }

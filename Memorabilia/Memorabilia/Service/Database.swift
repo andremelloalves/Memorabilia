@@ -170,22 +170,12 @@ class Database {
     func deleteMemory(id: String) -> Promise<Void> {
         return Promise { seal in
             do {
+                let memory = try realm.get(type: MemoryRealm.self, with: id)
+                try memory.transforms.forEach({ try realm.delete(type: TransformRealm.self, with: $0.uid) })
                 try realm.delete(type: MemoryRealm.self, with: id)
                 try documents.delete(file: id, folder: .experiences)
                 try documents.delete(file: id, folder: .snapshots)
                 try documents.delete(file: id, folder: .photos)
-                seal.fulfill(())
-            } catch let error {
-                seal.reject(error)
-            }
-        }
-    }
-    
-    func deleteMemoryTransforms(id: String) -> Promise<Void> {
-        return Promise { seal in
-            do {
-                let memory = try realm.get(type: MemoryRealm.self, with: id)
-                try memory.transforms.forEach({ try realm.delete(type: TransformRealm.self, with: $0.uid) })
                 seal.fulfill(())
             } catch let error {
                 seal.reject(error)
