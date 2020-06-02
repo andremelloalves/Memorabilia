@@ -111,6 +111,8 @@ extension StudioViewController: ARSCNViewDelegate {
         text.firstMaterial?.isDoubleSided = true
         text.firstMaterial?.diffuse.contents = UIColor.white
         let node = SCNNode(geometry: text)
+        let action = SCNAction.scale(by: 0.01, duration: 0)
+        node.runAction(action)
         
         return node
     }

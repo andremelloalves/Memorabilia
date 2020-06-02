@@ -13,7 +13,7 @@ protocol StudioInteractorInput {
     
     // Create
 
-    func createMemory(world: Data, snapshot: Data)
+    func createMemory(world: Data, snapshot: Data, transforms: [Transform])
     
     func createReminder(identifier: String, type: ReminderType, name: String?, url: URL?)
 
@@ -84,11 +84,11 @@ class StudioInteractor: StudioInteractorInput, StudioInteractorData {
     
     // Create
     
-    func createMemory(world: Data, snapshot: Data) {
+    func createMemory(world: Data, snapshot: Data, transforms: [Transform]) {
         guard let db = db, let name = name, let cover = cover else { return }
         
         firstly {
-            db.createMemory(name: name, world: world, snapshot: snapshot, cover: cover)
+            db.createMemory(name: name, world: world, snapshot: snapshot, cover: cover, transforms: transforms)
         }.done { _ in
             print("Memory saved successfully!")
         }.catch { error in

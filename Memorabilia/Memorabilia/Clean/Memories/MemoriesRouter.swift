@@ -50,7 +50,7 @@ class MemoriesRouter: MemoriesRouterInput, MemoriesRouterOutput {
     
     private func passDataExperienceViewController(source: MemoriesInteractorData, destination: inout ExperienceInteractorData, memoryID: String) {
         destination.db = source.db
-        destination.memory = source.memories?.first { $0.uid == memoryID }
+        destination.memory = source.memories?.first { $0.identifier == memoryID }
     }
     
 }

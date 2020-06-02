@@ -55,8 +55,12 @@ class Database {
     
     // MARK: Create
     
-    func createMemory(name: String, world: Data, snapshot: Data, cover: Data) -> Promise<Void> {
-        let memory = Memory(name: name)
+    func createMemory(name: String, world: Data, snapshot: Data, cover: Data, transforms: [Transform]) -> Promise<Void> {
+        let transforms = transforms.map({ TransformRealm(id: $0.identifier,
+                                                         scale: $0.scale, pitch: $0.pitch,
+                                                         yaw: $0.yaw,
+                                                         roll: $0.roll) })
+        let memory = MemoryRealm(name: name, transforms: transforms)
         return Promise { seal in
             do {
                 try realm.createUpdate(object: memory)
@@ -89,8 +93,8 @@ class Database {
         return Promise { seal in
             do {
                 let sort = NSSortDescriptor(key: "creationDate", ascending: false)
-                let results: Results<Memory> = try realm.query(with: nil, sortDescriptors: [sort])
-                let memories: [Memory] = Array(results)
+                let results: Results<MemoryRealm> = try realm.query(with: nil, sortDescriptors: [sort])
+                let memories: [Memory] = Array(results.map({ Memory(identifier: $0.uid, name: $0.name, creationDate: $0.creationDate) }))
                 seal.fulfill(memories)
             } catch let error {
                 seal.reject(error)
@@ -114,6 +118,23 @@ class Database {
             do {
                 let photo = try documents.read(file: id, folder: .photos)
                 seal.fulfill(photo)
+            } catch let error {
+                seal.reject(error)
+            }
+        }
+    }
+    
+    func readMemoryTransforms(id: String) -> Promise<[Transform]> {
+        return Promise { seal in
+            do {
+                let memory = try realm.get(type: MemoryRealm.self, with: id)
+                let results = memory.transforms.map({ Transform(identifier: $0.uid,
+                                                                scale: $0.scale,
+                                                                pitch: $0.pitch,
+                                                                yaw: $0.yaw,
+                                                                roll: $0.roll) })
+                let transforms = Array(results)
+                seal.fulfill(transforms)
             } catch let error {
                 seal.reject(error)
             }
@@ -149,10 +170,22 @@ class Database {
     func deleteMemory(id: String) -> Promise<Void> {
         return Promise { seal in
             do {
-                try realm.delete(type: Memory.self, with: id)
+                try realm.delete(type: MemoryRealm.self, with: id)
                 try documents.delete(file: id, folder: .experiences)
                 try documents.delete(file: id, folder: .snapshots)
                 try documents.delete(file: id, folder: .photos)
+                seal.fulfill(())
+            } catch let error {
+                seal.reject(error)
+            }
+        }
+    }
+    
+    func deleteMemoryTransforms(id: String) -> Promise<Void> {
+        return Promise { seal in
+            do {
+                let memory = try realm.get(type: MemoryRealm.self, with: id)
+                try memory.transforms.forEach({ try realm.delete(type: TransformRealm.self, with: $0.uid) })
                 seal.fulfill(())
             } catch let error {
                 seal.reject(error)

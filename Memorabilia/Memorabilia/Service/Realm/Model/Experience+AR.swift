@@ -80,6 +80,19 @@ extension ExperienceViewController: ARSCNViewDelegate {
         return renderNode(for: anchor)
     }
     
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard let transform = interactor?.readTransform(identifier: anchor.identifier.uuidString) else { return }
+        
+        let scale = SCNAction.scale(to: CGFloat(transform.scale), duration: 1)
+        node.runAction(scale)
+
+        let rotation = SCNAction.rotateTo(x: CGFloat(transform.pitch),
+                                          y: CGFloat(transform.yaw),
+                                          z: CGFloat(transform.roll),
+                                          duration: 1)
+        node.runAction(rotation)
+    }
+    
     func renderNode(for anchor: ARAnchor) -> SCNNode? {
         guard let reminder = anchor as? ReminderAnchor else { return nil }
         guard reminder.name != nil else { return renderDefaultNode() }

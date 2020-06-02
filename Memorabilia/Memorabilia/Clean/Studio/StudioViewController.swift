@@ -732,17 +732,30 @@ class StudioViewController: UIViewController {
         arView.session.getCurrentWorldMap { arWorld, error in
             guard let worldMap = arWorld else { return }
             
+            let transforms = self.getTransforms(worldMap: worldMap)
+            
             guard let snapshotAnchor = SnapshotAnchor(from: self.arView) else { return }
             worldMap.anchors.append(snapshotAnchor)
             
-            self.saveMemory(worldMap: worldMap, snapshot: snapshotAnchor.snapshot)
+            self.saveMemory(worldMap: worldMap, snapshot: snapshotAnchor.snapshot, transforms: transforms)
         }
     }
     
-    func saveMemory(worldMap: ARWorldMap, snapshot: Data) {
+    func getTransforms(worldMap: ARWorldMap) -> [Transform] {
+        worldMap.anchors.compactMap { anchor -> Transform? in
+            guard let node = self.arView.node(for: anchor) else { return nil }
+            let scale = node.scale.x
+            let pitch = node.eulerAngles.x
+            let yaw = node.eulerAngles.y
+            let roll = node.eulerAngles.z
+            return Transform(identifier: anchor.identifier.uuidString, scale: scale, pitch: pitch, yaw: yaw, roll: roll)
+        }
+    }
+    
+    func saveMemory(worldMap: ARWorldMap, snapshot: Data, transforms: [Transform]) {
         do {
             let world = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
-            self.interactor?.createMemory(world: world, snapshot: snapshot)
+            self.interactor?.createMemory(world: world, snapshot: snapshot, transforms: transforms)
             self.routeBack()
         } catch let error {
             print(error)

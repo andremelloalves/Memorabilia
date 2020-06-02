@@ -96,7 +96,7 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
         }.get { memories in
             self.memories = memories
         }.map {
-            $0.map { MemoriesEntity.Present(uid: $0.uid, name: $0.name, creationDate: $0.creationDate) }
+            $0.map { MemoriesEntity.Present(uid: $0.identifier, name: $0.name, creationDate: $0.creationDate) }
         }.done(on: .global(qos: .userInitiated)) { memories in
             self.presenter?.present(memories: memories, shouldUpdate: shouldUpdate)
         }.catch { error in
@@ -112,6 +112,8 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
         guard let db = db else { return }
         
         firstly {
+            db.deleteMemoryTransforms(id: id)
+        }.then {
             db.deleteMemory(id: id)
         }.catch { error in
             print(error.localizedDescription)

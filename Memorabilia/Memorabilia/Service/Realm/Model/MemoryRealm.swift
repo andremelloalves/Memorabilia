@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class Memory: Object {
+class MemoryRealm: Object {
     
     // MARK: Properties
     
@@ -19,13 +19,16 @@ class Memory: Object {
     
     @objc dynamic var creationDate: Date = Date()
     
+    let transforms: List<TransformRealm> = List<TransformRealm>()
+    
     // MARK: Initializers
     
-    convenience init(name: String) {
+    convenience init(name: String, transforms: [TransformRealm]) {
         self.init()
         self.uid = UUID().uuidString
         self.name = name
         self.creationDate = Date()
+        self.transforms.append(objectsIn: transforms)
     }
     
     // MARK: Realm

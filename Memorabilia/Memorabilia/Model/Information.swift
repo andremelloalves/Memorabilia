@@ -10,7 +10,7 @@ import Foundation
 
 struct Information: Decodable {
     
-    var uid: String
+    var identifier: String
     
     var type: InformationType
     

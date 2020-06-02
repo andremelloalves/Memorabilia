@@ -24,6 +24,8 @@ protocol ExperienceInteractorInput {
     
     func readReminder(identifier: String) -> Reminder?
     
+    func readTransform(identifier: String) -> Transform?
+    
     func readVisualReminders()
 
     // Update
@@ -64,6 +66,8 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
     var memory: Memory?
     
     var reminders: [Reminder] = []
+    
+    var transforms: [Transform] = []
     
     // MARK: Initializers
     
@@ -108,7 +112,7 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
         guard let db = db, let memory = memory else { return }
         
         firstly {
-            db.readMemorySnapshot(id: memory.uid)
+            db.readMemorySnapshot(id: memory.identifier)
         }.done { photo in
             self.presenter?.presentSnapshot(photo)
         }.catch { error in
@@ -120,9 +124,13 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
         guard let db = db, let memory = memory else { return }
         
         firstly {
-            db.readARWorld(id: memory.uid)
+            db.readARWorld(id: memory.identifier)
         }.done { world in
             self.presenter?.presentARWorld(world)
+        }.then {
+            db.readMemoryTransforms(id: memory.identifier)
+        }.get { transforms in
+            self.transforms = transforms
         }.catch { error in
             print(error.localizedDescription)
         }
@@ -130,6 +138,10 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
     
     func readReminder(identifier: String) -> Reminder? {
         reminders.first(where: { $0.identifier == identifier })
+    }
+    
+    func readTransform(identifier: String) -> Transform? {
+        transforms.first(where: { $0.identifier == identifier })
     }
     
     func readVisualReminders() {
