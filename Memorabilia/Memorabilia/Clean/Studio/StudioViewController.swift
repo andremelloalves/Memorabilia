@@ -176,6 +176,10 @@ class StudioViewController: UIViewController {
     
     var selectedReminder: ReminderAnchor?
     
+    var canAddReminder: Bool {
+        interactor?.readReminderCount() ?? .max < 7
+    }
+    
     var canTakeSnapshot: Bool {
         interactor?.readReminderCount() ?? 0 > 0
     }
@@ -455,8 +459,7 @@ class StudioViewController: UIViewController {
     // MARK: Action
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        guard !isTakingSnapshot else { return }
-        guard !isLimited else { return }
+        guard !isTakingSnapshot, !isLimited else { return }
         
         let point = sender.location(in: arView)
         
@@ -465,10 +468,16 @@ class StudioViewController: UIViewController {
             selectedReminder = anchor
             showEditing()
         } else {
-            guard !isEditingReminder else { return }
-            guard let query = arView.raycastQuery(from: point, allowing: .estimatedPlane, alignment: .any) else { return }
-            guard let raycast = arView.session.raycast(query).first else { return }
-            addReminderAnchor(with: raycast)
+            guard !isEditingReminder,
+                let query = arView.raycastQuery(from: point, allowing: .estimatedPlane, alignment: .any),
+                let raycast = arView.session.raycast(query).first
+                else { return }
+            
+            if canAddReminder {
+                addReminderAnchor(with: raycast)
+            } else {
+                showActionView(symbol: "nosign", text: "Limite de lembretes", duration: 2)
+            }
         }
     }
     
