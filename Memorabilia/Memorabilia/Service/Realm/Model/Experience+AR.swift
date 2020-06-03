@@ -164,7 +164,7 @@ extension ExperienceViewController: ARSCNViewDelegate {
             let aspectRatio = reminder.aspectRatio
             else { return renderLoadingNode() }
         
-        let plane = SCNPlane(width: 0.3, height: 0.3 * aspectRatio)
+        let plane = SCNPlane(width: 0.3 * aspectRatio, height: 0.3)
         plane.firstMaterial!.diffuse.contents = player
         let node = SCNNode(geometry: plane)
         

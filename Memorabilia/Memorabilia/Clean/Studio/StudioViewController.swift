@@ -758,7 +758,7 @@ class StudioViewController: UIViewController {
             self.interactor?.createMemory(world: world, snapshot: snapshot, transforms: transforms)
             self.routeBack()
         } catch let error {
-            print(error)
+            print(error.localizedDescription)
         }
     }
     

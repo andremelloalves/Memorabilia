@@ -78,14 +78,14 @@ struct VideoReminder: Reminder {
         
         guard let url = url else { return }
         self.player = AVPlayer(url: url)
-        self.aspectRatio = AVAsset(url: url).aspectRatio
+        self.aspectRatio = player?.currentItem?.asset.tracks(withMediaType: .video).first?.naturalSize.aspectRatio
     }
     
-    init(identifier: String, name: String?, item: AVPlayerItem?) {
+    init(identifier: String, name: String?, playerItem: AVPlayerItem?) {
         self.identifier = identifier
         self.name = name
-        self.player = AVPlayer(playerItem: item)
-        self.aspectRatio = item?.asset.aspectRatio
+        self.player = AVPlayer(playerItem: playerItem)
+        self.aspectRatio = playerItem?.asset.tracks(withMediaType: .video).first?.naturalSize.aspectRatio
     }
     
 }

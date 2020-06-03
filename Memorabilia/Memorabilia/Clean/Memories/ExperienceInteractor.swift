@@ -97,8 +97,8 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
             let data = media as? Data
             reminder = PhotoReminder(identifier: identifier, name: name, data: data)
         case .video:
-            let item = media as? AVPlayerItem
-            reminder = VideoReminder(identifier: identifier, name: name, item: item)
+            let playerItem = media as? AVPlayerItem
+            reminder = VideoReminder(identifier: identifier, name: name, playerItem: playerItem)
         case .audio:
             reminder = AudioReminder(identifier: identifier, name: name)
         }

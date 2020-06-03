@@ -80,7 +80,7 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
         }.done(on: .global(qos: .userInitiated)) { photo in
             self.presenter?.presentMemorySnapshot(photo, with: id, for: index)
         }.catch { error in
-            print(error)
+            print(error.localizedDescription)
         }
     }
     

@@ -18,4 +18,8 @@ extension CGSize {
         return CGSize(width: left.width - right.width, height: left.height - right.height)
     }
     
+    var aspectRatio: CGFloat {
+        width / height
+    }
+    
 }

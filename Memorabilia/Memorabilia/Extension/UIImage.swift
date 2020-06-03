@@ -24,15 +24,14 @@ extension UIImage.Orientation {
     
     init(cg: CGImagePropertyOrientation) {
         switch cg {
-        case .up:self = .up
-        case .upMirrored:self = .upMirrored
-        case .down:self = .down
-        case .downMirrored:self = .downMirrored
-        case .left:self = .left
-        case .leftMirrored:self = .leftMirrored
-        case .right:self = .right
-        case .rightMirrored:
-            self = .rightMirrored
+            case .up: self = .up
+            case .upMirrored: self = .upMirrored
+            case .down: self = .down
+            case .downMirrored: self = .downMirrored
+            case .left: self = .left
+            case .leftMirrored: self = .leftMirrored
+            case .right: self = .right
+            case .rightMirrored: self = .rightMirrored
         }
     }
     
@@ -42,31 +41,25 @@ extension CGImagePropertyOrientation {
     
     init(ui: UIImage.Orientation) {
         switch ui {
-        case .up: self = .up
-        case .upMirrored: self = .upMirrored
-        case .down: self = .down
-        case .downMirrored: self = .downMirrored
-        case .left: self = .left
-        case .leftMirrored: self = .leftMirrored
-        case .right: self = .right
-        case .rightMirrored: self = .rightMirrored
-        @unknown default:
-            fatalError()
+            case .up: self = .up
+            case .upMirrored: self = .upMirrored
+            case .down: self = .down
+            case .downMirrored: self = .downMirrored
+            case .left: self = .left
+            case .leftMirrored: self = .leftMirrored
+            case .right: self = .right
+            case .rightMirrored: self = .rightMirrored
+            @unknown default: fatalError()
         }
     }
     
     init(device: UIDeviceOrientation) {
         switch device {
-        case .portrait:
-            self = .right
-        case .portraitUpsideDown:
-            self = .left
-        case .landscapeLeft:
-            self = .up
-        case .landscapeRight:
-            self = .down
-        default:
-            self = .right
+            case .portrait: self = .right
+            case .portraitUpsideDown: self = .left
+            case .landscapeLeft: self = .up
+            case .landscapeRight: self = .down
+            default: self = .right
         }
     }
     
