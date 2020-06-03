@@ -12,9 +12,9 @@ protocol SettingsViewInput: class {
 
     // Update
     
-    func loadSections(sections: [SettingsSection])
+    func load(_ sections: [SettingsSection])
     
-    func reloadSections(changes: SectionChanges, sections: [SettingsSection])
+    func reload(_ sections: [SettingsSection], with changes: SectionChanges)
     
 }
 
@@ -144,13 +144,13 @@ extension SettingsViewController: SettingsViewInput {
     
     // Update
     
-    func loadSections(sections: [SettingsSection]) {
+    func load(_ sections: [SettingsSection]) {
         self.sections = sections
         
         table.reloadData()
     }
     
-    func reloadSections(changes: SectionChanges, sections: [SettingsSection]) {
+    func reload(_ sections: [SettingsSection], with changes: SectionChanges) {
         self.sections = sections
         
         table.performBatchUpdates({

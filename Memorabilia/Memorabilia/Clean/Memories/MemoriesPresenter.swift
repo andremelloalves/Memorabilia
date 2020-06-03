@@ -12,9 +12,9 @@ protocol MemoriesPresenterInput {
     
     // Present
     
-    func presentMemorySnapshot(_ data: Data, with id: String, for index: IndexPath)
+    func present(_ snapshot: Data, with id: String, for index: IndexPath)
     
-    func present(memories: [MemoriesEntity.Present], shouldUpdate: Bool)
+    func present(_ memories: [MemoriesEntity.Present], shouldUpdate: Bool)
     
 }
 
@@ -30,13 +30,13 @@ class MemoriesPresenter: MemoriesPresenterInput {
     
     // MARK: Functions
     
-    func presentMemorySnapshot(_ data: Data, with id: String, for index: IndexPath) {
+    func present(_ snapshot: Data, with id: String, for index: IndexPath) {
         DispatchQueue.main.async {
-            self.viewController?.loadSnapshot(data, with: id, for: index)
+            self.viewController?.load(snapshot, with: id, for: index)
         }
     }
     
-    func present(memories: [MemoriesEntity.Present], shouldUpdate: Bool) {
+    func present(_ memories: [MemoriesEntity.Present], shouldUpdate: Bool) {
         var sections: [MemoriesSection] = []
         
         let formatter = DateFormatter()
@@ -75,7 +75,7 @@ class MemoriesPresenter: MemoriesPresenterInput {
             self.sections = sections
             
             DispatchQueue.main.async {
-                self.viewController?.loadSections(sections: sections)
+                self.viewController?.load(sections)
             }
         }
     }
@@ -88,7 +88,7 @@ class MemoriesPresenter: MemoriesPresenterInput {
         sections = newSections
         
         DispatchQueue.main.async {
-            self.viewController?.reloadSections(changes: changes, sections: newSections)
+            self.viewController?.reload(newSections, with: changes)
         }
     }
 

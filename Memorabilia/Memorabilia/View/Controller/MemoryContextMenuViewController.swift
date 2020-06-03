@@ -25,7 +25,7 @@ class MemoryContextMenuViewController: UIViewController {
         let label = UILabel()
         label.textColor = .white
         label.backgroundColor = .clear
-        label.font = UIFont.systemFont(ofSize: 34, weight: .bold)
+        label.font = .systemFont(ofSize: 34, weight: .bold)
         label.adjustsFontForContentSizeCategory = true
         label.adjustsFontSizeToFitWidth = false
         label.baselineAdjustment = .alignCenters
@@ -38,7 +38,7 @@ class MemoryContextMenuViewController: UIViewController {
         let label = UILabel()
         label.textColor = .white
         label.backgroundColor = .clear
-        label.font = UIFont.systemFont(ofSize: 23, weight: .semibold)
+        label.font = .systemFont(ofSize: 23, weight: .semibold)
         label.adjustsFontForContentSizeCategory = true
         label.adjustsFontSizeToFitWidth = false
         label.baselineAdjustment = .alignCenters
@@ -101,7 +101,7 @@ class MemoryContextMenuViewController: UIViewController {
         name.text = memory.name
         
         firstly {
-            App.session.db.readMemoryPhoto(id: memory.photoID)
+            App.session.db.readMemoryPhoto(with: memory.photoID)
         }.done { photo in
             self.cover.image = UIImage(data: photo)
         }.catch { error in

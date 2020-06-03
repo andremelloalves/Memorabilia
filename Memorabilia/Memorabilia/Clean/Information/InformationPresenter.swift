@@ -12,7 +12,7 @@ protocol InformationPresenterInput {
     
     // Present
     
-    func present(informations: [InformationEntity.Present], shouldUpdate: Bool)
+    func present(_ informations: [InformationEntity.Present], shouldUpdate: Bool)
     
 }
 
@@ -28,7 +28,7 @@ class InformationPresenter: InformationPresenterInput {
     
     // MARK: Functions
     
-    func present(informations: [InformationEntity.Present], shouldUpdate: Bool) {
+    func present(_ informations: [InformationEntity.Present], shouldUpdate: Bool) {
         var sections: [InformationSection] = []
         
         var informationItems: [InformationItem] = []
@@ -57,7 +57,7 @@ class InformationPresenter: InformationPresenterInput {
             self.sections = sections
             
             DispatchQueue.main.async {
-                self.viewController?.loadSections(sections: sections)
+                self.viewController?.load(sections)
             }
         }
     }
@@ -70,7 +70,7 @@ class InformationPresenter: InformationPresenterInput {
         sections = newSections
         
         DispatchQueue.main.async {
-            self.viewController?.reloadSections(changes: changes, sections: newSections)
+            self.viewController?.reload(newSections, with: changes)
         }
     }
 

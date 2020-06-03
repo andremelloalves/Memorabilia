@@ -12,11 +12,11 @@ protocol ExperiencePresenterInput {
     
     // Present
     
-    func presentSnapshot(_ data: Data)
+    func presentSnapshot(with data: Data)
     
-    func presentARWorld(_ world: Data)
+    func presentWorld(with data: Data)
     
-    func presentReminder(identifier: String)
+    func presentReminder(with identifier: String)
     
 }
 
@@ -30,16 +30,16 @@ class ExperiencePresenter: ExperiencePresenterInput {
     
     // MARK: Functions
     
-    func presentSnapshot(_ data: Data) {
-        viewController?.loadSnapshot(data)
+    func presentSnapshot(with data: Data) {
+        viewController?.loadSnapshot(with: data)
     }
     
-    func presentARWorld(_ world: Data) {
-        viewController?.loadARWorld(world)
+    func presentWorld(with data: Data) {
+        viewController?.loadWorld(with: data)
     }
     
-    func presentReminder(identifier: String) {
-        viewController?.reloadReminder(identifier: identifier)
+    func presentReminder(with identifier: String) {
+        viewController?.reloadReminder(with: identifier)
     }
     
 }

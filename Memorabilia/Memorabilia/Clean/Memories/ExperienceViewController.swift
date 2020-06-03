@@ -16,11 +16,11 @@ protocol ExperienceViewInput: class {
     
     // Update
     
-    func loadSnapshot(_ photo: Data)
+    func loadSnapshot(with data: Data)
     
-    func loadARWorld(_ world: Data)
+    func loadWorld(with data: Data)
     
-    func reloadReminder(identifier: String)
+    func reloadReminder(with identifier: String)
     
 }
 
@@ -220,7 +220,7 @@ class ExperienceViewController: UIViewController {
     
     func controlMediaPlayback(with identifier: String?, play: Bool = true) {
         guard let identifier = identifier else { return }
-        guard let reminder = interactor?.readReminder(identifier: identifier) else { return }
+        guard let reminder = interactor?.readReminder(with: identifier) else { return }
         
         if let video = reminder as? VideoReminder, let player = video.player {
             if player.timeControlStatus == .playing || !play {
@@ -308,14 +308,14 @@ class ExperienceViewController: UIViewController {
     func requestStart() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
-            interactor?.readARWorld()
+            interactor?.readWorld()
         case .denied:
             showActionView(symbol: "exclamationmark.triangle.fill", text: "Sem acesso à camera", duration: 2)
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { granted in
                 if granted {
                     DispatchQueue.main.async {
-                        self.interactor?.readARWorld()
+                        self.interactor?.readWorld()
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -363,26 +363,25 @@ extension ExperienceViewController: ExperienceViewInput {
     
     // Update
     
-    func loadSnapshot(_ photo: Data) {
-        snapshotView.image = UIImage(data: photo)
+    func loadSnapshot(with data: Data) {
+        snapshotView.image = UIImage(data: data)
     }
     
-    func loadARWorld(_ world: Data) {
+    func loadWorld(with data: Data) {
         do {
-            guard let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: world) else {
+            guard let world = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) else {
                 routeBack()
                 return
             }
             
-            var anchors = worldMap.anchors
+            var anchors = world.anchors
             anchors.removeAll(where: { $0 is SnapshotAnchor })
             
-            self.world = worldMap
+            self.world = world
             
             guard let reminderAnchors = anchors.filter({ $0.isMember(of: ReminderAnchor.self) }) as? [ReminderAnchor] else { return }
             let reminders = reminderAnchors.map({ ExperienceEntity.Fetch(identifier: $0.identifier.uuidString, type: $0.type, name: $0.name)})
-            interactor?.createReminders(reminders)
-            interactor?.readVisualReminders()
+            interactor?.create(reminders)
             
             startSession(shouldRestart: true)
         } catch let error {
@@ -391,7 +390,7 @@ extension ExperienceViewController: ExperienceViewInput {
         }
     }
     
-    func reloadReminder(identifier: String) {
+    func reloadReminder(with identifier: String) {
         guard !isLimited, let anchor = world?.anchors.first(where: { $0.identifier.uuidString == identifier }) else { return }
         
         arView.session.remove(anchor: anchor)

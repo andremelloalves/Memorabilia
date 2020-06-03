@@ -64,7 +64,7 @@ class SettingsInteractor: SettingsInteractorInput, SettingsInteractorData {
     // Read
     
     func read() {
-        presenter?.present(memories: [], shouldUpdate: false)
+        presenter?.present([], shouldUpdate: false)
     }
     
     // Update

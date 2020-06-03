@@ -29,7 +29,8 @@ extension MemoriesViewController: UICollectionViewDataSource {
             if let data = snapshotDataCache.object(forKey: NSString(string: memory.snapshotID)) {
                 cell.updateCover(data as Data)
             } else {
-                interactor?.readMemorySnapshot(id: memory.snapshotID, index: indexPath)
+                cell.activityIndicator.startAnimating()
+                interactor?.readSnapshot(with: memory.snapshotID, for: indexPath)
             }
             return cell
         }
@@ -88,7 +89,7 @@ extension MemoriesViewController: UICollectionViewDelegate {
         selectedMemory = memory
         
         let delete = UIAction(title: "Exluir memória", image: UIImage(systemName: "trash.fill"), attributes: .destructive) { _ in
-            self.interactor?.deleteMemory(id: memory.memoryID)
+            self.interactor?.deleteMemory(with: memory.memoryID)
             self.selectedMemory = nil
         }
         let menu = UIMenu(title: "", image: nil, children: [delete])

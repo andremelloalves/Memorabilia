@@ -14,9 +14,17 @@ class MemoryCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "Memory"
     
+    let activityIndicator: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .medium)
+        view.color = .label
+        view.hidesWhenStopped = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     let cover: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .clear
         view.clipsToBounds = true
         view.contentMode = .scaleAspectFill
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -43,6 +51,9 @@ class MemoryCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = 20
         clipsToBounds = true
         
+        // Activity indicator
+        addSubview(activityIndicator)
+        
         // Photo
         addSubview(cover)
         
@@ -54,6 +65,7 @@ class MemoryCollectionViewCell: UICollectionViewCell {
     
     public func updateCover(_ data: Data) {
         cover.image = UIImage(data: data)
+        activityIndicator.stopAnimating()
     }
     
     // MARK: Constraints
@@ -61,6 +73,12 @@ class MemoryCollectionViewCell: UICollectionViewCell {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             // Self
+            
+            // Activity indicator
+            activityIndicator.topAnchor.constraint(equalTo: topAnchor),
+            activityIndicator.leftAnchor.constraint(equalTo: leftAnchor),
+            activityIndicator.rightAnchor.constraint(equalTo: rightAnchor),
+            activityIndicator.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             // Cover
             cover.topAnchor.constraint(equalTo: topAnchor),

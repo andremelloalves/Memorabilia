@@ -12,9 +12,9 @@ protocol InformationViewInput: class {
 
     // Update
     
-    func loadSections(sections: [InformationSection])
+    func load(_ sections: [InformationSection])
     
-    func reloadSections(changes: SectionChanges, sections: [InformationSection])
+    func reload(_ sections: [InformationSection], with changes: SectionChanges)
     
 }
 
@@ -132,7 +132,7 @@ class InformationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        interactor?.readInformations()
+        interactor?.read()
     }
     
     // MARK: Action
@@ -174,13 +174,13 @@ extension InformationViewController: InformationViewInput {
     
     // Update
     
-    func loadSections(sections: [InformationSection]) {
+    func load(_ sections: [InformationSection]) {
         self.sections = sections
         
         collection.reloadData()
     }
     
-    func reloadSections(changes: SectionChanges, sections: [InformationSection]) {
+    func reload(_ sections: [InformationSection], with changes: SectionChanges) {
         self.sections = sections
         
         collection.performBatchUpdates({

@@ -14,11 +14,11 @@ protocol MemoriesViewInput: class {
 
     // Update
     
-    func loadSnapshot(_ photo: Data, with id: String, for index: IndexPath)
+    func load(_ snapshot: Data, with id: String, for index: IndexPath)
     
-    func loadSections(sections: [MemoriesSection])
+    func load(_ sections: [MemoriesSection])
     
-    func reloadSections(changes: SectionChanges, sections: [MemoriesSection])
+    func reload(_ sections: [MemoriesSection], with changes: SectionChanges)
     
 }
 
@@ -179,19 +179,19 @@ extension MemoriesViewController: MemoriesViewInput {
     
     // Update
     
-    func loadSnapshot(_ photo: Data, with id: String, for index: IndexPath) {
-        snapshotDataCache.setObject(photo as NSData, forKey: NSString(string: id))
+    func load(_ snapshot: Data, with id: String, for index: IndexPath) {
+        snapshotDataCache.setObject(snapshot as NSData, forKey: NSString(string: id))
         
         collection.reloadItems(at: [index])
     }
     
-    func loadSections(sections: [MemoriesSection]) {
+    func load(_ sections: [MemoriesSection]) {
         self.sections = sections
         
         collection.reloadData()
     }
     
-    func reloadSections(changes: SectionChanges, sections: [MemoriesSection]) {
+    func reload(_ sections: [MemoriesSection], with changes: SectionChanges) {
         self.sections = sections
         
         collection.performBatchUpdates({

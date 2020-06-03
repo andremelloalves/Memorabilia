@@ -81,7 +81,7 @@ extension ExperienceViewController: ARSCNViewDelegate {
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        guard let transform = interactor?.readTransform(identifier: anchor.identifier.uuidString) else { return }
+        guard let transform = interactor?.readTransform(with: anchor.identifier.uuidString) else { return }
         
         let scale = SCNAction.scale(to: CGFloat(transform.scale), duration: 1)
         node.runAction(scale)
@@ -131,7 +131,7 @@ extension ExperienceViewController: ARSCNViewDelegate {
     }
     
     func renderTextNode(_ anchor: ReminderAnchor) -> SCNNode? {
-        guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? TextReminder,
+        guard let reminder = interactor?.readReminder(with: anchor.identifier.uuidString) as? TextReminder,
             let message = reminder.name
             else { return renderLoadingNode() }
         
@@ -144,7 +144,7 @@ extension ExperienceViewController: ARSCNViewDelegate {
     }
     
     func renderPhotoNode(_ anchor: ReminderAnchor) -> SCNNode? {
-        guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? PhotoReminder,
+        guard let reminder = interactor?.readReminder(with: anchor.identifier.uuidString) as? PhotoReminder,
             let data = reminder.data,
             let image = UIImage(data: data)?.orientedImage
             else { return renderLoadingNode() }
@@ -159,7 +159,7 @@ extension ExperienceViewController: ARSCNViewDelegate {
     }
     
     func renderVideoNode(_ anchor: ReminderAnchor) -> SCNNode? {
-        guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? VideoReminder,
+        guard let reminder = interactor?.readReminder(with: anchor.identifier.uuidString) as? VideoReminder,
             let player = reminder.player,
             let aspectRatio = reminder.aspectRatio
             else { return renderLoadingNode() }

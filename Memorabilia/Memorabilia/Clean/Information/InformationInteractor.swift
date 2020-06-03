@@ -15,7 +15,7 @@ protocol InformationInteractorInput {
 
     // Read
     
-    func readInformations()
+    func read()
 
     // Update
 
@@ -72,21 +72,17 @@ class InformationInteractor: InformationInteractorInput, InformationInteractorDa
     
     // Read
     
-    func readInformations() {
-        readInformations(shouldUpdate: false)
-    }
-    
-    private func readInformations(shouldUpdate: Bool = false) {
+    func read() {
         guard let db = db, let type = type else { return }
         
         firstly {
-            db.readInformations(type: type)
+            db.readInformations(of: type)
         }.get { informations in
             self.informations = informations
         }.map {
             $0.map { InformationEntity.Present(uid: $0.identifier, title: $0.title, message: $0.message, photoID: $0.photoID) }
         }.done(on: .global(qos: .userInitiated)) { informations in
-            self.presenter?.present(informations: informations, shouldUpdate: shouldUpdate)
+            self.presenter?.present(informations, shouldUpdate: false)
         }.catch { error in
             print(error.localizedDescription)
         }

@@ -15,7 +15,7 @@ protocol MemoriesInteractorInput {
 
     // Read
     
-    func readMemorySnapshot(id: String, index: IndexPath)
+    func readSnapshot(with id: String, for index: IndexPath)
 
     func readMemories()
 
@@ -23,7 +23,7 @@ protocol MemoriesInteractorInput {
 
     // Delete
     
-    func deleteMemory(id: String)
+    func deleteMemory(with id: String)
     
 }
 
@@ -72,13 +72,13 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
     
     // Read
     
-    func readMemorySnapshot(id: String, index: IndexPath) {
+    func readSnapshot(with id: String, for index: IndexPath) {
         guard let db = db else { return }
         
         firstly {
-            db.readMemorySnapshot(id: id)
-        }.done(on: .global(qos: .userInitiated)) { photo in
-            self.presenter?.presentMemorySnapshot(photo, with: id, for: index)
+            db.readMemorySnapshot(with: id)
+        }.done(on: .global(qos: .userInitiated)) { snapshot in
+            self.presenter?.present(snapshot, with: id, for: index)
         }.catch { error in
             print(error.localizedDescription)
         }
@@ -98,7 +98,7 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
         }.map {
             $0.map { MemoriesEntity.Present(uid: $0.identifier, name: $0.name, creationDate: $0.creationDate) }
         }.done(on: .global(qos: .userInitiated)) { memories in
-            self.presenter?.present(memories: memories, shouldUpdate: shouldUpdate)
+            self.presenter?.present(memories, shouldUpdate: shouldUpdate)
         }.catch { error in
             print(error.localizedDescription)
         }
@@ -108,11 +108,11 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
     
     // Delete
     
-    func deleteMemory(id: String) {
+    func deleteMemory(with id: String) {
         guard let db = db else { return }
         
         firstly {
-            db.deleteMemory(id: id)
+            db.deleteMemory(with: id)
         }.done {
             self.readMemories(shouldUpdate: true)
         }.catch { error in

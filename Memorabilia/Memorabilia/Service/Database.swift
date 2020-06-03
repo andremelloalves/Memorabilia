@@ -76,7 +76,7 @@ class Database {
     
     // MARK: Read
     
-    func readInformations(type: InformationType) -> Promise<[Information]> {
+    func readInformations(of type: InformationType) -> Promise<[Information]> {
         return Promise { seal in
             do {
                 let url = Bundle.main.url(forResource: "InformationData", withExtension: "jscsrc")!
@@ -102,7 +102,7 @@ class Database {
         }
     }
     
-    func readMemorySnapshot(id: String) -> Promise<Data> {
+    func readMemorySnapshot(with id: String) -> Promise<Data> {
         return Promise { seal in
             do {
                 let snapshot = try documents.read(file: id, folder: .snapshots)
@@ -113,7 +113,7 @@ class Database {
         }
     }
     
-    func readMemoryPhoto(id: String) -> Promise<Data> {
+    func readMemoryPhoto(with id: String) -> Promise<Data> {
         return Promise { seal in
             do {
                 let photo = try documents.read(file: id, folder: .photos)
@@ -124,7 +124,7 @@ class Database {
         }
     }
     
-    func readMemoryTransforms(id: String) -> Promise<[Transform]> {
+    func readMemoryTransforms(with id: String) -> Promise<[Transform]> {
         return Promise { seal in
             do {
                 let memory = try realm.get(type: MemoryRealm.self, with: id)
@@ -141,7 +141,7 @@ class Database {
         }
     }
     
-    func readARWorld(id: String) -> Promise<Data> {
+    func readWorld(with id: String) -> Promise<Data> {
         return Promise { seal in
             do {
                 let world = try documents.read(file: id, folder: .experiences)
@@ -167,7 +167,7 @@ class Database {
     
     // MARK: Delete
     
-    func deleteMemory(id: String) -> Promise<Void> {
+    func deleteMemory(with id: String) -> Promise<Void> {
         return Promise { seal in
             do {
                 let memory = try realm.get(type: MemoryRealm.self, with: id)

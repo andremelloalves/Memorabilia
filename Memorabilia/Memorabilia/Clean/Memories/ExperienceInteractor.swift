@@ -14,19 +14,17 @@ protocol ExperienceInteractorInput {
     
     // Create
     
-    func createReminders(_ entities: [ExperienceEntity.Fetch])
+    func create(_ reminders: [ExperienceEntity.Fetch])
 
     // Read
     
     func readSnapshot()
     
-    func readARWorld()
+    func readWorld()
     
-    func readReminder(identifier: String) -> Reminder?
+    func readReminder(with identifier: String) -> Reminder?
     
-    func readTransform(identifier: String) -> Transform?
-    
-    func readVisualReminders()
+    func readTransform(with identifier: String) -> Transform?
 
     // Update
 
@@ -81,10 +79,12 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
     
     // Create
     
-    func createReminders(_ entities: [ExperienceEntity.Fetch]) {
-        for entity in entities {
-            createReminder(identifier: entity.identifier, type: entity.type, name: entity.name)
+    func create(_ reminders: [ExperienceEntity.Fetch]) {
+        for reminder in reminders {
+            createReminder(identifier: reminder.identifier, type: reminder.type, name: reminder.name)
         }
+        
+        readVisualReminders()
     }
     
     func createReminder(identifier: String, type: ReminderType, name: String?, media: Any? = nil) {
@@ -112,23 +112,23 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
         guard let db = db, let memory = memory else { return }
         
         firstly {
-            db.readMemorySnapshot(id: memory.identifier)
-        }.done { photo in
-            self.presenter?.presentSnapshot(photo)
+            db.readMemorySnapshot(with: memory.identifier)
+        }.done { data in
+            self.presenter?.presentSnapshot(with: data)
         }.catch { error in
             print(error.localizedDescription)
         }
     }
     
-    func readARWorld() {
+    func readWorld() {
         guard let db = db, let memory = memory else { return }
         
         firstly {
-            db.readARWorld(id: memory.identifier)
-        }.done { world in
-            self.presenter?.presentARWorld(world)
+            db.readWorld(with: memory.identifier)
+        }.done { data in
+            self.presenter?.presentWorld(with: data)
         }.then {
-            db.readMemoryTransforms(id: memory.identifier)
+            db.readMemoryTransforms(with: memory.identifier)
         }.get { transforms in
             self.transforms = transforms
         }.catch { error in
@@ -136,15 +136,15 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
         }
     }
     
-    func readReminder(identifier: String) -> Reminder? {
+    func readReminder(with identifier: String) -> Reminder? {
         reminders.first(where: { $0.identifier == identifier })
     }
     
-    func readTransform(identifier: String) -> Transform? {
+    func readTransform(with identifier: String) -> Transform? {
         transforms.first(where: { $0.identifier == identifier })
     }
     
-    func readVisualReminders() {
+    private func readVisualReminders() {
         let photoReminders = reminders.filter({ $0.type == .photo })
         let videoReminders = reminders.filter({ $0.type == .video })
         let visualReminders = photoReminders + videoReminders
@@ -175,7 +175,7 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
             self.deleteReminder(identifier: reminder.identifier)
             self.createReminder(identifier: reminder.identifier, type: reminder.type, name: reminder.name, media: image?.pngData())
             DispatchQueue.main.async {
-                self.presenter?.presentReminder(identifier: reminder.identifier)
+                self.presenter?.presentReminder(with: reminder.identifier)
             }
         }
     }
@@ -187,7 +187,7 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
             self.deleteReminder(identifier: reminder.identifier)
             self.createReminder(identifier: reminder.identifier, type: reminder.type, name: reminder.name, media: item)
             DispatchQueue.main.async {
-                self.presenter?.presentReminder(identifier: reminder.identifier)
+                self.presenter?.presentReminder(with: reminder.identifier)
             }
         }
     }

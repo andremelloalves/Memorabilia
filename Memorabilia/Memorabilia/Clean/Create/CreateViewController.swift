@@ -15,7 +15,7 @@ protocol CreateViewInput: class {
 
     // Update
     
-    func loadSections(sections: [CreateSection])
+    func load(_ sections: [CreateSection])
     
 }
 
@@ -211,7 +211,7 @@ extension CreateViewController: CreateViewInput {
     
     // Update
     
-    func loadSections(sections: [CreateSection]) {
+    func load(_ sections: [CreateSection]) {
         self.sections = sections
         
         table.reloadData()

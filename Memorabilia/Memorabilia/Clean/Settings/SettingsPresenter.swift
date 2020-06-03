@@ -12,7 +12,7 @@ protocol SettingsPresenterInput {
     
     // Present
     
-    func present(memories: [SettingsEntity.Present], shouldUpdate: Bool)
+    func present(_ settings: [SettingsEntity.Present], shouldUpdate: Bool)
     
 }
 
@@ -28,7 +28,7 @@ class SettingsPresenter: SettingsPresenterInput {
     
     // MARK: Functions
     
-    func present(memories: [SettingsEntity.Present], shouldUpdate: Bool) {
+    func present(_ settings: [SettingsEntity.Present], shouldUpdate: Bool) {
         var sections: [SettingsSection] = []
         
         let messageItem = SettingsEntity.Display.MessageItem(message: """
@@ -49,7 +49,7 @@ class SettingsPresenter: SettingsPresenterInput {
             self.sections = sections
             
             DispatchQueue.main.async {
-                self.viewController?.loadSections(sections: sections)
+                self.viewController?.load(sections)
             }
         }
     }
@@ -62,7 +62,7 @@ class SettingsPresenter: SettingsPresenterInput {
         sections = newSections
         
         DispatchQueue.main.async {
-            self.viewController?.reloadSections(changes: changes, sections: newSections)
+            self.viewController?.reload(newSections, with: changes)
         }
     }
 
