@@ -102,7 +102,7 @@ class InformationInteractor: InformationInteractorInput, InformationInteractorDa
 extension InformationInteractor: DatabaseObserver {
     
     func notify() {
-        readInformations(shouldUpdate: true)
+        
     }
     
 }

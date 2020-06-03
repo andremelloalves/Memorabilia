@@ -1,55 +1,55 @@
 [
     {
-        "uid": "1",
+        "identifier": "1",
         "type": "app",
         "title": "Memorabilia",
         "message": "Esse é um app de AR.",
         "photoID": ""
     },
     {
-        "uid": "2",
+        "identifier": "2",
         "type": "app",
         "title": "Memorabilia",
         "message": "É possível criar sua própria experiência AR.",
         "photoID": ""
     },
     {
-        "uid": "3",
+        "identifier": "3",
         "type": "create",
         "title": "Criação",
         "message": "Escolha um nome e selecione Criar em AR para ir para o estúdio de criação.",
         "photoID": ""
     },
     {
-        "uid": "4",
+        "identifier": "4",
         "type": "memories",
         "title": "Memória",
         "message": "Todas as suas memórias estão guardadas aqui.",
         "photoID": ""
     },
     {
-        "uid": "5",
+        "identifier": "5",
         "type": "memories",
         "title": "Memória",
         "message": "Toque e segure uma memória para ter opção de apagar.",
         "photoID": ""
     },
     {
-        "uid": "6",
+        "identifier": "6",
         "type": "studioCreation",
         "title": "Criação",
         "message": "Texto temporário.",
         "photoID": ""
     },
     {
-        "uid": "7",
+        "identifier": "7",
         "type": "studioEdition",
         "title": "Edição",
         "message": "Texto temporário.",
         "photoID": ""
     },
     {
-        "uid": "8",
+        "identifier": "8",
         "type": "studioPosition",
         "title": "Posicionamento",
         "message": "Texto temporário.",

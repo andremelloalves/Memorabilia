@@ -449,7 +449,11 @@ class StudioViewController: UIViewController {
     
     func updateState(isLimited: Bool) {
         self.isLimited = isLimited
-        if isLimited {
+    }
+    
+    func updateARSupport() {
+        guard let count = interactor?.readReminderCount() else { return }
+        if count <= 0 {
             arView.debugOptions = [.showFeaturePoints]
         } else {
             arView.debugOptions = []
@@ -475,6 +479,7 @@ class StudioViewController: UIViewController {
             
             if canAddReminder {
                 addReminderAnchor(with: raycast)
+                updateARSupport()
             } else {
                 showActionView(symbol: "nosign", text: "Limite de lembretes", duration: 2)
             }
@@ -565,6 +570,7 @@ class StudioViewController: UIViewController {
     @objc func deleteButtonAction() {
         removeReminderAnchor()
         showCreating()
+        updateARSupport()
     }
     
     @objc func mediaButtonAction() {
