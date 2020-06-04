@@ -430,7 +430,7 @@ class StudioViewController: UIViewController {
     
     func controlMediaPlayback(with identifier: String?, play: Bool = true) {
         guard let identifier = identifier else { return }
-        guard let reminder = interactor?.readReminder(identifier: identifier) else { return }
+        guard let reminder = interactor?.readReminder(with: identifier) else { return }
         
         if let video = reminder as? VideoReminder, let player = video.player {
             if player.timeControlStatus == .playing || !play {
@@ -513,8 +513,6 @@ class StudioViewController: UIViewController {
         }
     }
     
-    var angles: SCNVector3 = SCNVector3(0, 0, 0)
-    
     @objc func handlePan(_ sender: UIPanGestureRecognizer) {
         guard let anchor = selectedReminder else { return }
         guard let node = arView.node(for: anchor) else { return }
@@ -525,10 +523,7 @@ class StudioViewController: UIViewController {
         case .changed:
             let translation = sender.translation(in: sender.view)
             
-            let x = Float(translation.y) * .pi / 360
-            let y = Float(translation.x) * .pi / 360
-            
-            node.eulerAngles = SCNVector3(angles.x + x, angles.y + y, angles.z)
+            node.eulerAngles = orientationForReminder(with: anchor.identifier.uuidString, for: translation)
         default:
             return
         }
@@ -548,6 +543,30 @@ class StudioViewController: UIViewController {
         default:
             return
         }
+    }
+    
+    var angles: SCNVector3 = SCNVector3(0, 0, 0)
+    
+    private func orientationForReminder(with identifier: String, for translation: CGPoint) -> SCNVector3 {
+        let video = interactor?.readReminder(with: identifier) as? VideoReminder
+        let x, y: Float
+        
+        switch video?.orientation {
+        case .left:
+            x = Float(translation.x) * .pi / 360
+            y = Float(translation.y) * -.pi / 360
+        case .right:
+            x = Float(translation.x) * -.pi / 360
+            y = Float(translation.y) * .pi / 360
+        case .down:
+            x = Float(translation.y) * -.pi / 360
+            y = Float(translation.x) * -.pi / 360
+        default:
+            x = Float(translation.y) * .pi / 360
+            y = Float(translation.x) * .pi / 360
+        }
+        
+        return SCNVector3(angles.x + x, angles.y + y, angles.z)
     }
     
     @objc func infoButtonAction() {
@@ -704,7 +723,7 @@ class StudioViewController: UIViewController {
     func addReminderAnchor(with raycast: ARRaycastResult) {
         let anchor = ReminderAnchor(type: selectedOption, transform: raycast.worldTransform)
         
-        interactor?.createReminder(identifier: anchor.identifier.uuidString, type: selectedOption, name: nil, url: nil)
+        interactor?.createReminder(with: anchor.identifier.uuidString, type: selectedOption, name: nil, url: nil)
         arView.session.add(anchor: anchor)
         
         selectedReminder = anchor
@@ -718,7 +737,7 @@ class StudioViewController: UIViewController {
         interactor?.deleteReminder(identifier: reminder.identifier.uuidString)
         arView.session.remove(anchor: reminder)
         
-        interactor?.createReminder(identifier: anchor.identifier.uuidString, type: reminder.type, name: name, url: url)
+        interactor?.createReminder(with: anchor.identifier.uuidString, type: reminder.type, name: name, url: url)
         arView.session.add(anchor: anchor)
         
         selectedReminder = anchor

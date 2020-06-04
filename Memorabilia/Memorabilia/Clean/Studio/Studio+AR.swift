@@ -39,8 +39,6 @@ extension StudioViewController: ARSessionDelegate {
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
-//        infoView.info = error.localizedDescription
-        
         guard error is ARError else { return }
         
         let errorWithInfo = error as NSError
@@ -103,7 +101,7 @@ extension StudioViewController: ARSCNViewDelegate {
     }
     
     func renderTextNode(_ anchor: ReminderAnchor) -> SCNNode? {
-        guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? TextReminder,
+        guard let reminder = interactor?.readReminder(with: anchor.identifier.uuidString) as? TextReminder,
             let message = reminder.name
             else { return nil }
         
@@ -118,7 +116,7 @@ extension StudioViewController: ARSCNViewDelegate {
     }
     
     func renderPhotoNode(_ anchor: ReminderAnchor) -> SCNNode? {
-        guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? PhotoReminder,
+        guard let reminder = interactor?.readReminder(with: anchor.identifier.uuidString) as? PhotoReminder,
             let data = reminder.data,
             let image = UIImage(data: data)?.orientedImage
             else { return nil }
@@ -133,7 +131,7 @@ extension StudioViewController: ARSCNViewDelegate {
     }
     
     func renderVideoNode(_ anchor: ReminderAnchor) -> SCNNode? {
-        guard let reminder = interactor?.readReminder(identifier: anchor.identifier.uuidString) as? VideoReminder,
+        guard let reminder = interactor?.readReminder(with: anchor.identifier.uuidString) as? VideoReminder,
             let player = reminder.player,
             let aspectRatio = reminder.aspectRatio
             else { return nil }
@@ -141,6 +139,19 @@ extension StudioViewController: ARSCNViewDelegate {
         let plane = SCNPlane(width: 0.3 * aspectRatio, height: 0.3)
         plane.firstMaterial!.diffuse.contents = player
         let node = SCNNode(geometry: plane)
+        
+        let action: SCNAction
+        switch reminder.orientation {
+        case .left:
+            action = SCNAction.rotate(by: .pi / 2, around: SCNVector3(0, 0, 1), duration: 0)
+        case .right:
+            action = SCNAction.rotate(by: -.pi / 2, around: SCNVector3(0, 0, 1), duration: 0)
+        case .down:
+            action = SCNAction.rotate(by: .pi, around: SCNVector3(0, 0, 1), duration: 0)
+        default:
+            action = SCNAction.rotate(by: 0, around: SCNVector3(0, 0, 1), duration: 0)
+        }
+        node.runAction(action)
         
         return node
     }

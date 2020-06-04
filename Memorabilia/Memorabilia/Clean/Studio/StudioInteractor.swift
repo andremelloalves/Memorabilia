@@ -15,11 +15,11 @@ protocol StudioInteractorInput {
 
     func createMemory(world: Data, snapshot: Data, transforms: [Transform])
     
-    func createReminder(identifier: String, type: ReminderType, name: String?, url: URL?)
+    func createReminder(with identifier: String, type: ReminderType, name: String?, url: URL?)
 
     // Read
     
-    func readReminder(identifier: String) -> Reminder?
+    func readReminder(with identifier: String) -> Reminder?
     
     func readReminders() -> [Reminder]
     
@@ -96,7 +96,7 @@ class StudioInteractor: StudioInteractorInput, StudioInteractorData {
         }
     }
     
-    func createReminder(identifier: String, type: ReminderType, name: String? = nil, url: URL? = nil) {
+    func createReminder(with identifier: String, type: ReminderType, name: String? = nil, url: URL? = nil) {
         let reminder: Reminder
         
         switch type {
@@ -115,7 +115,7 @@ class StudioInteractor: StudioInteractorInput, StudioInteractorData {
     
     // Read
     
-    func readReminder(identifier: String) -> Reminder? {
+    func readReminder(with identifier: String) -> Reminder? {
         reminders.first(where: { $0.identifier == identifier })
     }
     

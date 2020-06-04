@@ -72,20 +72,26 @@ struct VideoReminder: Reminder {
     
     var aspectRatio: CGFloat?
     
+    var orientation: AVAssetTrack.Orientation?
+    
     init(identifier: String, name: String?, url: URL? = nil) {
         self.identifier = identifier
         self.name = name
         
         guard let url = url else { return }
         self.player = AVPlayer(url: url)
-        self.aspectRatio = player?.currentItem?.asset.tracks(withMediaType: .video).first?.naturalSize.aspectRatio
+        let track = player?.currentItem?.asset.tracks(withMediaType: .video).first
+        self.aspectRatio = track?.naturalSize.aspectRatio
+        self.orientation = track?.orientation
     }
     
     init(identifier: String, name: String?, playerItem: AVPlayerItem?) {
         self.identifier = identifier
         self.name = name
         self.player = AVPlayer(playerItem: playerItem)
-        self.aspectRatio = playerItem?.asset.tracks(withMediaType: .video).first?.naturalSize.aspectRatio
+        let track = player?.currentItem?.asset.tracks(withMediaType: .video).first
+        self.aspectRatio = track?.naturalSize.aspectRatio
+        self.orientation = track?.orientation
     }
     
 }

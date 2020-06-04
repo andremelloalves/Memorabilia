@@ -46,8 +46,6 @@ extension ExperienceViewController: ARSessionDelegate {
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
-//        infoView.info = error.localizedDescription
-        
         guard error is ARError else { return }
         
         let errorWithInfo = error as NSError

@@ -493,11 +493,11 @@
 				B6E3E88C243E771100656B21 /* Array.swift */,
 				B6412CE6238EF9A500BED236 /* ARUtilities.swift */,
 				B6D033432456058800511544 /* AVAssetTrack.swift */,
-				B6C1898E245F8644002B6FEA /* Comparable.swift */,
 				B6E7F6782438C8E0001A5149 /* CGPoint.swift */,
 				B6E7F6762438C8C1001A5149 /* CGRect.swift */,
 				B6C1898C245F7D5D002B6FEA /* CGSize.swift */,
 				B6303372245CBF7B00DFDA0D /* Collection.swift */,
+				B6C1898E245F8644002B6FEA /* Comparable.swift */,
 				B6D033452456630A00511544 /* UIImage.swift */,
 			);
 			path = Extension;
