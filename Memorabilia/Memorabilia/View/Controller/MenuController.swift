@@ -22,6 +22,13 @@ class MenuController: UIViewController {
     
     // MARK: Properties
     
+    let background: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     lazy var page: UIPageViewController = {
         let controller = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         controller.delegate = self
@@ -100,12 +107,15 @@ class MenuController: UIViewController {
     private func setup() {
         // Background
         view.backgroundColor = .systemBackground
-        let gradient = CAGradientLayer()
-        gradient.frame = view.bounds
-        gradient.colors = [UIColor(named: "Memo5")!.cgColor, UIColor(named: "Memo6")!.cgColor]
-        gradient.startPoint = .init(x: 0, y: 0.3)
-        gradient.endPoint = .init(x: 0, y: 1)
-        view.layer.insertSublayer(gradient, at: 0)
+//        let gradient = CAGradientLayer()
+//        gradient.frame = view.bounds
+//        gradient.colors = [UIColor(named: "Memo5")!.cgColor, UIColor(named: "Memo6")!.cgColor]
+//        gradient.startPoint = .init(x: 0, y: 0.3)
+//        gradient.endPoint = .init(x: 0, y: 1)
+//        view.layer.insertSublayer(gradient, at: 0)
+        
+        // Background
+        view.addSubview(background)
         
         // PageView
         view.addSubview(page.view)
@@ -129,6 +139,12 @@ class MenuController: UIViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
+            // Background
+            background.topAnchor.constraint(equalTo: view.topAnchor),
+            background.leftAnchor.constraint(equalTo: view.leftAnchor),
+            background.rightAnchor.constraint(equalTo: view.rightAnchor),
+            background.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
             // PageView
             page.view.topAnchor.constraint(equalTo: view.topAnchor),
             page.view.leftAnchor.constraint(equalTo: view.leftAnchor),
@@ -156,6 +172,8 @@ class MenuController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        background.image = UIImage(named: "bandeira-nacional-brasil")
         configurePages(with: App.session.db)
     }
     
