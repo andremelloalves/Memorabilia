@@ -218,9 +218,10 @@ class ExperienceViewController: UIViewController {
     
     // MARK: Control
     
-    func controlMediaPlayback(with identifier: String?, play: Bool = true) {
-        guard let identifier = identifier else { return }
-        guard let reminder = interactor?.readReminder(with: identifier) else { return }
+    func controlMediaPlayback(for anchor: ARAnchor?, play: Bool = true) {
+        guard let anchor = anchor,
+            let node = arView.node(for: anchor),
+            let reminder = interactor?.readReminder(with: anchor.identifier.uuidString) else { return }
         
         if let video = reminder as? VideoReminder, let player = video.player {
             if player.timeControlStatus == .playing || !play {
@@ -231,8 +232,10 @@ class ExperienceViewController: UIViewController {
         } else if let audio = reminder as? AudioReminder, let player = audio.player {
             if player.isPlaying || !play {
                 player.pause()
+                animate(node, play: false)
             } else {
                 player.play()
+                animate(node, play: true)
             }
         }
     }
@@ -257,11 +260,11 @@ class ExperienceViewController: UIViewController {
         if let node = arView.hitTest(point).first?.node, let anchor = arView.anchor(for: node) as? ReminderAnchor {
             guard selectedReminder?.identifier != anchor.identifier else { return }
             
-            controlMediaPlayback(with: selectedReminder?.identifier.uuidString, play: false)
-            controlMediaPlayback(with: anchor.identifier.uuidString)
+            controlMediaPlayback(for: selectedReminder, play: false)
+            controlMediaPlayback(for: anchor)
             selectedReminder = anchor
         } else {
-            controlMediaPlayback(with: selectedReminder?.identifier.uuidString, play: false)
+            controlMediaPlayback(for: selectedReminder, play: false)
             selectedReminder = nil
         }
     }
@@ -280,7 +283,7 @@ class ExperienceViewController: UIViewController {
     
     // MARK: Animation
     
-    func showActionView(symbol: String, text: String, duration: TimeInterval) {
+    func showAction(with symbol: String, and text: String, for duration: TimeInterval) {
         actionView.update(symbol: symbol, text: text)
         
         let fadeIn = { [unowned self] in self.actionView.alpha = 1 }
@@ -291,6 +294,21 @@ class ExperienceViewController: UIViewController {
 
         fadeInAnimator.startAnimation()
         fadeInAnimator.addCompletion { _ in fadeOutAnimator.startAnimation(afterDelay: duration / 2) }
+    }
+    
+    func animate(_ node: SCNNode, play: Bool) {
+        if play {
+            let scaleUp = SCNAction.scale(to: 1.5, duration: 0.5)
+            let scaleDown = SCNAction.scale(to: 1, duration: 0.5)
+            let sequence = SCNAction.sequence([scaleUp, scaleDown])
+            let forever = SCNAction.repeatForever(sequence)
+            node.runAction(forever)
+        } else {
+            let scaleDown = SCNAction.scale(to: 1, duration: 0.5)
+            node.runAction(scaleDown) {
+                node.removeAllActions()
+            }
+        }
     }
     
     // MARK: Navigation
@@ -310,7 +328,7 @@ class ExperienceViewController: UIViewController {
         case .authorized:
             interactor?.readWorld()
         case .denied:
-            showActionView(symbol: "exclamationmark.triangle.fill", text: "Sem acesso à camera", duration: 2)
+            showAction(with: "exclamationmark.triangle.fill", and: "Sem acesso à camera", for: 2)
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { granted in
                 if granted {
@@ -319,7 +337,7 @@ class ExperienceViewController: UIViewController {
                     }
                 } else {
                     DispatchQueue.main.async {
-                        self.showActionView(symbol: "exclamationmark.triangle.fill", text: "Sem acesso à camera", duration: 2)
+                        self.showAction(with: "exclamationmark.triangle.fill", and: "Sem acesso à camera", for: 2)
                     }
                 }
             }

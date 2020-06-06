@@ -32,9 +32,7 @@ class SettingsPresenter: SettingsPresenterInput {
         var sections: [SettingsSection] = []
         
         let messageItem = SettingsEntity.Display.MessageItem(message: """
-        O Memorabilia é um aplicativo AR feito para transformar o ambiente real em um palácio da memória virtual e criar lembretes audiovisuais, com o objetivo de facilitar a memorização de tarefas cotidianas e lembrança de memórias para suporte a pessoas com transtornos neurocognitivos.
-
-        Este aplicativo foi desenvolvido por André Mello Alves como projeto de graduação em Engenharia de Computação na PUC-Rio.
+        Este aplicativo foi desenvolvido por André Mello Alves como projeto de graduação em Engenharia da Computação na PUC-Rio.
         """)
         let messageSection = SettingsEntity.Display.AboutSection(title: "Sobre", settings: [messageItem])
         sections.append(messageSection)

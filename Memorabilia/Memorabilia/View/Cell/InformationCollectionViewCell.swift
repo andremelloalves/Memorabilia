@@ -16,6 +16,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.backgroundColor = .clear
         label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
         label.adjustsFontForContentSizeCategory = true
@@ -29,6 +30,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
     
     let messageLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.backgroundColor = .clear
         label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         label.adjustsFontForContentSizeCategory = true

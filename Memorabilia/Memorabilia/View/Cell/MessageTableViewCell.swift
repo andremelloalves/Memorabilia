@@ -16,6 +16,7 @@ class MessageTableViewCell: UITableViewCell {
     
     let messageLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.backgroundColor = .clear
         label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         label.adjustsFontForContentSizeCategory = true
@@ -35,13 +36,13 @@ class MessageTableViewCell: UITableViewCell {
         blurView.clipsToBounds = true
         blurView.translatesAutoresizingMaskIntoConstraints = false
         
-        // Vibrancy
-        let vibrancy = UIVibrancyEffect(blurEffect: blur, style: .label)
-        let vibrancyView = UIVisualEffectView(effect: vibrancy)
-        vibrancyView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        
-        vibrancyView.contentView.addSubview(messageLabel)
-        blurView.contentView.addSubview(vibrancyView)
+//        // Vibrancy
+//        let vibrancy = UIVibrancyEffect(blurEffect: blur, style: .label)
+//        let vibrancyView = UIVisualEffectView(effect: vibrancy)
+//        vibrancyView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+//
+//        vibrancyView.contentView.addSubview(messageLabel)
+//        blurView.contentView.addSubview(vibrancyView)
         return blurView
     }()
     
@@ -66,6 +67,9 @@ class MessageTableViewCell: UITableViewCell {
         // Background
         addSubview(background)
         
+        // Message
+        addSubview(messageLabel)
+        
         // Constraints
         setupConstraints()
     }
@@ -89,7 +93,7 @@ class MessageTableViewCell: UITableViewCell {
             background.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
             background.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            // Input
+            // Message
             messageLabel.topAnchor.constraint(equalTo: background.topAnchor, constant: 16),
             messageLabel.leftAnchor.constraint(equalTo: background.leftAnchor, constant: 16),
             messageLabel.rightAnchor.constraint(equalTo: background.rightAnchor, constant: -16),

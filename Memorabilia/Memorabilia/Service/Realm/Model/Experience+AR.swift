@@ -113,7 +113,7 @@ extension ExperienceViewController: ARSCNViewDelegate {
     }
     
     func renderDefaultNode() -> SCNNode {
-        let sphere = SCNSphere(radius: 0.1)
+        let sphere = SCNSphere(radius: 0.05)
         sphere.firstMaterial!.diffuse.contents = UIColor.white
         let node = SCNNode(geometry: sphere)
 
@@ -121,9 +121,13 @@ extension ExperienceViewController: ARSCNViewDelegate {
     }
     
     func renderLoadingNode() -> SCNNode {
-        let sphere = SCNSphere(radius: 0.1)
-        sphere.firstMaterial!.diffuse.contents = UIColor.systemTeal
-        let node = SCNNode(geometry: sphere)
+        let torus = SCNTorus(ringRadius: 0.05, pipeRadius: 0.01)
+        torus.firstMaterial!.diffuse.contents = UIColor.white
+        let node = SCNNode(geometry: torus)
+        
+        let rotation = SCNAction.rotateBy(x: .pi, y: .pi, z: .pi, duration: 1)
+        let forever = SCNAction.repeatForever(rotation)
+        node.runAction(forever)
 
         return node
     }
@@ -170,9 +174,9 @@ extension ExperienceViewController: ARSCNViewDelegate {
     }
     
     func renderAudioNode() -> SCNNode? {
-        let sphere = SCNSphere(radius: 0.1)
-        sphere.firstMaterial?.diffuse.contents = UIColor.white
-        let node = SCNNode(geometry: sphere)
+        let box = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.01)
+        box.firstMaterial?.diffuse.contents = UIColor.white
+        let node = SCNNode(geometry: box)
         
         return node
     }

@@ -93,7 +93,7 @@ extension StudioViewController: ARSCNViewDelegate {
     }
     
     func renderDefaultNode() -> SCNNode {
-        let sphere = SCNSphere(radius: 0.1)
+        let sphere = SCNSphere(radius: 0.05)
         sphere.firstMaterial!.diffuse.contents = UIColor.white
         let node = SCNNode(geometry: sphere)
 
@@ -157,9 +157,9 @@ extension StudioViewController: ARSCNViewDelegate {
     }
     
     func renderAudioNode() -> SCNNode? {
-        let sphere = SCNSphere(radius: 0.1)
-        sphere.firstMaterial?.diffuse.contents = UIColor.white
-        let node = SCNNode(geometry: sphere)
+        let box = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.01)
+        box.firstMaterial?.diffuse.contents = UIColor.white
+        let node = SCNNode(geometry: box)
         
         return node
     }

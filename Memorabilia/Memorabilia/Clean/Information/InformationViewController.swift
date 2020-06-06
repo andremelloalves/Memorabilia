@@ -29,7 +29,7 @@ class InformationViewController: UIViewController {
     // MARK: View properties
     
     let background: UIVisualEffectView = {
-        let blur = UIBlurEffect(style: .systemThinMaterial)
+        let blur = UIBlurEffect(style: .systemUltraThinMaterial)
         let blurView = UIVisualEffectView(effect: blur)
         blurView.translatesAutoresizingMaskIntoConstraints = false
         return blurView

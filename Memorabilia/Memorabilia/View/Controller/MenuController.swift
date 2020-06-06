@@ -82,6 +82,10 @@ class MenuController: UIViewController {
         return view
     }()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
     // MARK: Control properties
     
     var selectedPage: MenuPageType = .memories
@@ -106,12 +110,13 @@ class MenuController: UIViewController {
     
     private func setup() {
         // Background
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .black
 //        let gradient = CAGradientLayer()
 //        gradient.frame = view.bounds
-//        gradient.colors = [UIColor(named: "Memo5")!.cgColor, UIColor(named: "Memo6")!.cgColor]
-//        gradient.startPoint = .init(x: 0, y: 0.3)
-//        gradient.endPoint = .init(x: 0, y: 1)
+//        gradient.colors = [UIColor.systemYellow.cgColor, UIColor.systemOrange.cgColor, UIColor.black.cgColor]
+//        gradient.startPoint = .init(x: 0.5, y: 0)
+//        gradient.locations = [0, 0.1, 0.2]
+//        gradient.endPoint = .init(x: 0.5, y: 1)
 //        view.layer.insertSublayer(gradient, at: 0)
         
         // Background
@@ -173,7 +178,6 @@ class MenuController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        background.image = UIImage(named: "bandeira-nacional-brasil")
         configurePages(with: App.session.db)
     }
     

@@ -428,9 +428,10 @@ class StudioViewController: UIViewController {
     
     // MARK: Control
     
-    func controlMediaPlayback(with identifier: String?, play: Bool = true) {
-        guard let identifier = identifier else { return }
-        guard let reminder = interactor?.readReminder(with: identifier) else { return }
+    func controlMediaPlayback(for anchor: ARAnchor?, play: Bool = true) {
+        guard let anchor = anchor,
+            let node = arView.node(for: anchor),
+            let reminder = interactor?.readReminder(with: anchor.identifier.uuidString) else { return }
         
         if let video = reminder as? VideoReminder, let player = video.player {
             if player.timeControlStatus == .playing || !play {
@@ -441,8 +442,10 @@ class StudioViewController: UIViewController {
         } else if let audio = reminder as? AudioReminder, let player = audio.player {
             if player.isPlaying || !play {
                 player.pause()
+                animate(node, play: false)
             } else {
                 player.play()
+                animate(node, play: true)
             }
         }
     }
@@ -468,7 +471,7 @@ class StudioViewController: UIViewController {
         let point = sender.location(in: arView)
         
         if let node = arView.hitTest(point).first?.node, let anchor = arView.anchor(for: node) as? ReminderAnchor {
-            controlMediaPlayback(with: selectedReminder?.identifier.uuidString, play: false)
+            controlMediaPlayback(for: selectedReminder, play: false)
             selectedReminder = anchor
             showEditing()
         } else {
@@ -481,7 +484,7 @@ class StudioViewController: UIViewController {
                 addReminderAnchor(with: raycast)
                 updateARSupport()
             } else {
-                showActionView(symbol: "nosign", text: "Limite de lembretes", duration: 2)
+                showAction(with: "nosign", and: "Limite de lembretes", for: 2)
             }
         }
     }
@@ -491,7 +494,7 @@ class StudioViewController: UIViewController {
         
         switch sender.state {
         case .began:
-            controlMediaPlayback(with: anchor.identifier.uuidString)
+            controlMediaPlayback(for: anchor)
         default:
             return
         }
@@ -578,7 +581,7 @@ class StudioViewController: UIViewController {
     }
     
     @objc func backButtonAction() {
-        controlMediaPlayback(with: selectedReminder?.identifier.uuidString, play: false)
+        controlMediaPlayback(for: selectedReminder, play: false)
         showCreating()
     }
     
@@ -620,7 +623,7 @@ class StudioViewController: UIViewController {
     func optionButtonAction(option: ReminderType) -> () -> () {
         let action = { [weak self] in
             self?.selectedOption = option
-            self?.showActionView(symbol: option.symbol, text: option.name, duration: 1)
+            self?.showAction(with: option.symbol, and: option.name, for: 1)
         }
         return action
     }
@@ -647,7 +650,7 @@ class StudioViewController: UIViewController {
     
     // MARK: Animation
     
-    func showActionView(symbol: String, text: String, duration: TimeInterval) {
+    func showAction(with symbol: String, and text: String, for duration: TimeInterval) {
         actionView.update(symbol: symbol, text: text)
         
         let fadeIn = { [unowned self] in self.actionView.alpha = 1 }
@@ -658,6 +661,21 @@ class StudioViewController: UIViewController {
 
         fadeInAnimator.startAnimation()
         fadeInAnimator.addCompletion { _ in fadeOutAnimator.startAnimation(afterDelay: duration / 2) }
+    }
+    
+    func animate(_ node: SCNNode, play: Bool) {
+        if play {
+            let scaleUp = SCNAction.scale(to: 1.5, duration: 0.5)
+            let scaleDown = SCNAction.scale(to: 1, duration: 0.5)
+            let sequence = SCNAction.sequence([scaleUp, scaleDown])
+            let forever = SCNAction.repeatForever(sequence)
+            node.runAction(forever)
+        } else {
+            let scaleDown = SCNAction.scale(to: 1, duration: 0.5)
+            node.runAction(scaleDown) {
+                node.removeAllActions()
+            }
+        }
     }
     
     // MARK: Navigation
@@ -679,7 +697,7 @@ class StudioViewController: UIViewController {
                 }
             default:
                 DispatchQueue.main.async {
-                    self.showActionView(symbol: "exclamationmark.triangle.fill", text: "Sem acesso a fotos", duration: 2)
+                    self.showAction(with: "exclamationmark.triangle.fill", and: "Sem acesso a fotos", for: 2)
                 }
             }
         }
@@ -692,7 +710,7 @@ class StudioViewController: UIViewController {
         case .authorized:
             startSession()
         case .denied:
-            showActionView(symbol: "exclamationmark.triangle.fill", text: "Sem acesso à camera", duration: 2)
+            showAction(with: "exclamationmark.triangle.fill", and: "Sem acesso à camera", for: 2)
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { granted in
                 if granted {
@@ -701,7 +719,7 @@ class StudioViewController: UIViewController {
                     }
                 } else {
                     DispatchQueue.main.async {
-                        self.showActionView(symbol: "exclamationmark.triangle.fill", text: "Sem acesso à camera", duration: 2)
+                        self.showAction(with: "exclamationmark.triangle.fill", and: "Sem acesso à camera", for: 2)
                     }
                 }
             }

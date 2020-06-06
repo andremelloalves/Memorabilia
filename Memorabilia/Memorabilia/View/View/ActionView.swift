@@ -25,6 +25,7 @@ class ActionView: UIView {
     
     let textLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.backgroundColor = .clear
         label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         label.adjustsFontForContentSizeCategory = true
