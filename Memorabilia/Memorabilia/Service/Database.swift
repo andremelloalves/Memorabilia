@@ -76,13 +76,13 @@ class Database {
     
     // MARK: Read
     
-    func readInformations(of type: InformationType) -> Promise<[Information]> {
+    func readInformations(of types: [InformationType]) -> Promise<[Information]> {
         return Promise { seal in
             do {
                 let url = Bundle.main.url(forResource: "InformationData", withExtension: "jscsrc")!
                 let data = try Data(contentsOf: url)
                 let informations = try JSONDecoder().decode([Information].self, from: data)
-                seal.fulfill(informations.filter({ $0.type == type }))
+                seal.fulfill(informations.filter({ types.contains($0.type) }))
             } catch let error {
                 seal.reject(error)
             }

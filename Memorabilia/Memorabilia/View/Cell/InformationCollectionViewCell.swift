@@ -22,6 +22,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
         label.adjustsFontSizeToFitWidth = false
         label.baselineAdjustment = .alignCenters
         label.textAlignment = .left
+        label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -31,7 +32,8 @@ class InformationCollectionViewCell: UICollectionViewCell {
         label.backgroundColor = .clear
         label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         label.adjustsFontForContentSizeCategory = true
-        label.adjustsFontSizeToFitWidth = false
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.75
         label.baselineAdjustment = .alignCenters
         label.textAlignment = .left
         label.numberOfLines = 0

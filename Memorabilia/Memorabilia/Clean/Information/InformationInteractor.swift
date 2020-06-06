@@ -75,8 +75,16 @@ class InformationInteractor: InformationInteractorInput, InformationInteractorDa
     func read() {
         guard let db = db, let type = type else { return }
         
+        var types: [InformationType] = [type]
+        switch type {
+        case .create, .memories, .settings:
+            types.append(.app)
+        default:
+            break
+        }
+        
         firstly {
-            db.readInformations(of: type)
+            db.readInformations(of: types)
         }.get { informations in
             self.informations = informations
         }.map {

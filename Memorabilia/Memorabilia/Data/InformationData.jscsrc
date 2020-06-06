@@ -2,36 +2,43 @@
     {
         "identifier": "1",
         "type": "app",
-        "title": "Memorabilia",
-        "message": "Esse é um app de AR.",
+        "title": "O que é o Memorabilia?",
+        "message": "O Memorabilia é um aplicativo de Realidade Aumentada (AR) e com ele você pode criar experiências virtuais personalizadas em um ambiente real. Cada uma destas experiências é chamada de Memória. Deslize para o lado para ver mais.",
         "photoID": ""
     },
     {
         "identifier": "2",
         "type": "app",
-        "title": "Memorabilia",
-        "message": "É possível criar sua própria experiência AR.",
+        "title": "Como navegar pelo aplicativo?",
+        "message": "A tela principal do Memorabilia é dividida em três páginas. Você pode navegar entre as páginas utilizando a barra de navegação na parte inferior da tela ao tocar na página de destino ou ao arrastar o indicador até ela. Você também pode deslizar horizontalmente entre as páginas.",
         "photoID": ""
     },
     {
         "identifier": "3",
         "type": "create",
-        "title": "Criação",
-        "message": "Escolha um nome e selecione Criar em AR para ir para o estúdio de criação.",
+        "title": "Como criar uma memória?",
+        "message": "A primeira etapa da criação da Memória é a escolha de um nome e de uma foto de capa. Eles são atributos secundários de uma Memória, mas também merecem atenção. Escolha um nome e uma foto que ilustrem o ambiente e/ou criador da Memória. Digite o nome no campo abaixo e escolha a foto da sua biblioteca.",
+        "photoID": ""
+    },
+    {
+        "identifier": "3",
+        "type": "create",
+        "title": "Como criar em AR?",
+        "message": "Quando você estiver satisfeito com a escolha do nome e da foto de capa, toque em Criar em AR. Tenha em mente que não é possível alterá-los depois. Ao tocar no botão, você será levado para a próxima etapa, em outra tela, para mapear o ambiente e adicionar Lembretes.",
         "photoID": ""
     },
     {
         "identifier": "4",
         "type": "memories",
-        "title": "Memória",
-        "message": "Todas as suas memórias estão guardadas aqui.",
+        "title": "O que são Memórias?",
+        "message": "O conceito mais importante do Memorabilia é a Memória. Uma Memória é uma experiência AR que você pode customizar e integrar componentes virtuais e o mundo real. Estes componentes são chamados de Lembretes.",
         "photoID": ""
     },
     {
         "identifier": "5",
         "type": "memories",
-        "title": "Memória",
-        "message": "Toque e segure uma memória para ter opção de apagar.",
+        "title": "O que são lembretes?",
+        "message": "Um lembrete é um componente audiovisual virtual que você pode ancorar em um ponto físico dentro de uma experiência, ou Memória. Cada Lembrete pode apresentar um entre quatro tipos de mídia: texto, foto, vídeo e áudio. As mídias são importadas da sua própria biblioteca de músicas ou do rolo da câmera.",
         "photoID": ""
     },
     {
