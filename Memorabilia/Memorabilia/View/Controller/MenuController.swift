@@ -184,18 +184,25 @@ class MenuController: UIViewController {
         super.viewDidLoad()
         
         let db = App.session.db
-        let preference = db.readPreference()
-        let background = db.readBackground()
         
         firstly {
-            when(fulfilled: preference, background)
-        }.get { preference, _ in
+            db.readPreference()
+        }.get { preference in
             App.session.preference = preference
-        }.done { preference, data in
+        }.done { preference in
             self.configurePages(with: db, and: preference)
-            self.background.image = UIImage(data: data)
         }.catch { error in
             print(error.localizedDescription)
+            self.configurePages(with: db, and: Preference(color: .white))
+        }
+        
+        firstly {
+            db.readBackground()
+        }.done { data in
+            self.background.image = UIImage(data: data)?.orientedImage
+        }.catch { error in
+            print(error.localizedDescription)
+            self.background.image = nil
         }
     }
     
