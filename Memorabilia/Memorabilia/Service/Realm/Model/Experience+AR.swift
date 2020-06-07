@@ -114,7 +114,7 @@ extension ExperienceViewController: ARSCNViewDelegate {
     
     func renderDefaultNode() -> SCNNode {
         let sphere = SCNSphere(radius: 0.05)
-        sphere.firstMaterial!.diffuse.contents = UIColor.white
+        sphere.firstMaterial!.diffuse.contents = interactor?.readPreferredColor()
         let node = SCNNode(geometry: sphere)
 
         return node
@@ -122,7 +122,7 @@ extension ExperienceViewController: ARSCNViewDelegate {
     
     func renderLoadingNode() -> SCNNode {
         let torus = SCNTorus(ringRadius: 0.05, pipeRadius: 0.01)
-        torus.firstMaterial!.diffuse.contents = UIColor.white
+        torus.firstMaterial!.diffuse.contents = interactor?.readPreferredColor()
         let node = SCNNode(geometry: torus)
         
         let rotation = SCNAction.rotateBy(x: .pi, y: .pi, z: .pi, duration: 1)
@@ -139,7 +139,7 @@ extension ExperienceViewController: ARSCNViewDelegate {
         
         let text = SCNText(string: message, extrusionDepth: 0)
         text.firstMaterial?.isDoubleSided = true
-        text.firstMaterial?.diffuse.contents = UIColor.white
+        text.firstMaterial?.diffuse.contents = interactor?.readPreferredColor()
         let node = SCNNode(geometry: text)
         
         return node
@@ -175,7 +175,7 @@ extension ExperienceViewController: ARSCNViewDelegate {
     
     func renderAudioNode() -> SCNNode? {
         let box = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.01)
-        box.firstMaterial?.diffuse.contents = UIColor.white
+        box.firstMaterial?.diffuse.contents = interactor?.readPreferredColor()
         let node = SCNNode(geometry: box)
         
         return node

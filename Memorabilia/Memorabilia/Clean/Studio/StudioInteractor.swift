@@ -24,6 +24,8 @@ protocol StudioInteractorInput {
     func readReminders() -> [Reminder]
     
     func readReminderCount() -> Int
+    
+    func readPreferredColor() -> UIColor?
 
     // Update
 
@@ -38,6 +40,8 @@ protocol StudioInteractorData {
     // Data
     
     var db: Database? { get set }
+    
+    var preference: Preference? { get set }
     
     var reminders: [Reminder] { get set }
     
@@ -65,6 +69,8 @@ class StudioInteractor: StudioInteractorInput, StudioInteractorData {
             db?.startNotifications(observer: self)
         }
     }
+    
+    var preference: Preference?
     
     var reminders: [Reminder] = []
     
@@ -125,6 +131,10 @@ class StudioInteractor: StudioInteractorInput, StudioInteractorData {
     
     func readReminderCount() -> Int {
         reminders.count
+    }
+    
+    func readPreferredColor() -> UIColor? {
+        preference?.color.uiColor
     }
     
     // Update

@@ -25,6 +25,8 @@ protocol SettingsInteractorInput {
 
     // Delete
     
+    func deleteBackground()
+    
 }
 
 protocol SettingsInteractorData {
@@ -107,6 +109,16 @@ class SettingsInteractor: SettingsInteractorInput, SettingsInteractorData {
     }
     
     // Delete
+    
+    func deleteBackground() {
+        guard let db = db else { return }
+        
+        firstly {
+            db.deleteBackground()
+        }.catch { error in
+            print(error.localizedDescription)
+        }
+    }
     
 }
 

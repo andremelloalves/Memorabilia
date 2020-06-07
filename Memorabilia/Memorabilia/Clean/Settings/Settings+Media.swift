@@ -23,7 +23,7 @@ extension SettingsViewController: UIImagePickerControllerDelegate {
         
         menu?.background.image = image
         
-        if let data = image?.pngData() {
+        if let data = image?.orientedImage.pngData() {
             interactor?.updateBackground(with: data)
         }
         

@@ -25,6 +25,8 @@ protocol ExperienceInteractorInput {
     func readReminder(with identifier: String) -> Reminder?
     
     func readTransform(with identifier: String) -> Transform?
+    
+    func readPreferredColor() -> UIColor?
 
     // Update
 
@@ -37,6 +39,8 @@ protocol ExperienceInteractorData {
     // Data
     
     var db: Database? { get set }
+    
+    var preference: Preference? { get set }
     
     var memory: Memory? { get set }
     
@@ -60,6 +64,8 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
             db?.startNotifications(observer: self)
         }
     }
+    
+    var preference: Preference?
     
     var memory: Memory?
     
@@ -142,6 +148,10 @@ class ExperienceInteractor: ExperienceInteractorInput, ExperienceInteractorData 
     
     func readTransform(with identifier: String) -> Transform? {
         transforms.first(where: { $0.identifier == identifier })
+    }
+    
+    func readPreferredColor() -> UIColor? {
+        preference?.color.uiColor
     }
     
     private func readVisualReminders() {

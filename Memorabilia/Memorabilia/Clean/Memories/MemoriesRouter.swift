@@ -50,6 +50,7 @@ class MemoriesRouter: MemoriesRouterInput, MemoriesRouterOutput {
     
     private func passDataExperienceViewController(source: MemoriesInteractorData, destination: inout ExperienceInteractorData, memoryID: String) {
         destination.db = source.db
+        destination.preference = source.preference
         destination.memory = source.memories?.first { $0.identifier == memoryID }
     }
     

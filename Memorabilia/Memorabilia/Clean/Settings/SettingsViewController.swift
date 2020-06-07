@@ -58,7 +58,9 @@ class SettingsViewController: UIViewController, MenuPage {
         return view
     }()
     
-    var backgroundButton: PillButton?
+    var chooseButton: PillButton?
+    
+    var deleteButton: PillButton?
 
     // MARK: Control properties
 
@@ -135,8 +137,14 @@ class SettingsViewController: UIViewController, MenuPage {
     
     // MARK: Action
     
-    @objc func backgroundButtonAction() {
+    @objc func chooseButtonAction() {
         routeToPicker()
+    }
+    
+    @objc func deleteButtonAction() {
+        menu?.background.image = nil
+
+        interactor?.deleteBackground()
     }
 
     // MARK: Animation
@@ -200,9 +208,9 @@ extension SettingsViewController: SettingsViewInput {
             table.deleteSections(changes.deletes, with: .fade)
             table.insertSections(changes.inserts, with: .fade)
             
-            table.reloadRows(at: changes.updates.reloads, with: .fade)
-            table.insertRows(at: changes.updates.inserts, with: .fade)
-            table.deleteRows(at: changes.updates.deletes, with: .fade)
+            table.reloadRows(at: changes.updates.reloads, with: .none)
+            table.insertRows(at: changes.updates.inserts, with: .none)
+            table.deleteRows(at: changes.updates.deletes, with: .none)
         }, completion: nil)
     }
     

@@ -51,6 +51,7 @@ class CreateRouter: CreateRouterInput, CreateRouterOutput {
     private func passDataStudioViewController(source: CreateInteractorData, destination: inout StudioInteractorData, name: String, cover: Data) {
         // Pass data
         destination.db = source.db
+        destination.preference = source.preference
         destination.name = name
         destination.cover = cover
     }

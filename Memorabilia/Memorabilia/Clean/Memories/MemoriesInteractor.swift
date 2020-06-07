@@ -32,6 +32,8 @@ protocol MemoriesInteractorData {
     // Data
     
     var db: Database? { get set }
+    
+    var preference: Preference? { get set }
 
     var memories: [Memory]? { get }
     
@@ -55,6 +57,8 @@ class MemoriesInteractor: MemoriesInteractorInput, MemoriesInteractorData {
             db?.startNotifications(observer: self)
         }
     }
+    
+    var preference: Preference?
 
     var memories: [Memory]?
     

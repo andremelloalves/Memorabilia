@@ -199,7 +199,7 @@ class MenuController: UIViewController {
         firstly {
             db.readBackground()
         }.done { data in
-            self.background.image = UIImage(data: data)?.orientedImage
+            self.background.image = UIImage(data: data)
         }.catch { error in
             print(error.localizedDescription)
             self.background.image = nil
@@ -269,11 +269,13 @@ class MenuController: UIViewController {
         let create = CreateViewController()
         var createInteractor = create.router!.interactor!
         createInteractor.db = db
+        createInteractor.preference = preference
         addPage(create)
         
         let memories = MemoriesViewController()
         var memoriesInteractor = memories.router!.interactor!
         memoriesInteractor.db = db
+        memoriesInteractor.preference = preference
         addPage(memories)
         
         let settings = SettingsViewController()

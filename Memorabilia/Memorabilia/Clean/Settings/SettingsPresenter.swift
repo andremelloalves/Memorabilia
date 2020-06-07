@@ -39,8 +39,13 @@ class SettingsPresenter: SettingsPresenterInput {
         let colorSection = SettingsEntity.Display.ColorSection(title: "Cor dos lembretes", colors: colorItems)
         sections.append(colorSection)
         
-        let backgroundSection = SettingsEntity.Display.BackgroundSection(title: "Plano de fundo", backgrounds: [.init()])
-        sections.append(backgroundSection)
+        let chooseItem = SettingsEntity.Display.BackgroundItem(action: "Escolher nova foto")
+        let chooseSection = SettingsEntity.Display.BackgroundSection(title: "Plano de fundo", backgrounds: [chooseItem])
+        sections.append(chooseSection)
+        
+        let deleteItem = SettingsEntity.Display.BackgroundItem(action: "Apagar foto existente")
+        let deleteSection = SettingsEntity.Display.BackgroundSection(title: nil, backgrounds: [deleteItem])
+        sections.append(deleteSection)
         
         let messageItem = SettingsEntity.Display.MessageItem(message: """
         Este aplicativo foi desenvolvido por André Mello Alves como projeto de graduação em Engenharia da Computação na PUC-Rio.

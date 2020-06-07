@@ -31,9 +31,16 @@ extension SettingsViewController: UITableViewDataSource {
             cell = colorCell
         case .background:
             let backgroundCell = tableView.dequeueReusableCell(withIdentifier: ButtonTableViewCell.identifier, for: indexPath) as? ButtonTableViewCell
-            backgroundButton = backgroundCell?.button
-            backgroundButton?.update(title: "Escolher", image: nil)
-            backgroundButton?.addTarget(self, action: #selector(backgroundButtonAction), for: .primaryActionTriggered)
+            let background = item.item as? SettingsEntity.Display.BackgroundItem
+            if background?.action == "Escolher nova foto" {
+                chooseButton = backgroundCell?.button
+                chooseButton?.update(title: background?.action, image: nil)
+                chooseButton?.addTarget(self, action: #selector(chooseButtonAction), for: .primaryActionTriggered)
+            } else {
+                deleteButton = backgroundCell?.button
+                deleteButton?.update(title: background?.action, image: nil)
+                deleteButton?.addTarget(self, action: #selector(deleteButtonAction), for: .primaryActionTriggered)
+            }
             cell = backgroundCell
         case .message:
             let aboutCell = tableView.dequeueReusableCell(withIdentifier: MessageTableViewCell.identifier, for: indexPath) as? MessageTableViewCell

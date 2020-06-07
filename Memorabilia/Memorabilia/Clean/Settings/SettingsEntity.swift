@@ -170,12 +170,14 @@ struct SettingsEntity {
         struct BackgroundItem: SettingsItem {
             
             var uid: String {
-                return type.rawValue
+                return type.rawValue + action
             }
             
             var type: ItemType {
                 .background
             }
+            
+            var action: String
             
         }
         

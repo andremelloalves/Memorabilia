@@ -91,7 +91,7 @@ class Database {
     func readBackground() -> Promise<Data> {
         return Promise { seal in
             do {
-                let background = try documents.read(file: "app", folder: .photos)
+                let background = try documents.read(file: "app-background-image", folder: .photos)
                 seal.fulfill(background)
             } catch let error {
                 seal.reject(error)
@@ -189,7 +189,7 @@ class Database {
     func updateBackground(with data: Data) -> Promise<Void> {
         return Promise { seal in
             do {
-                try documents.create(file: "app", folder: .photos, data: data)
+                try documents.create(file: "app-background-image", folder: .photos, data: data)
                 seal.fulfill(())
             } catch let error {
                 seal.reject(error)
@@ -229,7 +229,7 @@ class Database {
     func deleteBackground() -> Promise<Void> {
         return Promise { seal in
             do {
-                try documents.delete(file: "app", folder: .photos)
+                try documents.delete(file: "app-background-image", folder: .photos)
                 seal.fulfill(())
             } catch let error {
                 seal.reject(error)

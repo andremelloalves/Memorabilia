@@ -67,6 +67,7 @@
 		B6654C5A243E5D4E0081CD22 /* SettingsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C59243E5D4E0081CD22 /* SettingsEntity.swift */; };
 		B6654C5C243E5D640081CD22 /* SettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6654C5B243E5D640081CD22 /* SettingsRouter.swift */; };
 		B67F2FFF2453C42900C42324 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67F2FFE2453C42900C42324 /* InputTextView.swift */; };
+		B68C9F58248D39700027B8F5 /* DualButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68C9F57248D39700027B8F5 /* DualButtonTableViewCell.swift */; };
 		B68D44982483363800F5A44A /* Settings+Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68D44972483363800F5A44A /* Settings+Table.swift */; };
 		B68D449A248338DF00F5A44A /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68D4499248338DF00F5A44A /* MessageTableViewCell.swift */; };
 		B6907C742481F19500B7252B /* CollectionViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6907C732481F19500B7252B /* CollectionViewHeaderView.swift */; };
@@ -173,6 +174,7 @@
 		B6654C59243E5D4E0081CD22 /* SettingsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEntity.swift; sourceTree = "<group>"; };
 		B6654C5B243E5D640081CD22 /* SettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRouter.swift; sourceTree = "<group>"; };
 		B67F2FFE2453C42900C42324 /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
+		B68C9F57248D39700027B8F5 /* DualButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualButtonTableViewCell.swift; sourceTree = "<group>"; };
 		B68D44972483363800F5A44A /* Settings+Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Table.swift"; sourceTree = "<group>"; };
 		B68D4499248338DF00F5A44A /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		B6907C732481F19500B7252B /* CollectionViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeaderView.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				B6DBE82C248086E2003D83B0 /* ButtonTableViewCell.swift */,
 				B68D4499248338DF00F5A44A /* MessageTableViewCell.swift */,
 				B6D7B9AF248C4F2B008AF90C /* ColorTableViewCell.swift */,
+				B68C9F57248D39700027B8F5 /* DualButtonTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -707,6 +710,7 @@
 				B64E7CE52485F61E003292F1 /* Memory.swift in Sources */,
 				B6D033422455E6C400511544 /* Reminder.swift in Sources */,
 				B6D7B9B4248C58BD008AF90C /* Preference.swift in Sources */,
+				B68C9F58248D39700027B8F5 /* DualButtonTableViewCell.swift in Sources */,
 				B6654C56243E5D310081CD22 /* SettingsInteractor.swift in Sources */,
 				B6654C5C243E5D640081CD22 /* SettingsRouter.swift in Sources */,
 				B60E2433247B52500010A363 /* EmptyInformationCollectionViewCell.swift in Sources */,

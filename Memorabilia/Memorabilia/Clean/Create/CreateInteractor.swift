@@ -28,6 +28,8 @@ protocol CreateInteractorData {
     
     var db: Database? { get set }
     
+    var preference: Preference? { get set }
+    
 }
 
 class CreateInteractor: CreateInteractorInput, CreateInteractorData {
@@ -48,6 +50,8 @@ class CreateInteractor: CreateInteractorInput, CreateInteractorData {
             db?.startNotifications(observer: self)
         }
     }
+    
+    var preference: Preference?
     
     // MARK: Initializers
     
