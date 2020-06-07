@@ -226,6 +226,7 @@ class ExperienceViewController: UIViewController {
         if let video = reminder as? VideoReminder, let player = video.player {
             if player.timeControlStatus == .playing || !play {
                 player.pause()
+                player.seek(to: .zero)
             } else {
                 player.play()
             }
@@ -234,7 +235,7 @@ class ExperienceViewController: UIViewController {
                 player.pause()
                 animate(node, play: false)
             } else {
-                player.play()
+                player.play(atTime: .zero)
                 animate(node, play: true)
             }
         }
@@ -270,6 +271,7 @@ class ExperienceViewController: UIViewController {
     }
     
     @objc func infoButtonAction() {
+        controlMediaPlayback(for: selectedReminder, play: false)
         routeToInformation()
     }
     
@@ -278,6 +280,8 @@ class ExperienceViewController: UIViewController {
     }
     
     @objc func restartButtonAction() {
+        controlMediaPlayback(for: selectedReminder, play: false)
+        selectedReminder = nil
         startSession(shouldRestart: true)
     }
     

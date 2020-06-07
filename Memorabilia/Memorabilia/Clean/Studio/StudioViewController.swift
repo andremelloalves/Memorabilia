@@ -436,6 +436,7 @@ class StudioViewController: UIViewController {
         if let video = reminder as? VideoReminder, let player = video.player {
             if player.timeControlStatus == .playing || !play {
                 player.pause()
+                player.seek(to: .zero)
             } else {
                 player.play()
             }
@@ -444,7 +445,7 @@ class StudioViewController: UIViewController {
                 player.pause()
                 animate(node, play: false)
             } else {
-                player.play()
+                player.play(atTime: .zero)
                 animate(node, play: true)
             }
         }
@@ -573,6 +574,7 @@ class StudioViewController: UIViewController {
     }
     
     @objc func infoButtonAction() {
+        controlMediaPlayback(for: selectedReminder, play: false)
         routeToInformation()
     }
     
@@ -596,6 +598,7 @@ class StudioViewController: UIViewController {
     }
     
     @objc func mediaButtonAction() {
+        controlMediaPlayback(for: selectedReminder, play: false)
         reminderMediaAction()
     }
     
