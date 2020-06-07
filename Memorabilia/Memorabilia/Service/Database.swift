@@ -76,6 +76,29 @@ class Database {
     
     // MARK: Read
     
+    func readPreference() -> Promise<Preference?> {
+        return Promise { seal in
+            do {
+                let dictionary = defaults.readDictionary(for: .preferences) ?? [:]
+                let preference = try Preference(dictionary: dictionary)
+                seal.fulfill(preference)
+            } catch let error {
+                seal.reject(error)
+            }
+        }
+    }
+    
+    func readBackground() -> Promise<Data> {
+        return Promise { seal in
+            do {
+                let background = try documents.read(file: "app", folder: .photos)
+                seal.fulfill(background)
+            } catch let error {
+                seal.reject(error)
+            }
+        }
+    }
+    
     func readInformations(of types: [InformationType]) -> Promise<[Information]> {
         return Promise { seal in
             do {
@@ -154,6 +177,26 @@ class Database {
     
     // MARK: Update
     
+    func update(_ preference: Preference) -> Promise<Void> {
+        return Promise { seal in
+            do {
+                defaults.createUpdate(object: preference.dictionary, for: .preferences)
+                seal.fulfill(())
+            }
+        }
+    }
+    
+    func updateBackground(with data: Data) -> Promise<Void> {
+        return Promise { seal in
+            do {
+                try documents.create(file: "app", folder: .photos, data: data)
+                seal.fulfill(())
+            } catch let error {
+                seal.reject(error)
+            }
+        }
+    }
+    
     func update(changes: () -> ()?) -> Promise<Void> {
         return Promise { seal in
             do {
@@ -176,6 +219,17 @@ class Database {
                 try documents.delete(file: id, folder: .experiences)
                 try documents.delete(file: id, folder: .snapshots)
                 try documents.delete(file: id, folder: .photos)
+                seal.fulfill(())
+            } catch let error {
+                seal.reject(error)
+            }
+        }
+    }
+    
+    func deleteBackground() -> Promise<Void> {
+        return Promise { seal in
+            do {
+                try documents.delete(file: "app", folder: .photos)
                 seal.fulfill(())
             } catch let error {
                 seal.reject(error)

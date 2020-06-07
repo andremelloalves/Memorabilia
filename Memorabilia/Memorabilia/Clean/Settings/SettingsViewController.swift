@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Photos
+import MobileCoreServices
 
 protocol SettingsViewInput: class {
 
@@ -37,7 +39,7 @@ class SettingsViewController: UIViewController, MenuPage {
     lazy var table: UITableView = {
         let view = UITableView(frame: .zero, style: .grouped)
         view.backgroundColor = .clear
-        view.allowsSelection = false
+        view.allowsSelection = true
         view.dataSource = self
         view.delegate = self
         view.rowHeight = UITableView.automaticDimension
@@ -49,12 +51,28 @@ class SettingsViewController: UIViewController, MenuPage {
         view.separatorStyle = .none
         view.translatesAutoresizingMaskIntoConstraints = false
         view.register(TableViewHeaderView.self, forHeaderFooterViewReuseIdentifier: TableViewHeaderView.identifier)
+        view.register(ColorTableViewCell.self, forCellReuseIdentifier: ColorTableViewCell.identifier)
+        view.register(ButtonTableViewCell.self, forCellReuseIdentifier: ButtonTableViewCell.identifier)
         view.register(MessageTableViewCell.self, forCellReuseIdentifier: MessageTableViewCell.identifier)
         view.register(FlagTableViewCell.self, forCellReuseIdentifier: FlagTableViewCell.identifier)
         return view
     }()
+    
+    var backgroundButton: PillButton?
 
     // MARK: Control properties
+
+    // MARK: Media properties
+    
+    lazy var photoPicker: UIImagePickerController = {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        picker.imageExportPreset = .compatible
+        picker.mediaTypes = [kUTTypeImage as String]
+        picker.sourceType = .photoLibrary
+        return picker
+    }()
     
     // MARK: View model
     
@@ -109,7 +127,17 @@ class SettingsViewController: UIViewController, MenuPage {
         interactor?.read()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        interactor?.read()
+    }
+    
     // MARK: Action
+    
+    @objc func backgroundButtonAction() {
+        routeToPicker()
+    }
 
     // MARK: Animation
     
@@ -117,6 +145,21 @@ class SettingsViewController: UIViewController, MenuPage {
     
     func pageWillDisapear() {
         
+    }
+    
+    private func routeToPicker() {
+        PHPhotoLibrary.requestAuthorization { status in
+            switch status {
+            case .authorized:
+                DispatchQueue.main.async {
+                    self.menu?.present(self.photoPicker, animated: true, completion: nil)
+                }
+            default:
+                DispatchQueue.main.async {
+                    self.menu?.showActionView(symbol: "exclamationmark.triangle.fill", text: "Sem acesso a fotos", duration: 2)
+                }
+            }
+        }
     }
     
 }
@@ -154,12 +197,12 @@ extension SettingsViewController: SettingsViewInput {
         self.sections = sections
         
         table.performBatchUpdates({
-            table.deleteSections(changes.deletes, with: .automatic)
-            table.insertSections(changes.inserts, with: .automatic)
+            table.deleteSections(changes.deletes, with: .fade)
+            table.insertSections(changes.inserts, with: .fade)
             
-            table.reloadRows(at: changes.updates.reloads, with: .automatic)
-            table.insertRows(at: changes.updates.inserts, with: .automatic)
-            table.deleteRows(at: changes.updates.deletes, with: .automatic)
+            table.reloadRows(at: changes.updates.reloads, with: .fade)
+            table.insertRows(at: changes.updates.inserts, with: .fade)
+            table.deleteRows(at: changes.updates.deletes, with: .fade)
         }, completion: nil)
     }
     

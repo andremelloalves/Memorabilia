@@ -43,8 +43,50 @@ struct SettingsEntity {
         // MARK: Sections
         
         enum SectionType: String {
+            case color
+            case background
             case about
             case flag
+        }
+        
+        struct ColorSection: SettingsSection {
+            
+            var uid: String {
+                type.rawValue
+            }
+            
+            var type: SectionType {
+                .about
+            }
+            
+            var title: String?
+            
+            var colors: [ColorItem]
+            
+            var items: [ItemWrapper] {
+                colors.map({ ItemWrapper(uid: $0.uid, item: $0) })
+            }
+        
+        }
+        
+        struct BackgroundSection: SettingsSection {
+            
+            var uid: String {
+                type.rawValue
+            }
+            
+            var type: SectionType {
+                .about
+            }
+            
+            var title: String?
+            
+            var backgrounds: [BackgroundItem]
+            
+            var items: [ItemWrapper] {
+                backgrounds.map({ ItemWrapper(uid: $0.uid, item: $0) })
+            }
+        
         }
         
         struct AboutSection: SettingsSection {
@@ -59,10 +101,10 @@ struct SettingsEntity {
             
             var title: String?
             
-            var settings: [MessageItem]
+            var messages: [MessageItem]
             
             var items: [ItemWrapper] {
-                settings.map({ ItemWrapper(uid: $0.uid, item: $0) })
+                messages.map({ ItemWrapper(uid: $0.uid, item: $0) })
             }
         
         }
@@ -90,6 +132,8 @@ struct SettingsEntity {
         // MARK: Items
         
         enum ItemType: String {
+            case background
+            case color
             case message
             case flag
         }
@@ -103,6 +147,34 @@ struct SettingsEntity {
             static func ==(lhs: ItemWrapper, rhs: ItemWrapper) -> Bool {
                 return lhs.uid == rhs.uid &&
                     lhs.item.uid == rhs.item.uid
+            }
+            
+        }
+        
+        struct ColorItem: SettingsItem {
+            
+            var uid: String {
+                return type.rawValue + color.rawValue + selected.description
+            }
+            
+            var type: ItemType {
+                .color
+            }
+            
+            var color: Color
+            
+            var selected: Bool
+            
+        }
+        
+        struct BackgroundItem: SettingsItem {
+            
+            var uid: String {
+                return type.rawValue
+            }
+            
+            var type: ItemType {
+                .background
             }
             
         }

@@ -12,7 +12,7 @@ protocol SettingsPresenterInput {
     
     // Present
     
-    func present(_ settings: [SettingsEntity.Present], shouldUpdate: Bool)
+    func present(_ settings: [SettingsEntity.Present], preference: Preference?, shouldUpdate: Bool)
     
 }
 
@@ -28,13 +28,24 @@ class SettingsPresenter: SettingsPresenterInput {
     
     // MARK: Functions
     
-    func present(_ settings: [SettingsEntity.Present], shouldUpdate: Bool) {
+    func present(_ settings: [SettingsEntity.Present], preference: Preference?, shouldUpdate: Bool) {
         var sections: [SettingsSection] = []
+        
+        var colorItems: [SettingsEntity.Display.ColorItem] = []
+        for color in Color.allCases {
+            let colorItem = SettingsEntity.Display.ColorItem(color: color, selected: color == preference?.color)
+            colorItems.append(colorItem)
+        }
+        let colorSection = SettingsEntity.Display.ColorSection(title: "Cor dos lembretes", colors: colorItems)
+        sections.append(colorSection)
+        
+        let backgroundSection = SettingsEntity.Display.BackgroundSection(title: "Plano de fundo", backgrounds: [.init()])
+        sections.append(backgroundSection)
         
         let messageItem = SettingsEntity.Display.MessageItem(message: """
         Este aplicativo foi desenvolvido por André Mello Alves como projeto de graduação em Engenharia da Computação na PUC-Rio.
         """)
-        let messageSection = SettingsEntity.Display.AboutSection(title: "Sobre", settings: [messageItem])
+        let messageSection = SettingsEntity.Display.AboutSection(title: "Sobre", messages: [messageItem])
         sections.append(messageSection)
         
         let flagItem = SettingsEntity.Display.FlagItem(flag: "bandeira-nacional-brasil")

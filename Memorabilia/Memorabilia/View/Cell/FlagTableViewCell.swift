@@ -41,6 +41,7 @@ class FlagTableViewCell: UITableViewCell {
     private func setup() {
         // Self
         backgroundColor = .clear
+        isUserInteractionEnabled = false
         
         // Image
         addSubview(flag)

@@ -28,7 +28,11 @@ class UserDefaultsDatabase {
     
     // MARK: Read
     
-    func read(for key: Keys) -> Any? {
+    func readDictionary(for key: Keys) -> [String:Any]? {
+        return defaults.dictionary(forKey: key.code)
+    }
+    
+    func readObject(for key: Keys) -> Any? {
         return defaults.object(forKey: key.code)
     }
     

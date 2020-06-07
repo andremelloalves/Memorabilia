@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import PromiseKit
 
 protocol MenuPage: UIViewController {
+    
+    // MARK: Properties
     
     var menu: MenuController? { get set }
     
     var type: MenuPageType { get set }
+    
+    // MARK: Functions
     
     func pageWillDisapear()
     
@@ -178,7 +183,20 @@ class MenuController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configurePages(with: App.session.db)
+        let db = App.session.db
+        let preference = db.readPreference()
+        let background = db.readBackground()
+        
+        firstly {
+            when(fulfilled: preference, background)
+        }.get { preference, _ in
+            App.session.preference = preference
+        }.done { preference, data in
+            self.configurePages(with: db, and: preference)
+            self.background.image = UIImage(data: data)
+        }.catch { error in
+            print(error.localizedDescription)
+        }
     }
     
     // MARK: Actions
@@ -240,7 +258,7 @@ class MenuController: UIViewController {
     
     private var pages: [MenuPage] = []
     
-    private func configurePages(with db: Database) {
+    private func configurePages(with db: Database, and preference: Preference?) {
         let create = CreateViewController()
         var createInteractor = create.router!.interactor!
         createInteractor.db = db
@@ -254,6 +272,7 @@ class MenuController: UIViewController {
         let settings = SettingsViewController()
         var settingsInteractor = settings.router!.interactor!
         settingsInteractor.db = db
+        settingsInteractor.preference = preference
         addPage(settings)
         
         page.setViewControllers([pages[1]], direction: .forward, animated: true, completion: nil)

@@ -20,9 +20,21 @@ extension SettingsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell?
-        let item = sections[indexPath.section].items[indexPath.item]
+        let items = sections[indexPath.section].items
+        let item = items[indexPath.item]
         
         switch item.item.type {
+        case .color:
+            let colorCell = tableView.dequeueReusableCell(withIdentifier: ColorTableViewCell.identifier, for: indexPath) as? ColorTableViewCell
+            let color = item.item as? SettingsEntity.Display.ColorItem
+            colorCell?.update(color: color?.color, selected: color?.selected ?? false, isFirst: indexPath.item == 0, isLast: indexPath.item == items.count - 1)
+            cell = colorCell
+        case .background:
+            let backgroundCell = tableView.dequeueReusableCell(withIdentifier: ButtonTableViewCell.identifier, for: indexPath) as? ButtonTableViewCell
+            backgroundButton = backgroundCell?.button
+            backgroundButton?.update(title: "Escolher", image: nil)
+            backgroundButton?.addTarget(self, action: #selector(backgroundButtonAction), for: .primaryActionTriggered)
+            cell = backgroundCell
         case .message:
             let aboutCell = tableView.dequeueReusableCell(withIdentifier: MessageTableViewCell.identifier, for: indexPath) as? MessageTableViewCell
             let about = item.item as? SettingsEntity.Display.MessageItem
@@ -41,6 +53,13 @@ extension SettingsViewController: UITableViewDataSource {
 }
 
 extension SettingsViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let section = sections[indexPath.section] as? SettingsEntity.Display.ColorSection,
+            let item = section.items[indexPath.item].item as? SettingsEntity.Display.ColorItem else { return }
+        
+        interactor?.updatePreference(with: item.color)
+    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard sections[section].title != nil else { return 0 }

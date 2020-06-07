@@ -63,6 +63,7 @@ class MessageTableViewCell: UITableViewCell {
     private func setup() {
         // Self
         backgroundColor = .clear
+        isUserInteractionEnabled = false
         
         // Background
         addSubview(background)

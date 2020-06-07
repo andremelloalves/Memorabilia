@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PromiseKit
 
 protocol SettingsInteractorInput {
     
@@ -17,6 +18,10 @@ protocol SettingsInteractorInput {
     func read()
 
     // Update
+    
+    func updatePreference(with color: Color)
+    
+    func updateBackground(with data: Data)
 
     // Delete
     
@@ -27,6 +32,8 @@ protocol SettingsInteractorData {
     // Data
     
     var db: Database? { get set }
+    
+    var preference: Preference? { get set }
     
 }
 
@@ -49,6 +56,8 @@ class SettingsInteractor: SettingsInteractorInput, SettingsInteractorData {
         }
     }
     
+    var preference: Preference?
+    
     // MARK: Initializers
     
     init() {}
@@ -64,10 +73,38 @@ class SettingsInteractor: SettingsInteractorInput, SettingsInteractorData {
     // Read
     
     func read() {
-        presenter?.present([], shouldUpdate: false)
+        read(shouldUpdate: false)
+    }
+    
+    func read(shouldUpdate: Bool) {
+        presenter?.present([], preference: preference, shouldUpdate: shouldUpdate)
     }
     
     // Update
+    
+    func updatePreference(with color: Color) {
+        guard let db = db, let preference = preference else { return }
+        
+        preference.color = color
+        
+        firstly {
+            db.update(preference)
+        }.done {
+            self.read(shouldUpdate: true)
+        }.catch { error in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func updateBackground(with data: Data) {
+        guard let db = db else { return }
+        
+        firstly {
+            db.updateBackground(with: data)
+        }.catch { error in
+            print(error.localizedDescription)
+        }
+    }
     
     // Delete
     

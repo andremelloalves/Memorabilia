@@ -16,7 +16,7 @@ class App {
     
     var db: Database = Database.db
     
-    var preferences: Preferences?
+    var preference: Preference?
     
     // MARK: Initializers
     
@@ -35,41 +35,6 @@ class App {
     }
     
     func finish() {
-        
-    }
-    
-    // MARK: Functions
-    
-    // Create
-    
-    // Read
-    
-    // Update
-    
-    // Delete
-    
-    // MARK: Preferences
-    
-    struct Preferences: Codable {
-        
-        var dictionary: [String:Any] {
-            guard let data = try? JSONEncoder().encode(self) else { return [:] }
-            if let dictionary = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
-                return dictionary
-            } else {
-                return [:]
-            }
-        }
-        
-        init() {}
-        
-        init(dictionary: [String:Any]) {
-            if let preferences = try? JSONDecoder().decode(Preferences.self, from: JSONSerialization.data(withJSONObject: dictionary)) {
-                self = preferences
-            } else {
-                self = Preferences()
-            }
-        }
         
     }
     
