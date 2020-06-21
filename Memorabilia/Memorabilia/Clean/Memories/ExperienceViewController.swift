@@ -233,9 +233,10 @@ class ExperienceViewController: UIViewController {
         } else if let audio = reminder as? AudioReminder, let player = audio.player {
             if player.isPlaying || !play {
                 player.pause()
+                player.currentTime = .zero
                 animate(node, play: false)
             } else {
-                player.play(atTime: .zero)
+                player.play()
                 animate(node, play: true)
             }
         }
