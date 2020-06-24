@@ -4,62 +4,139 @@
         "type": "app",
         "title": "O que é o Memorabilia?",
         "message": "O Memorabilia é um aplicativo de Realidade Aumentada (AR) e com ele você pode criar experiências virtuais personalizadas em um ambiente real. Cada uma destas experiências é chamada de Memória. Deslize para o lado para ver mais.",
-        "photoID": ""
+        "photoID": "I1"
     },
     {
         "identifier": "2",
         "type": "app",
-        "title": "Como navegar pelo aplicativo?",
+        "title": "Como navegar?",
         "message": "A tela principal do Memorabilia é dividida em três páginas. Você pode navegar entre as páginas utilizando a barra de navegação na parte inferior da tela ao tocar na página de destino ou ao arrastar o indicador até ela. Você também pode deslizar horizontalmente entre as páginas.",
-        "photoID": ""
+        "photoID": "I2"
     },
     {
         "identifier": "3",
         "type": "create",
-        "title": "Como criar uma memória?",
-        "message": "A primeira etapa da criação da Memória é a escolha de um nome e de uma foto de capa. Eles são atributos secundários de uma Memória, mas também merecem atenção. Escolha um nome e uma foto que ilustrem o ambiente e/ou criador da Memória. Digite o nome no campo abaixo e escolha a foto da sua biblioteca.",
-        "photoID": ""
-    },
-    {
-        "identifier": "3",
-        "type": "create",
-        "title": "Como criar em AR?",
-        "message": "Quando você estiver satisfeito com a escolha do nome e da foto de capa, toque em Criar em AR. Tenha em mente que não é possível alterá-los depois. Ao tocar no botão, você será levado para a próxima etapa, em outra tela, para mapear o ambiente e adicionar Lembretes.",
-        "photoID": ""
+        "title": "Como criar memórias?",
+        "message": "A primeira etapa é a escolher um nome e uma foto de capa. Eles são atributos secundários de uma Memória, mas também merecem atenção. Escolha um nome e uma foto que ilustrem o ambiente e/ou criador da Memória. Digite o nome no campo e escolha a foto da sua biblioteca.",
+        "photoID": "I3"
     },
     {
         "identifier": "4",
-        "type": "memories",
-        "title": "O que são Memórias?",
-        "message": "O conceito mais importante do Memorabilia é a Memória. Uma Memória é uma experiência AR que você pode customizar e integrar componentes virtuais e o mundo real. Estes componentes são chamados de Lembretes.",
-        "photoID": ""
+        "type": "create",
+        "title": "Como dar permissão?",
+        "message": "A primeira vez que você selecionar uma foto, será solicitada a permissão para acesso à sua biblioteca pessoal. Para ter a experiência completa com o Memorabilia, você deve permitir. Se você mudar de ideia, acesse as configurações do dispositivo para administrar suas permissões.",
+        "photoID": "I4"
     },
     {
         "identifier": "5",
-        "type": "memories",
-        "title": "O que são lembretes?",
-        "message": "Um lembrete é um componente audiovisual virtual que você pode ancorar em um ponto físico dentro de uma experiência, ou Memória. Cada Lembrete pode apresentar um entre quatro tipos de mídia: texto, foto, vídeo e áudio. As mídias são importadas da sua própria biblioteca de músicas ou do rolo da câmera.",
-        "photoID": ""
+        "type": "create",
+        "title": "Como criar em AR?",
+        "message": "Quando você estiver satisfeito com a escolha do nome e da foto de capa, toque em Criar em AR. Tenha em mente que não é possível alterá-los depois. Ao tocar no botão, você será levado para a próxima etapa, em outra tela, para mapear o ambiente e adicionar os Lembretes.",
+        "photoID": "I5"
     },
     {
         "identifier": "6",
-        "type": "studioCreation",
-        "title": "Criação",
-        "message": "O Memorabilia é um aplicativo AR feito para transformar o ambiente real em um palácio da memória virtual e criar lembretes audiovisuais, com o objetivo de facilitar a memorização de tarefas cotidianas e lembrança de memórias para suporte a pessoas com transtornos neurocognitivos.",
-        "photoID": ""
+        "type": "memories",
+        "title": "O que são Memórias?",
+        "message": "O conceito mais importante do Memorabilia é a Memória. Uma Memória é uma experiência AR que você pode customizar e integrar componentes virtuais e o mundo real. Estes componentes são chamados de Lembretes.",
+        "photoID": "I6"
     },
     {
         "identifier": "7",
-        "type": "studioEdition",
-        "title": "Edição",
-        "message": "Texto temporário.",
-        "photoID": ""
+        "type": "memories",
+        "title": "O que são lembretes?",
+        "message": "Um lembrete é um componente audiovisual virtual que você pode ancorar em um ponto físico dentro de uma experiência, ou Memória. Cada Lembrete pode apresentar um entre quatro tipos de mídia: texto, foto, vídeo e áudio.",
+        "photoID": "I7"
     },
     {
         "identifier": "8",
+        "type": "memories",
+        "title": "Como ver a capa da memória?",
+        "message": "Para acessar a foto de capa e mais informações da memória, pressione por um tempo a memória. Uma nova tela aparecerá com as informações, além de um botão para exluí-la caso deseje.",
+        "photoID": "I8"
+    },
+    {
+        "identifier": "9",
+        "type": "settings",
+        "title": "Como trocar a cor dos lembretes?",
+        "message": "Na tela de ajustes há uma série de cores disponíveis para customizar os lembretes das experiências AR. Apenas marque a cor que deseja. A cor escolhida estará marcada com um marcador.",
+        "photoID": "I9"
+    },
+    {
+        "identifier": "10",
+        "type": "settings",
+        "title": "Como trocar o plano de fundo?",
+        "message": "Para trocar o plano de fundo do aplicativo, pressione o botão para selecionar uma nova foto da biblioteca. Também é possível apagar o fundo atual.",
+        "photoID": "I10"
+    },
+    {
+        "identifier": "11",
+        "type": "studioCreation",
+        "title": "Como funciona o AR?",
+        "message": "O Memorabilia usa o vídeo da câmera e sobrepõe conteúdo virtual para dar a impressão de que os lembretes estão no ambiente real. Movimente o dispositivo para começar a mapear o espaço. Você deve dar permissão para câmera para o AR funcionar.",
+        "photoID": "I7"
+    },
+    {
+        "identifier": "12",
+        "type": "studioCreation",
+        "title": "Como adicionar lembretes?",
+        "message": "Quando as condições de iluminação estiverem favoráveis, pontos amarelos aparecerão nas superfícies. Selecione o tipo de mídia na barra inferior e toque em um ponto amarelo para adicionar o primeiro lembrete.",
+        "photoID": "I12"
+    },
+    {
+        "identifier": "13",
+        "type": "studioCreation",
+        "title": "Como salvar a memória?",
+        "message": "Para salvar uma memória, é necessário adicionar pelo menos um lembrete. Quando a opção estiver disponível, o botão de finalizar aparecerá acima da barra inferior.",
+        "photoID": "I13"
+    },
+    {
+        "identifier": "14",
+        "type": "studioEdition",
+        "title": "Como escolher a mídia?",
+        "message": "Com o lembrete selecionado, pressione a barra inferior no caso do lembrete de texto ou o botão inferior direito, caso contrário. Cada tipo de mídia mostrará as opções disponíveis na biblioteca. Para sair da edição pressione o botão superior esquerdo.",
+        "photoID": "I14"
+    },
+    {
+        "identifier": "15",
+        "type": "studioEdition",
+        "title": "Como girar o lembrete?",
+        "message": "Use gestos multitoque para orientar o lembrete selecionado. Arraste para orientar ou gire dois dedos para rotacionar. Se a mídia escolhida não aparecer automaticamente ao ser adicionada, ela pode estar virada. Gire-a.",
+        "photoID": "I15"
+    },
+    {
+        "identifier": "16",
+        "type": "studioEdition",
+        "title": "Como apagar um lembrete?",
+        "message": "Caso queria apagar ou mudar a posição ou tipo do lembrete, pressione o botão de lixeira para apagar o lembrete selecionado. Adicione outro se for necessário.",
+        "photoID": "I16"
+    },
+    {
+        "identifier": "17",
         "type": "studioPosition",
-        "title": "Posicionamento",
-        "message": "Texto temporário.",
-        "photoID": ""
+        "title": "Como finalizar a memória?",
+        "message": "Há um novo botão na tela, que apenas tira uma foto e salva a memória. Escolha bem o local de salvamento. Ele será usado para carregar a experiência posteriormente e guiar o mapeamento do ambiente.",
+        "photoID": "I17"
+    },
+    {
+        "identifier": "18",
+        "type": "experienceLocation",
+        "title": "Como carregar a experiência AR?",
+        "message": "No canto inferior direito da tela, há uma pequena imagem da perspectiva a ser procurada. Movimente-se no ambiente para encontrar essa perspectiva. É possível aumentar a imagem para vê-la melhor.",
+        "photoID": "I18"
+    },
+    {
+        "identifier": "19",
+        "type": "experienceLocation",
+        "title": "Como reiniciar a experiência?",
+        "message": "Caso tenha dificuldade para visualizar os lembretes ou ocorrer algum erro inesperado, reinicie a experiência pressionando no botão inferior esquerdo.",
+        "photoID": "I19"
+    },
+    {
+        "identifier": "20",
+        "type": "experienceInteraction",
+        "title": "Como interagir com um lembrete?",
+        "message": "Ao encontrar um lembrete AR no ambiente, você pode interagir com ele. Se o lembrete for de vídeo ou música, toque para reproduzir e toque fora para terminar.",
+        "photoID": "I20"
     }
 ]

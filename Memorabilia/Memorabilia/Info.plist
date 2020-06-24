@@ -21,11 +21,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>This application will use the camera for Augmented Reality.</string>
+	<string>A câmera é necessária para a experiência de realidade aumentada.</string>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>This application will use the media library for Augmented Reality experiences.</string>
+	<string>A biblioteca é necessária para customizar a experiência.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This application will use the photo library for Augmented Reality experiences.</string>
+	<string>A biblioteca é necessária para customizar a experiência.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

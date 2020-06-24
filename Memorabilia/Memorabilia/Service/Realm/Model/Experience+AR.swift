@@ -19,8 +19,10 @@ extension ExperienceViewController: ARSessionDelegate {
         switch state {
         case .normal:
             infoView.update(title: "Explorando", info: "Mapeie o ambiente e interaja com os lembretes AR.")
+            selectedInfo = .experienceInteraction
         case .limited(.relocalizing):
             infoView.update(title: "Localizando", info: "Mova o dispositivo para a perspectiva da imagem.")
+            selectedInfo = .experienceLocation
         default:
             infoView.update(title: state.description, info: state.feedback)
         }

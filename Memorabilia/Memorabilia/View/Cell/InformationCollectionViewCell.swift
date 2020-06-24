@@ -121,6 +121,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
             background.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             // Title
+            titleLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 67),
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
@@ -131,6 +132,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
             messageLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
             
             // Image
+            photo.heightAnchor.constraint(equalTo: photo.widthAnchor),
             photo.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 16),
             photo.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             photo.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
